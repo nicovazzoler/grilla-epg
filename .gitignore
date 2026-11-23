@@ -1,5 +1,11 @@
 .env
-salida/
-*.xlsx
-diccionario/pendientes.json
+salida/*
+!salida/.gitkeep
+diccionario/*_pendientes.json
 __pycache__/
+
+# Las grillas son de las señales: no se suben.
+*.xlsx
+*.xls
+*.pdf
+*.docx
