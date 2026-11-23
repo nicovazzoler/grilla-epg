@@ -4,16 +4,17 @@ import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment
 
 DIAS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
-COLUMNAS = ['Programa', 'Año', 'Cap.', 'TT']
-ANCHOS = {'N': 6, 'Día': 11, 'Fecha': 12, 'Hora': 8, 'Duración': 10, 'Programa': 44, 'Año': 7, 'Cap.': 6, 'TT': 6}
-CENTRADAS = {'N', 'Fecha', 'Hora', 'Duración', 'Año', 'Cap.', 'TT'}
+COLUMNAS = ['Programa', 'Ciclo', 'Temp.', 'Año', 'Cap.', 'Título', 'TT', 'DEST', 'A1', 'A2', 'A3']
+ANCHOS = {'N': 6, 'Día': 11, 'Fecha': 12, 'Hora': 8, 'Duración': 10, 'Programa': 44, 'Ciclo': 22, 'Temp.': 7, 'Año': 7,
+          'Cap.': 6, 'Título': 50, 'TT': 6, 'DEST': 7, 'A1': 22, 'A2': 22, 'A3': 22}
+CENTRADAS = {'N', 'Fecha', 'Hora', 'Duración', 'Temp.', 'Año', 'Cap.', 'TT', 'DEST'}
 
 
-def poner_fines(bloques):
-    # Manda la hora de inicio: cada bloque dura hasta que empieza el siguiente, y la semana cierra a los 7 días.
+def poner_fines(bloques, cierre):
+    # Manda la hora de inicio: cada bloque dura hasta que empieza el siguiente, aunque la grilla diga otra cosa.
     for actual, siguiente in zip(bloques, bloques[1:]):
         actual['fin'] = siguiente['inicio']
-    bloques[-1]['fin'] = bloques[0]['inicio'] + dt.timedelta(days=7)
+    bloques[-1]['fin'] = cierre
 
 
 def minutos(bloque):
