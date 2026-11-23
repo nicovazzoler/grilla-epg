@@ -36,6 +36,18 @@ python aprobar.py <señal>
 
 El Excel queda en `salida/`. Las grillas no se suben al repo.
 
+## Revisarlo antes de mandarlo
+
+```
+python leer_epg.py salida/<archivo>.xlsx --resumen    # totales, duraciones raras, nombres repetidos
+python leer_epg.py salida/<archivo>.xlsx              # las filas en TSV, para grep
+```
+
+`leer_epg.py` lee el Excel con la biblioteca estándar: no hace falta openpyxl ni abrir Excel.
+
+El agente `revisor-epg` (en `.claude/agents/`) hace esa revisión completa: cruza el EPG con los
+pendientes, el diccionario y las reglas de la señal, y reporta por severidad. No modifica nada.
+
 ### Demo con RBTV
 
 ```
