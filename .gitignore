@@ -1,0 +1,5 @@
+.env
+salida/
+*.xlsx
+diccionario/pendientes.json
+__pycache__/
