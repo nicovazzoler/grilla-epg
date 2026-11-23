@@ -8,8 +8,12 @@ Los nombres de los programas se corrigen en capas:
 
 1. **Diccionario**: lo ya aprobado se corrige solo.
 2. **Parecido de texto**: "MUQLING" se reconoce como "MUQILING" sin llamar a ningún modelo.
-3. **Modelo**: lo que no se parece a nada conocido lo propone Claude, siguiendo las reglas de la señal.
-4. **Persona**: `aprobar.py` muestra lo nuevo, y lo aprobado pasa al diccionario.
+3. **Modelo**: lo que no se parece a nada conocido lo propone Claude, siguiendo las reglas de la señal. Si el nombre
+   trae algo pegado que va en otra columna, lo separa: "BRASILEIRÃO 2026" → Programa *Brasileirão*, Tít. Temp. *2026*.
+4. **Persona**: `aprobar.py` muestra lo nuevo en una línea; Enter acepta y se corrige solo lo que está mal.
+   Lo aprobado pasa al diccionario, y hasta entonces esas filas salen con *Revisar: sí* en el Excel.
+
+Dos nombres que difieren en un número (BN 20 y BN 30) nunca cuentan como parecidos: casi siempre son programas distintos.
 
 Cada semana el modelo ve solo lo nuevo, así que su uso baja en vez de crecer. Cada corrida queda en `registro.csv`.
 

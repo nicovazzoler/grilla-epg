@@ -4,10 +4,11 @@ import openpyxl
 from openpyxl.styles import Font, PatternFill, Alignment
 
 DIAS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
-COLUMNAS = ['Programa', 'Ciclo', 'Temp.', 'Año', 'Cap.', 'Título', 'TT', 'DEST', 'A1', 'A2', 'A3']
-ANCHOS = {'N': 6, 'Día': 11, 'Fecha': 12, 'Hora': 8, 'Duración': 10, 'Programa': 44, 'Ciclo': 22, 'Temp.': 7, 'Año': 7,
-          'Cap.': 6, 'Título': 50, 'TT': 6, 'DEST': 7, 'A1': 22, 'A2': 22, 'A3': 22}
-CENTRADAS = {'N', 'Fecha', 'Hora', 'Duración', 'Temp.', 'Año', 'Cap.', 'TT', 'DEST'}
+# Revisar marca las filas con un nombre que todavía nadie aprobó.
+COLUMNAS = ['Programa', 'Ciclo', 'Temp.', 'Tít. Temp.', 'Año', 'Cap.', 'Título', 'TT', 'DEST', 'A1', 'A2', 'A3', 'Revisar']
+ANCHOS = {'N': 6, 'Día': 11, 'Fecha': 12, 'Hora': 8, 'Duración': 10, 'Programa': 44, 'Ciclo': 22, 'Temp.': 7,
+          'Tít. Temp.': 10, 'Año': 7, 'Cap.': 6, 'Título': 50, 'TT': 6, 'DEST': 7, 'A1': 22, 'A2': 22, 'A3': 22, 'Revisar': 9}
+CENTRADAS = {'N', 'Fecha', 'Hora', 'Duración', 'Temp.', 'Tít. Temp.', 'Año', 'Cap.', 'TT', 'DEST', 'Revisar'}
 
 
 def poner_fines(bloques, cierre):
