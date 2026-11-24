@@ -153,11 +153,13 @@ def bajar_excel(corrida_id: int, db: Session = Depends(sesion_db), _=Depends(usu
                     headers={'Content-Disposition': f'attachment; filename="{nombre}"'})
 
 
-@app.post('/api/corridas/{corrida_id}/aprobar-parecidos')
-def aprobar_parecidos(corrida_id: int, db: Session = Depends(sesion_db), _=Depends(usuario_actual)):
+@app.post('/api/corridas/{corrida_id}/aprobar-propuestas')
+def aprobar_propuestas(corrida_id: int, capa: str = '', db: Session = Depends(sesion_db), _=Depends(usuario_actual)):
+    """Pasa al diccionario lo que quedaba sin aprobar tal como se propuso; con capa, solo lo de esa capa.
+    Lo que no tiene propuesta queda."""
     corrida = la_corrida(db, corrida_id)
     aprobados = 0
-    for p in [p for p in corrida.pendientes if p.capa == 'parecido' and p.estado != 'aprobado']:
+    for p in [p for p in corrida.pendientes if p.estado != 'aprobado' and (not capa or p.capa == capa)]:
         if corridas.aprobar(db, p, p.propuesta):
             aprobados += 1
     return {'aprobados': aprobados}
