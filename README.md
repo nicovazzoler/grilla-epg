@@ -74,6 +74,15 @@ python aprobar.py <señal>
 
 El Excel queda en `salida/`. Las grillas no se suben al repo.
 
+## Antes de un PR: probar.py
+
+`python probar.py` corre cada grilla de `referencias/<señal>/<caso>/` y compara el EPG contra su `esperado.xlsx`,
+celda por celda. Los nombres los toma del esperado, así que lo que prueba es el lector y el armado, no el diccionario:
+si un cambio mueve algo sin querer, dice en qué fila y columna. Un caso nuevo es una carpeta con las grillas, el EPG
+bueno como `esperado.xlsx` y, si hace falta, `opciones.json` (`{"semanal": true, "horas": {"288": "20:30"}}`).
+
+`referencias/` no se sube: son grillas del laburo.
+
 ## La web
 
 `web/` es lo mismo con pantalla: subir las grillas, ver qué resolvió cada capa, revisar los nombres nuevos con su
