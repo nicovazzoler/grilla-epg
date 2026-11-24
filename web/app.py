@@ -13,10 +13,10 @@ from fastapi.responses import FileResponse, JSONResponse, Response
 from fastapi.staticfiles import StaticFiles
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
-from procesar import Frenado, MINUTOS_A_MANO, limpiar_reparto, reparto, senales
+from procesar import Frenado, MINUTOS_A_MANO, es_patron, limpiar_reparto, senales
 from web import corridas
 from web.base import preparar, sesion_db
-from web.modelos import Corrida, Entrada, Pendiente, ahora_utc, iso_utc
+from web.modelos import Corrida, Entrada, Pendiente, Senal, ahora_utc, iso_utc
 from web.sesion import COOKIE, DURACION, credenciales_configuradas, credenciales_validas, crear_token, usuario_actual
 
 ESTATICOS = Path(__file__).parent / 'static'
@@ -89,9 +89,23 @@ def yo(usuario=Depends(usuario_actual)):
 
 
 @app.get('/api/senales')
-def lista_de_senales(_=Depends(usuario_actual)):
-    return [{'id': s, 'nombre': lector(s).NOMBRE, 'corrige_horas': getattr(lector(s), 'CORRIGE_HORAS', False)}
+def lista_de_senales(db: Session = Depends(sesion_db), _=Depends(usuario_actual)):
+    return [{'id': s, 'nombre': corridas.nombre_de(db, s), 'corrige_horas': getattr(lector(s), 'CORRIGE_HORAS', False)}
             for s in senales()]
+
+
+@app.put('/api/senales/{senal}')
+async def renombrar_senal(senal: str, request: Request, db: Session = Depends(sesion_db), _=Depends(usuario_actual)):
+    """El nombre que se ve en la pantalla y que llevan los eventos de un semanal."""
+    lector(senal)
+    if not (nombre := str((await request.json()).get('nombre') or '').strip()):
+        raise HTTPException(422, 'Falta el nombre.')
+    if not (fila := db.get(Senal, senal)):
+        fila = Senal(id=senal, nombre=nombre)
+        db.add(fila)
+    fila.nombre = nombre
+    db.commit()
+    return {'id': senal, 'nombre': nombre}
 
 
 @app.post('/api/corridas')
@@ -160,7 +174,8 @@ def aprobar_propuestas(corrida_id: int, capa: str = '', db: Session = Depends(se
     corrida = la_corrida(db, corrida_id)
     aprobados = 0
     for p in [p for p in corrida.pendientes if p.estado != 'aprobado' and (not capa or p.capa == capa)]:
-        if corridas.aprobar(db, p, p.propuesta):
+        # Un patrón aprobado en esta misma vuelta ya pudo haber resuelto este.
+        if p.estado != 'aprobado' and corridas.aprobar(db, p, p.propuesta, patron=p.propuesta.get('PATRON') is True):
             aprobados += 1
     return {'aprobados': aprobados}
 
@@ -170,11 +185,13 @@ async def aprobar_pendiente(pendiente_id: int, request: Request, db: Session = D
                             _=Depends(usuario_actual)):
     if not (pendiente := db.get(Pendiente, pendiente_id)):
         raise HTTPException(404, 'Ese pendiente no existe.')
-    propuesta = (await request.json()).get('reparto') or {}
+    datos = await request.json()
+    propuesta = datos.get('reparto') or {}
     editado = limpiar_reparto(propuesta) != limpiar_reparto(pendiente.propuesta)
-    if not (r := corridas.aprobar(db, pendiente, propuesta, 'a mano' if editado else None)):
+    if not (hecho := corridas.aprobar(db, pendiente, propuesta, 'a mano' if editado else None,
+                                      patron=datos.get('patron') is True)):
         raise HTTPException(422, 'Falta el título.')
-    return {'reparto': r}
+    return {'reparto': hecho[0], 'patron': hecho[1]}
 
 
 @app.post('/api/pendientes/{pendiente_id}/saltear')
@@ -194,9 +211,36 @@ def ver_diccionario(senal: str, q: str = '', db: Session = Depends(sesion_db), _
     if q:
         q = q.lower()
         entradas = [e for e in entradas if q in e.crudo.lower() or q in json.dumps(e.reparto, ensure_ascii=False).lower()]
-    total = len(entradas)
-    return {'total': total, 'entradas': [{'id': e.id, 'crudo': e.crudo, 'reparto': reparto(e.reparto), 'capa': e.capa,
-                                          'aprobada': iso_utc(e.aprobada)} for e in entradas[:300]]}
+    return {'total': len(entradas), 'entradas': [
+        {'id': e.id, 'crudo': e.crudo, 'reparto': {'TIT PRINC': e.reparto} if isinstance(e.reparto, str) else e.reparto,
+         'capa': e.capa, 'aprobada': iso_utc(e.aprobada)} for e in entradas[:3000]]}
+
+
+@app.put('/api/diccionario/{senal}/programa')
+async def renombrar_programa(senal: str, request: Request, db: Session = Depends(sesion_db), _=Depends(usuario_actual)):
+    """Cambia el título de un programa en todas las entradas que lo tienen: los nombres y los patrones."""
+    lector(senal)
+    datos = await request.json()
+    antes, despues = str(datos.get('antes') or ''), str(datos.get('despues') or '').strip()
+    if not despues:
+        raise HTTPException(422, 'Falta el título nuevo.')
+    cambiadas = 0
+    for e in db.scalars(select(Entrada).where(Entrada.senal == senal)):
+        if isinstance(e.reparto, dict) and e.reparto.get('TIT PRINC') == antes:
+            e.reparto, e.capa, e.aprobada = {**e.reparto, 'TIT PRINC': despues}, 'a mano', ahora_utc()
+            cambiadas += 1
+    db.commit()
+    return {'cambiadas': cambiadas}
+
+
+@app.delete('/api/diccionario/{senal}/{entrada_id}')
+def borrar_entrada(senal: str, entrada_id: int, db: Session = Depends(sesion_db), _=Depends(usuario_actual)):
+    entrada = db.get(Entrada, entrada_id)
+    if not entrada or entrada.senal != senal:
+        raise HTTPException(404, 'Esa entrada no existe.')
+    db.delete(entrada)
+    db.commit()
+    return {'ok': True}
 
 
 @app.put('/api/diccionario/{senal}/{entrada_id}')
@@ -206,8 +250,11 @@ async def editar_entrada(senal: str, entrada_id: int, request: Request, db: Sess
     if not entrada or entrada.senal != senal:
         raise HTTPException(404, 'Esa entrada no existe.')
     r = limpiar_reparto((await request.json()).get('reparto') or {})
+    r.pop('PATRON', None)
     if not r['TIT PRINC']:
         raise HTTPException(422, 'Falta el título.')
+    if es_patron(entrada.reparto):
+        r['RESTO'] = entrada.reparto['RESTO']
     entrada.reparto, entrada.capa, entrada.aprobada = r, 'a mano', ahora_utc()
     db.commit()
     return {'reparto': r}

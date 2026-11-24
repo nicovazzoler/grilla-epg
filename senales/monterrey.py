@@ -112,7 +112,12 @@ def separar(lineas):
             if l:
                 nombre.append(l)
             continue
-        if mayus(l) and not resto and l not in TITULOS_EN_MAYUS:
+        # "LA PARRILLA DEL FUEGO La panza es primero": el programa y el título vienen en el mismo renglón.
+        if not resto and not mayus(l) and (m := re.fullmatch(r'(.+?)\s+([A-ZÁÉÍÓÚÑ¡¿][a-záéíóúñ].*)', l)) \
+                and mayus(m.group(1)):
+            nombre.append(m.group(1))
+            resto.append(m.group(2))
+        elif mayus(l) and not resto and l not in TITULOS_EN_MAYUS:
             nombre.append(l)
         else:
             resto.append(l)

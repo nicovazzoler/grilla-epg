@@ -32,6 +32,14 @@ class Entrada(Base):
     aprobada: Mapped[dt.datetime] = mapped_column(DateTime, default=ahora_utc)
 
 
+class Senal(Base):
+    """El nombre que se le puso a una señal desde la pantalla. Sin fila, vale el NOMBRE de su lector."""
+    __tablename__ = 'senales'
+
+    id: Mapped[str] = mapped_column(String(40), primary_key=True)
+    nombre: Mapped[str] = mapped_column(String(80))
+
+
 class Corrida(Base):
     """Una vez que se procesaron grillas. Guarda las filas leídas, no el archivo de la señal."""
     __tablename__ = 'corridas'
