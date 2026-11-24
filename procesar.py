@@ -27,14 +27,18 @@ CAPAS = ('diccionario', 'patrón', 'parecido', 'modelo', 'sin propuesta')
 
 
 class Frenado(Exception):
-    """Horarios fuera de orden: una de las dos horas está mal tipeada en la grilla."""
-    def __init__(self, antes, ahora):
-        self.filas = [{'ref': f['ref'], 'inicio': f['inicio'], 'nombre': f['crudo'] or f['datos']['TIT PRINC']}
-                      for f in (antes, ahora)]
+    """Horarios fuera de orden: una de las dos horas está mal tipeada en la grilla.
+    filas son las dos en conflicto (marcadas) con las dos de antes y las dos de después, para ver cuál no encaja."""
+    def __init__(self, filas, i):
+        ahora = filas[i]
+        self.filas = [{'ref': f['ref'], 'inicio': f['inicio'], 'nombre': f['crudo'] or f['datos']['TIT PRINC'],
+                       'conflicto': j in (i - 1, i)}
+                      for j, f in enumerate(filas) if i - 3 <= j <= i + 2]
         super().__init__(
             f'horarios fuera de orden el {DIAS[ahora["inicio"].weekday()]} {ahora["inicio"]:%d/%m}.\n'
-            + ''.join(f'  {f["ref"]}: {f["inicio"]:%H:%M} {f["nombre"]}\n' for f in self.filas)
-            + 'Una de las dos horas está mal: revisá la grilla.')
+            + ''.join(f'{"> " if f["conflicto"] else "  "}{f["ref"]}: {DIAS[f["inicio"].weekday()][:3].lower()} {f["inicio"]:%H:%M} {f["nombre"]}\n'
+                      for f in self.filas)
+            + 'Una de las dos marcadas está mal: revisá la grilla.')
 
 
 def senales():
@@ -251,9 +255,10 @@ def resolver_nombres(senal, crudos, diccionario):
 def leer_grillas(senal, archivos, horas):
     """Lo que leyó el lector de la señal. Frena si los horarios no van en orden."""
     leido = importlib.import_module(f'senales.{senal}').leer(archivos, horas)
-    for antes, ahora in zip(leido['filas'], leido['filas'][1:]):
-        if ahora['inicio'] <= antes['inicio']:
-            raise Frenado(antes, ahora)
+    filas = leido['filas']
+    for i in range(1, len(filas)):
+        if filas[i]['inicio'] <= filas[i - 1]['inicio']:
+            raise Frenado(filas, i)
     return leido
 
 

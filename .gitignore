@@ -10,3 +10,6 @@ __pycache__/
 *.pdf
 *.docx
 grilla_epg.db
+
+# Las grillas y EPG de referencia de probar.py: son del laburo, no se suben salvo que se decida lo contrario.
+referencias/

@@ -133,7 +133,8 @@ async def nueva_corrida(archivos: list[UploadFile] = File(...), senal: str = For
             corrida = await asyncio.to_thread(corridas.crear, db, senal, rutas, nombres, horas_corregidas, semanal)
         except Frenado as e:
             filas = [{'fila': int(m.group(1)) if (m := re.fullmatch(r'fila (\d+)', f['ref'])) else None,
-                      'ref': f['ref'], 'hora': f'{f["inicio"]:%H:%M}', 'dia': f'{f["inicio"]:%d/%m}', 'nombre': f['nombre']}
+                      'ref': f['ref'], 'hora': f'{f["inicio"]:%H:%M}', 'dia': f'{f["inicio"]:%d/%m}', 'nombre': f['nombre'],
+                      'conflicto': f['conflicto']}
                      for f in e.filas]
             return JSONResponse({'frenado': str(e), 'filas': filas, 'senal': senal,
                                  'corrige_horas': getattr(lector(senal), 'CORRIGE_HORAS', False)}, status_code=409)

@@ -144,12 +144,17 @@ async function procesar() {
 function preguntarHora(f) {
   const estado = $('#estado-subida');
   const filas = f.filas.map((x) => {
-    const campo = f.corrige_horas && x.fila
+    const campo = f.corrige_horas && x.fila && x.conflicto
       ? el('input', { size: 5, placeholder: x.hora, 'aria-label': `hora buena de ${x.ref}`, 'data-fila': x.fila })
       : null;
-    return el('p', {}, `  ${x.ref}  ${x.dia} ${x.hora}  ${x.nombre}  `, campo ? ['→ ', campo] : '');
+    return [el('span', { class: x.conflicto ? 'alerta' : 'tenue' }, x.conflicto ? '>' : ''),
+      el('span', { class: x.conflicto ? 'alerta' : 'tenue' }, x.ref),
+      el('span', { class: x.conflicto ? 'alerta' : 'tenue' }, `${x.dia} ${x.hora}`),
+      el('span', { class: x.conflicto ? null : 'tenue' }, x.nombre),
+      el('span', {}, campo)];
   });
-  const salida = [el('p', { class: 'alerta' }, `? FRENADO: horarios fuera de orden. Una de las dos horas está mal en la grilla.`), ...filas];
+  const salida = [el('p', { class: 'alerta' }, '? Frenado: hay horarios fuera de orden. Una de las dos marcadas está mal en la grilla.'),
+    el('div', { class: 'conflicto' }, filas)];
   if (f.corrige_horas) {
     salida.push(el('p', { class: 'tenue' }, 'Poné la hora buena en la fila que esté mal y volvé a procesar.'));
     salida.push(el('button', {
@@ -198,25 +203,26 @@ async function verCorrida(id, enfocar = null) {
 
   poner(v, 
     prompt(`cat corrida/${c.id}`),
-    el('div', { class: 'cabecera' },
-      el('p', { class: 'titular' }, nombreDe(c.senal), c.semanal ? el('span', { class: 'tenue' }, '  semanal') : null),
-      el('p', { class: 'tenue' }, c.archivos.join(' · ')),
-      el('p', { class: 'tenue' }, `${plural(c.epg.filas.length, 'programa', 'programas')} · ${c.epg.dias} días`)),
-    barras(c.capas),
+    el('div', { class: 'resumen' },
+      el('div', { class: 'cabecera' },
+        el('p', { class: 'titular' }, nombreDe(c.senal), c.semanal ? el('span', { class: 'tenue' }, '  semanal') : null),
+        el('p', { class: 'tenue' }, c.archivos.join(' · ')),
+        el('p', { class: 'tenue' }, `${plural(c.epg.filas.length, 'programa', 'programas')} · ${c.epg.dias} días`)),
+      barras(c.capas),
+      el('div', { class: 'acciones' },
+        el('a', { class: 'btn lleno', href: `/api/corridas/${c.id}/excel` }, 'descargar .xlsx'),
+        conPropuesta.length ? el('button', {
+          class: 'btn', onclick: async () => {
+            await api(`/api/corridas/${c.id}/aprobar-propuestas`, { method: 'POST' });
+            verCorrida(c.id);
+          },
+        }, `aceptar ${conPropuesta.length === 1 ? 'la propuesta' : `las ${conPropuesta.length} propuestas`}`) : null)),
     c.problema_modelo ? el('p', { class: 'alerta' }, `! ${c.problema_modelo}`) : null,
     errores.length ? el('div', { class: 'bloque' },
       el('p', { class: 'error' }, `${plural(errores.length, 'error', 'errores')} de formato: el sistema que recibe el EPG lo rechazaría`),
       errores.slice(0, 30).map((e) => el('p', { class: 'error sangria' }, e)),
       errores.length > 30 ? el('p', { class: 'error sangria' }, `y ${errores.length - 30} más`) : null) : null,
     c.epg.avisos.length ? el('div', { class: 'bloque' }, c.epg.avisos.map((a) => el('p', { class: 'alerta' }, `aviso: ${a}`))) : null,
-    el('div', { class: 'acciones' },
-      el('a', { class: 'btn lleno', href: `/api/corridas/${c.id}/excel` }, 'descargar .xlsx'),
-      conPropuesta.length ? el('button', {
-        class: 'btn', onclick: async () => {
-          await api(`/api/corridas/${c.id}/aprobar-propuestas`, { method: 'POST' });
-          verCorrida(c.id);
-        },
-      }, `aceptar ${conPropuesta.length === 1 ? 'la propuesta' : `las ${conPropuesta.length} propuestas`}`) : null),
     el('h2', {}, faltan.length ? `revisar ${faltan.length}` : 'revisar: no queda nada'),
     faltan.length ? el('p', { class: 'ayuda' }, 'Enter acepta · Esc lo deja para después · lo que quede sin aprobar sale marcado en REVISAR') : null,
     el('ul', { class: 'pendientes' }, faltan.map((p) => pendiente(c, p))),
