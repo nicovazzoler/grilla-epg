@@ -13,7 +13,8 @@ Los nombres de los programas se corrigen en capas:
 4. **Persona**: `aprobar.py` muestra lo nuevo en una línea; Enter acepta y se corrige solo lo que está mal.
    Lo aprobado pasa al diccionario, y hasta entonces esas filas salen con *REVISAR: sí* en el Excel.
 
-Dos nombres que difieren en un número (BN 20 y BN 30) nunca cuentan como parecidos: casi siempre son programas distintos.
+Dos nombres que difieren en un número (BN 20 y BN 30) nunca se corrigen solos por parecido: los ve el modelo y los
+aprueba una persona.
 
 Cada semana el modelo ve solo lo nuevo, así que su uso baja en vez de crecer. Cada corrida queda en `registro.csv`.
 
@@ -34,13 +35,15 @@ en ninguna fila, y TIT ORIG, TIT ING y TIT PORT tampoco si la señal los trae.
 ## Semanal
 
 Algunas señales mandan semanas que terminan a mitad de mes y el EPG se completa hasta fin de ese mes repitiendo la
-última semana: `python procesar.py <señal> <grillas> --semanal`. En los días repetidos:
+última semana: `python procesar.py <señal> <grillas> --semanal`. No entra ningún programa que empiece en el mes
+siguiente, y el último del mes dura lo que dura aunque termine después. En los días repetidos:
 
 - Las películas pasan a su ciclo ("Cine de Oro", "Butaca América") o a "Película" si no tienen, sin ningún otro dato.
 - Los torneos y eventos especiales pasan al nombre de la señal, también sin ningún otro dato.
 - El resto queda igual, sin NRO CAP ni TIT CAP.
 
-Qué es película y qué es evento lo marca el lector de cada señal.
+Qué es película y qué es evento lo marca el lector de cada señal y, para los nombres nuevos, lo propone el modelo
+como TIPO junto con el resto (película, evento o programa) y queda en el diccionario al aprobarlo.
 
 ## Señales
 
@@ -64,6 +67,35 @@ python aprobar.py <señal>
 ```
 
 El Excel queda en `salida/`. Las grillas no se suben al repo.
+
+## La web
+
+`web/` es lo mismo con pantalla: subir las grillas, ver qué resolvió cada capa, revisar los nombres nuevos con su
+contexto (día, hora, qué va antes y después), bajar el Excel, el historial de corridas y el diccionario para buscar y
+corregir. Llama a las mismas funciones de `procesar.py`; lo que cambia es dónde vive el diccionario.
+
+- **La base** (PostgreSQL en Railway, SQLite local) tiene el diccionario, cada corrida con las filas que leyó el lector
+  y los pendientes. El archivo de la señal no se guarda: se lee desde una carpeta temporal que se borra al terminar.
+  Las corridas se borran a los 30 días.
+- **El diccionario** arranca, la primera vez, con los JSON de `diccionario/`. Desde ahí la fuente es la base; el botón
+  "exportar .json" lo baja en el mismo formato.
+- **El EPG se arma de nuevo cada vez que se pide**, con el diccionario de ese momento: lo que se aprueba entra sin volver
+  a subir la grilla.
+
+Local:
+
+```
+APP_USUARIO=nico APP_CLAVE=algo uvicorn web.app:app --port 8011
+```
+
+En Railway, un servicio desde este repo (arranca con el `Procfile`) más un PostgreSQL, y estas variables:
+
+| Variable | Qué es |
+|---|---|
+| `DATABASE_URL` | La pone Railway al conectar el PostgreSQL |
+| `APP_USUARIO`, `APP_CLAVE` | El único usuario. Sin las dos no entra nadie |
+| `SECRET_KEY` | Firma la sesión. Sin ella anda igual, pero cada deploy te desloguea |
+| `ANTHROPIC_API_KEY` | Para las propuestas del modelo. Sin ella lo nuevo queda pendiente sin propuesta |
 
 ## Revisarlo antes de mandarlo
 

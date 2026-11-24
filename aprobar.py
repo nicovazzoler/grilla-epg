@@ -3,8 +3,10 @@ Uso: python aprobar.py <señal> [--todo]   (--todo acepta todas las propuestas s
 import json, sys
 from procesar import COLUMNAS_DEL_NOMBRE, diccionario_de, limpiar_reparto, pendientes_de, senales
 
+EDITABLES = [*COLUMNAS_DEL_NOMBRE, 'TIPO']
+
 AYUDA = ('  Enter acepta · texto cambia el título · "COLUMNA=valor" cambia o borra una columna'
-         f' ({", ".join(COLUMNAS_DEL_NOMBRE)}) · "s" lo deja para después')
+         f' ({", ".join(EDITABLES)}) · "s" lo deja para después')
 
 
 def linea(r):
@@ -25,7 +27,7 @@ def revisar(p):
             if r.get('TIT PRINC'):
                 return r
             print('  Falta el título: escribilo o poné "s".')
-        elif '=' in respuesta and (col := respuesta.split('=', 1)[0].strip()) in COLUMNAS_DEL_NOMBRE:
+        elif '=' in respuesta and (col := respuesta.split('=', 1)[0].strip()) in EDITABLES:
             valor = respuesta.split('=', 1)[1].strip()
             r = limpiar_reparto({**r, col: valor or None})
         else:

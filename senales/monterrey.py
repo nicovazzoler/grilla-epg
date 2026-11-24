@@ -6,6 +6,8 @@ import sys
 from pathlib import Path
 import pdfplumber
 
+NOMBRE = 'Televisa Monterrey'
+ARCHIVOS = r'MONTERREY.*\.pdf$'
 ARRIBA, ABAJO = 79.2, 747.7          # 00:00 y 24:00 en el PDF
 COLUMNAS = [49.1, 122.3, 195.5, 268.7, 341.9, 415.1, 488.4, 561.6]
 

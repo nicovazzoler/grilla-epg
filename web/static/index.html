@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>grilla-epg</title>
+<link rel="stylesheet" href="/static/estilo.css">
+<script src="/static/app.js" defer></script>
+</head>
+<body>
+<header class="barra">
+  <span class="marca">[grilla-epg]</span>
+  <nav id="menu" hidden>
+    <a href="#subir">0:subir</a>
+    <a href="#corridas">1:corridas</a>
+    <a href="#historial">2:historial</a>
+    <a href="#diccionario">3:diccionario</a>
+  </nav>
+  <span class="derecha"><span id="quien"></span> <span id="reloj"></span></span>
+</header>
+
+<main>
+  <section id="v-login" hidden>
+    <p class="tenue">grilla-epg login</p>
+    <form id="f-login" autocomplete="on">
+      <label class="linea">usuario: <input name="usuario" autocomplete="username" required></label>
+      <label class="linea">clave: <input name="clave" type="password" autocomplete="current-password" required></label>
+      <button class="btn lleno">entrar</button>
+      <p class="error" id="login-error" hidden></p>
+    </form>
+  </section>
+
+  <section id="v-subir" hidden>
+    <p class="prompt"><span class="yo"></span>@grilla-epg:~$ ./procesar</p>
+    <pre class="titulo" aria-label="grilla-epg">
+ ██████  ██████  ██ ██      ██       █████      ███████ ██████   ██████
+██       ██   ██ ██ ██      ██      ██   ██     ██      ██   ██ ██
+██   ███ ██████  ██ ██      ██      ███████     █████   ██████  ██   ███
+██    ██ ██   ██ ██ ██      ██      ██   ██     ██      ██      ██    ██
+ ██████  ██   ██ ██ ███████ ███████ ██   ██     ███████ ██       ██████</pre>
+    <p class="bajada">Grillas de las señales a EPG. Lo que ya conoce lo corrige solo; lo nuevo te lo pregunta.</p>
+
+    <div id="zona" class="zona" tabindex="0">
+      <input id="f-archivos" type="file" multiple hidden accept=".xlsx,.xls,.pdf,.docx">
+      <p>&gt; arrastrá las grillas acá o <button type="button" class="btn" id="elegir">elegir archivos</button></p>
+      <ul id="lista-archivos" class="archivos"></ul>
+    </div>
+
+    <div class="opciones">
+      <label>señal <select id="f-senal"><option value="">reconocer por el archivo</option></select></label>
+      <label class="tilde"><input type="checkbox" id="f-semanal"> semanal</label>
+      <button class="btn lleno" id="procesar" disabled>procesar</button>
+    </div>
+    <div id="estado-subida" aria-live="polite"></div>
+  </section>
+
+  <section id="v-corrida" hidden></section>
+  <section id="v-corridas" hidden></section>
+  <section id="v-historial" hidden></section>
+  <section id="v-diccionario" hidden></section>
+</main>
+
+<div class="ticker" id="ticker" aria-hidden="true"><span id="ticker-texto"></span></div>
+</body>
+</html>
