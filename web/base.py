@@ -2,10 +2,11 @@
 import datetime as dt
 import json
 import os
+import re
 from pathlib import Path
 from sqlalchemy import create_engine, select, func
 from sqlalchemy.orm import sessionmaker
-from web.modelos import Base, Entrada, Corrida
+from web.modelos import Base, Entrada, Corrida, ahora_utc
 
 RAIZ = Path(__file__).resolve().parent.parent
 DIAS_QUE_SE_GUARDA_UNA_CORRIDA = 30
@@ -13,8 +14,9 @@ DIAS_QUE_SE_GUARDA_UNA_CORRIDA = 30
 
 def url_de_la_base():
     url = os.environ.get('DATABASE_URL', f'sqlite:///{RAIZ / "grilla_epg.db"}')
-    # Railway da la URL como postgres://, que SQLAlchemy ya no acepta.
-    return url.replace('postgres://', 'postgresql://', 1)
+    # El driver va explícito: sin él, cada versión de SQLAlchemy elige otro (psycopg2 o psycopg 3).
+    # Railway la da como postgres://, que SQLAlchemy ya no acepta.
+    return re.sub(r'^postgres(ql)?://', 'postgresql+psycopg://', url)
 
 
 motor = create_engine(url_de_la_base(), pool_pre_ping=True)
@@ -41,7 +43,7 @@ def sembrar_diccionarios(db, senales):
 
 
 def borrar_corridas_viejas(db):
-    limite = dt.datetime.now() - dt.timedelta(days=DIAS_QUE_SE_GUARDA_UNA_CORRIDA)
+    limite = ahora_utc() - dt.timedelta(days=DIAS_QUE_SE_GUARDA_UNA_CORRIDA)
     for corrida in db.scalars(select(Corrida).where(Corrida.creada < limite)):
         db.delete(corrida)
     db.commit()

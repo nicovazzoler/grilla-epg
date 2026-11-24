@@ -34,6 +34,11 @@ async function api(ruta, opciones = {}) {
   return { status: r.status, cuerpo };
 }
 
+// Las fechas llegan en UTC; el navegador las muestra en la hora de quien mira.
+const fecha = (iso, conHora = true) => new Date(iso).toLocaleString('es-AR', {
+  day: '2-digit', month: '2-digit', ...(conHora ? { hour: '2-digit', minute: '2-digit', hour12: false } : {}),
+});
+
 const postJSON = (ruta, datos) =>
   api(ruta, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(datos) });
 
@@ -302,7 +307,7 @@ async function verCorridas() {
     v.replaceChildren(prompt('ls corridas/'),
       lista.length ? el('ul', { class: 'lista' }, lista.map((c) => el('li', {},
         el('a', { href: `#corrida/${c.id}` },
-          `#${c.id}  ${c.creada.replace('T', ' ')}  ${c.senal}  ${c.archivos.length} grilla${c.archivos.length > 1 ? 's' : ''}`,
+          `#${c.id}  ${fecha(c.creada)}  ${c.senal}  ${c.archivos.length} grilla${c.archivos.length > 1 ? 's' : ''}`,
           c.semanal ? '  semanal' : ''),
         c.faltan ? el('span', { class: 'alerta' }, `  faltan ${c.faltan}`) : el('span', { class: 'tenue' }, '  al día'))))
         : el('p', { class: 'tenue' }, 'Todavía no procesaste ninguna grilla. Se guardan 30 días.'));
@@ -322,7 +327,7 @@ async function verHistorial() {
     const lineas = h.corridas.slice().reverse().map((c) => {
       const total = Object.values(c.capas).reduce((a, b) => a + b, 0) || 1;
       const seg = (n, ch) => ch.repeat(Math.round((n / total) * ancho));
-      return `${c.creada.slice(5, 10).split('-').reverse().join('/')}  ${c.senal.padEnd(10)} `
+      return `${fecha(c.creada, false)}  ${c.senal.padEnd(10)} `
         + seg(c.capas.diccionario || 0, '█') + seg(c.capas.parecido || 0, '▓')
         + seg((c.capas.modelo || 0) + (c.capas['sin propuesta'] || 0), '░')
         + `  ${(c.capas.modelo || 0) + (c.capas['sin propuesta'] || 0)} al modelo`;

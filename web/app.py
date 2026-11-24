@@ -16,7 +16,7 @@ from sqlalchemy.orm import Session
 from procesar import Frenado, MINUTOS_A_MANO, limpiar_reparto, reparto, senales
 from web import corridas
 from web.base import preparar, sesion_db
-from web.modelos import Corrida, Entrada, Pendiente
+from web.modelos import Corrida, Entrada, Pendiente, ahora_utc, iso_utc
 from web.sesion import COOKIE, DURACION, credenciales_configuradas, credenciales_validas, crear_token, usuario_actual
 
 ESTATICOS = Path(__file__).parent / 'static'
@@ -136,7 +136,7 @@ async def nueva_corrida(archivos: list[UploadFile] = File(...), senal: str = For
 def lista_de_corridas(db: Session = Depends(sesion_db), _=Depends(usuario_actual)):
     faltan = dict(db.execute(select(Pendiente.corrida_id, func.count()).where(Pendiente.estado != 'aprobado')
                              .group_by(Pendiente.corrida_id)).all())
-    return [{'id': c.id, 'senal': c.senal, 'creada': c.creada.isoformat(timespec='minutes'), 'archivos': c.archivos,
+    return [{'id': c.id, 'senal': c.senal, 'creada': iso_utc(c.creada), 'archivos': c.archivos,
              'capas': c.capas, 'semanal': c.semanal, 'faltan': faltan.get(c.id, 0)}
             for c in db.scalars(select(Corrida).order_by(Corrida.creada.desc()))]
 
@@ -194,7 +194,7 @@ def ver_diccionario(senal: str, q: str = '', db: Session = Depends(sesion_db), _
         entradas = [e for e in entradas if q in e.crudo.lower() or q in json.dumps(e.reparto, ensure_ascii=False).lower()]
     total = len(entradas)
     return {'total': total, 'entradas': [{'id': e.id, 'crudo': e.crudo, 'reparto': reparto(e.reparto), 'capa': e.capa,
-                                          'aprobada': e.aprobada.isoformat(timespec='minutes')} for e in entradas[:300]]}
+                                          'aprobada': iso_utc(e.aprobada)} for e in entradas[:300]]}
 
 
 @app.put('/api/diccionario/{senal}/{entrada_id}')
@@ -206,7 +206,7 @@ async def editar_entrada(senal: str, entrada_id: int, request: Request, db: Sess
     r = limpiar_reparto((await request.json()).get('reparto') or {})
     if not r['TIT PRINC']:
         raise HTTPException(422, 'Falta el título.')
-    entrada.reparto, entrada.capa, entrada.aprobada = r, 'a mano', dt.datetime.now()
+    entrada.reparto, entrada.capa, entrada.aprobada = r, 'a mano', ahora_utc()
     db.commit()
     return {'reparto': r}
 
@@ -224,10 +224,10 @@ def exportar_diccionario(senal: str, db: Session = Depends(sesion_db), _=Depends
 @app.get('/api/historial')
 def historial(db: Session = Depends(sesion_db), _=Depends(usuario_actual)):
     lista = list(db.scalars(select(Corrida).order_by(Corrida.creada)))
-    hace_una_semana = dt.datetime.now() - dt.timedelta(days=7)
+    hace_una_semana = ahora_utc() - dt.timedelta(days=7)
     grillas = sum(m.minutos_a_mano // MINUTOS_A_MANO for m in lista)
     return {
-        'corridas': [{'id': c.id, 'senal': c.senal, 'creada': c.creada.isoformat(timespec='minutes'),
+        'corridas': [{'id': c.id, 'senal': c.senal, 'creada': iso_utc(c.creada),
                       'capas': c.capas, 'grillas': c.minutos_a_mano // MINUTOS_A_MANO} for c in lista],
         'nombres_aprobados': db.scalar(select(func.count()).select_from(Entrada)),
         'al_modelo_esta_semana': sum(c.capas.get('modelo', 0) + c.capas.get('sin propuesta', 0)
