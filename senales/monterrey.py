@@ -146,7 +146,7 @@ def leer(archivos, horas_corregidas):
             cond += [None] * (3 - len(cond))
             filas.append({'ref': f'{nombre}, día {d + 1}', 'crudo': crudo,
                           'inicio': lunes + dt.timedelta(days=d, minutes=inicio if inicio is not None else desde),
-                          'datos': {'Programa': programa, 'Cap.': cap, 'Título': titulo, 'TT': tt,
+                          'datos': {'TIT PRINC': programa, 'NRO CAP': cap, 'TIT CAP': titulo, 'TT': tt,
                                     'A1': cond[0], 'A2': cond[1], 'A3': cond[2]}})
     filas = juntar_medianoche(sorted(filas, key=lambda f: f['inicio']))
     if huerfanos := [f'{f["inicio"]:%d/%m %H:%M}' for f in filas if f['crudo'] == SOLO_CICLO]:

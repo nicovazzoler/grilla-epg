@@ -47,5 +47,5 @@ def leer(archivos, horas_corregidas):
             inicio = fecha + dt.timedelta(days=1 if hora.hour < 6 else 0, hours=hora.hour, minutes=hora.minute)
             crudo, anio, cap, tt = limpiar(str(prog))
             filas.append({'ref': f'fila {fila}', 'inicio': inicio, 'crudo': crudo,
-                          'datos': {'Año': anio, 'Cap.': cap, 'TT': tt}})
-    return {'canal': 'RBTV', 'filas': filas, 'cierre': filas[0]['inicio'] + dt.timedelta(days=7 * len(archivos))}
+                          'datos': {'AÑO': anio, 'NRO CAP': cap, 'TT': tt}})
+    return {'canal': 'RBTV', 'idioma': 'pt', 'filas': filas, 'cierre': filas[0]['inicio'] + dt.timedelta(days=7 * len(archivos))}

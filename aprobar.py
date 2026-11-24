@@ -3,14 +3,14 @@ Uso: python aprobar.py <señal> [--todo]   (--todo acepta todas las propuestas s
 import json, sys
 from procesar import COLUMNAS_DEL_NOMBRE, diccionario_de, limpiar_reparto, pendientes_de, senales
 
-AYUDA = ('  Enter acepta · texto cambia el Programa · "Columna=valor" cambia o borra una columna'
+AYUDA = ('  Enter acepta · texto cambia el título · "COLUMNA=valor" cambia o borra una columna'
          f' ({", ".join(COLUMNAS_DEL_NOMBRE)}) · "s" lo deja para después')
 
 
 def linea(r):
-    if not r.get('Programa'):
+    if not r.get('TIT PRINC'):
         return '(sin propuesta)'
-    return '  ·  '.join([r['Programa'], *(f'{c}: {v}' for c, v in r.items() if c != 'Programa')])
+    return '  ·  '.join([r['TIT PRINC'], *(f'{c}: {v}' for c, v in r.items() if c != 'TIT PRINC')])
 
 
 def revisar(p):
@@ -22,19 +22,19 @@ def revisar(p):
         if respuesta.lower() == 's':
             return None
         if not respuesta:
-            if r.get('Programa'):
+            if r.get('TIT PRINC'):
                 return r
-            print('  Falta el Programa: escribilo o poné "s".')
+            print('  Falta el título: escribilo o poné "s".')
         elif '=' in respuesta and (col := respuesta.split('=', 1)[0].strip()) in COLUMNAS_DEL_NOMBRE:
             valor = respuesta.split('=', 1)[1].strip()
             r = limpiar_reparto({**r, col: valor or None})
         else:
-            r['Programa'] = respuesta
+            r['TIT PRINC'] = respuesta
 
 
 def para_guardar(r):
-    """Solo con Programa se guarda como texto, igual que las entradas de antes."""
-    return r['Programa'] if list(r) == ['Programa'] else r
+    """Si es solo el título se guarda como texto, igual que las entradas de antes."""
+    return r['TIT PRINC'] if list(r) == ['TIT PRINC'] else r
 
 
 if len(sys.argv) < 2 or sys.argv[1] not in senales():
@@ -54,7 +54,7 @@ for p in pendientes:
     print(f'\n{p["crudo"]}   [{p["capa"]}]{nota}')
     if todo:
         print(f'  ->  {linea(p["propuesta"])}')
-        r = p['propuesta'] if p['propuesta'].get('Programa') else None
+        r = p['propuesta'] if p['propuesta'].get('TIT PRINC') else None
     else:
         r = revisar(p)
     if r is None:
