@@ -6,8 +6,9 @@ import tempfile
 from pathlib import Path
 from sqlalchemy import select
 from escribir_epg import DIAS, FIJAS, errores_de_formato, fila_de, guardar, minutos, orden, IDIOMAS
-from procesar import MINUTOS_A_MANO, armar, avisos, leer_grillas, limpiar_reparto, reparto, resolver_nombres, senales
-from web.modelos import Corrida, Entrada, Pendiente, ahora_utc, iso_utc
+from procesar import (MINUTOS_A_MANO, armar, avisos, conocido, crear_patron, leer_grillas, limpiar_reparto,
+                      resolver_nombres, senales)
+from web.modelos import Corrida, Entrada, Pendiente, Senal, ahora_utc, iso_utc
 
 
 def detectar_senal(nombres):
@@ -16,6 +17,13 @@ def detectar_senal(nombres):
                   if (patron := getattr(importlib.import_module(f'senales.{s}'), 'ARCHIVOS', None))
                   and all(re.search(patron, n, re.I) for n in nombres)]
     return candidatas[0] if len(candidatas) == 1 else None
+
+
+def nombre_de(db, senal):
+    """El nombre de la señal: el que se le puso en la pantalla o, si no, el del lector."""
+    if propio := db.get(Senal, senal):
+        return propio.nombre
+    return importlib.import_module(f'senales.{senal}').NOMBRE
 
 
 def diccionario(db, senal):
@@ -70,12 +78,14 @@ def crear(db, senal, rutas, nombres_archivos, horas, semanal):
 def epg(db, corrida):
     """Las filas del EPG con el diccionario de ahora: lo aprobado manda y lo que falta sale con la propuesta."""
     leido = de_json(corrida.leido)
+    # Los eventos del semanal llevan el nombre de la señal, que se puede haber cambiado después de la corrida.
+    leido['etiqueta'] = nombre_de(db, corrida.senal)
     dicc = diccionario(db, corrida.senal)
     propuestas = {p.crudo: p.propuesta for p in corrida.pendientes}
     repartos, sin_aprobar = {}, set()
     for crudo in {f['crudo'] for f in leido['filas'] if f['crudo'] is not None}:
-        if crudo in dicc:
-            repartos[crudo] = reparto(dicc[crudo])
+        if ya := conocido(crudo, dicc):
+            repartos[crudo] = ya[0]
         else:
             repartos[crudo] = propuestas.get(crudo) or {'TIT PRINC': crudo}
             if not repartos[crudo].get('TIT PRINC'):
@@ -117,20 +127,35 @@ def excel(db, corrida):
         return ruta.name, ruta.read_bytes()
 
 
-def aprobar(db, pendiente, propuesta, capa=None):
-    """Pasa el nombre al diccionario de la señal. Devuelve el reparto guardado o None si no tiene título."""
+def guardar_entrada(db, senal, crudo, reparto_, capa):
+    entrada = db.scalar(select(Entrada).where(Entrada.senal == senal, Entrada.crudo == crudo))
+    if entrada is None:
+        entrada = Entrada(senal=senal, crudo=crudo)
+        db.add(entrada)
+    entrada.reparto, entrada.capa, entrada.aprobada = reparto_, capa, ahora_utc()
+
+
+def aprobar(db, pendiente, propuesta, capa=None, patron=False):
+    """Pasa el nombre al diccionario de la señal y, con patron, también todo lo que empiece igual.
+    Devuelve (reparto guardado, clave del patrón o None), o None si no tiene título."""
     r = limpiar_reparto(propuesta)
+    r.pop('PATRON', None)
     if not r['TIT PRINC']:
         return None
     senal = pendiente.corrida.senal
-    entrada = db.scalar(select(Entrada).where(Entrada.senal == senal, Entrada.crudo == pendiente.crudo))
-    if entrada is None:
-        entrada = Entrada(senal=senal, crudo=pendiente.crudo)
-        db.add(entrada)
-    entrada.reparto, entrada.capa, entrada.aprobada = r, capa or pendiente.capa, ahora_utc()
-    # El mismo nombre puede estar pendiente en otras corridas de la señal: queda resuelto en todas.
+    nuevo = crear_patron(pendiente.crudo, r) if patron else None
+    if nuevo:
+        guardar_entrada(db, senal, nuevo[0], nuevo[1], 'patrón')
+    # Con un patrón que resuelve solo, el nombre exacto sobra: el patrón ya lo cubre.
+    if not nuevo or nuevo[1]['RESTO']['estilo'] == 'modelo':
+        guardar_entrada(db, senal, pendiente.crudo, r, capa or pendiente.capa)
+    db.flush()
+    # Lo que quedó resuelto queda resuelto en todas las corridas de la señal: el mismo nombre y,
+    # si se creó un patrón, los otros capítulos del programa.
+    dicc = diccionario(db, senal)
     for otro in db.scalars(select(Pendiente).join(Corrida).where(
-            Corrida.senal == senal, Pendiente.crudo == pendiente.crudo, Pendiente.estado != 'aprobado')):
-        otro.estado = 'aprobado'
+            Corrida.senal == senal, Pendiente.estado != 'aprobado')):
+        if otro.crudo == pendiente.crudo or (nuevo and conocido(otro.crudo, dicc)):
+            otro.estado = 'aprobado'
     db.commit()
-    return r
+    return r, nuevo[0] if nuevo else None

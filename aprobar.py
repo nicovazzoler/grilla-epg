@@ -1,31 +1,31 @@
 """Repasa los nombres nuevos de la última corrida de una señal y pasa al diccionario los aprobados.
 Uso: python aprobar.py <señal> [--todo]   (--todo acepta todas las propuestas sin preguntar)"""
 import json, sys
-from procesar import COLUMNAS_DEL_NOMBRE, diccionario_de, limpiar_reparto, pendientes_de, senales
+from procesar import COLUMNAS_DEL_NOMBRE, crear_patron, diccionario_de, limpiar_reparto, pendientes_de, senales
 
 EDITABLES = [*COLUMNAS_DEL_NOMBRE, 'TIPO']
 
 AYUDA = ('  Enter acepta · texto cambia el título · "COLUMNA=valor" cambia o borra una columna'
-         f' ({", ".join(EDITABLES)}) · "s" lo deja para después')
+         f' ({", ".join(EDITABLES)}) · "p" acepta y lo usa para todo lo que empiece igual · "s" lo deja para después')
 
 
 def linea(r):
     if not r.get('TIT PRINC'):
         return '(sin propuesta)'
-    return '  ·  '.join([r['TIT PRINC'], *(f'{c}: {v}' for c, v in r.items() if c != 'TIT PRINC')])
+    return '  ·  '.join([r['TIT PRINC'], *(f'{c}: {v}' for c, v in r.items() if c not in ('TIT PRINC', 'PATRON'))])
 
 
 def revisar(p):
-    """El reparto aprobado, o None si queda para después."""
+    """(reparto aprobado, si se usa como patrón), o (None, False) si queda para después."""
     r = dict(p['propuesta'])
     while True:
         print(f'  ->  {linea(r)}')
         respuesta = input('  > ').strip()
         if respuesta.lower() == 's':
-            return None
-        if not respuesta:
+            return None, False
+        if not respuesta or respuesta.lower() == 'p':
             if r.get('TIT PRINC'):
-                return r
+                return r, respuesta.lower() == 'p'
             print('  Falta el título: escribilo o poné "s".')
         elif '=' in respuesta and (col := respuesta.split('=', 1)[0].strip()) in EDITABLES:
             valor = respuesta.split('=', 1)[1].strip()
@@ -36,6 +36,7 @@ def revisar(p):
 
 def para_guardar(r):
     """Si es solo el título se guarda como texto, igual que las entradas de antes."""
+    r = {k: v for k, v in r.items() if k != 'PATRON'}
     return r['TIT PRINC'] if list(r) == ['TIT PRINC'] else r
 
 
@@ -56,13 +57,19 @@ for p in pendientes:
     print(f'\n{p["crudo"]}   [{p["capa"]}]{nota}')
     if todo:
         print(f'  ->  {linea(p["propuesta"])}')
-        r = p['propuesta'] if p['propuesta'].get('TIT PRINC') else None
+        r, patron = (p['propuesta'], p['propuesta'].get('PATRON') is True) if p['propuesta'].get('TIT PRINC') else (None, False)
     else:
-        r = revisar(p)
+        r, patron = revisar(p)
     if r is None:
         quedan.append(p)
         continue
-    diccionario[p['crudo']] = para_guardar(r)
+    nuevo = crear_patron(p['crudo'], r) if patron else None
+    if nuevo:
+        diccionario[nuevo[0]] = nuevo[1]
+        print(f'  patrón: todo lo que empiece con "{nuevo[0]}"')
+    # Con un patrón que resuelve solo, el nombre exacto sobra: el patrón ya lo cubre.
+    if not nuevo or nuevo[1]['RESTO']['estilo'] == 'modelo':
+        diccionario[p['crudo']] = para_guardar(r)
     aprobados += 1
 
 dicc_path.write_text(json.dumps(diccionario, ensure_ascii=False, indent=1), encoding='utf-8')

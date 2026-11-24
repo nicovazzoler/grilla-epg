@@ -7,10 +7,16 @@ Lo estructural (horarios, duraciones, ciclos, temporada, en vivo o repetición) 
 Los nombres de los programas se corrigen en capas:
 
 1. **Diccionario**: lo ya aprobado se corrige solo.
-2. **Parecido de texto**: "MUQLING" se reconoce como "MUQILING" sin llamar a ningún modelo.
-3. **Modelo**: lo que no se parece a nada conocido lo propone Claude, siguiendo las reglas de la señal. Si el nombre
+2. **Patrón**: un programa que trae una parte que cambia cada semana después de un separador
+   ("PARECE TERAPIA | RAFA OLIVEIRA") se aprueba una vez como patrón y desde ahí se resuelve solo: el programa va a
+   TIT PRINC y lo que sigue a TIT CAP, escrito como en el ejemplo aprobado. Si esa parte es una frase con nombres
+   propios adentro, la escribe el modelo y queda para revisar. Sin separador no es patrón: "COPA LIBERTADORES
+   HIGHLIGHTS" es otro programa.
+3. **Parecido de texto**: "MUQLING" se reconoce como "MUQILING" sin llamar a ningún modelo.
+4. **Modelo**: lo que no se parece a nada conocido lo propone Claude, siguiendo las reglas de la señal. Si el nombre
    trae algo pegado que va en otra columna, lo separa: "BRASILEIRÃO 2026" → TIT PRINC *Brasileirão*, TIT TEMP *2026*.
-4. **Persona**: `aprobar.py` muestra lo nuevo en una línea; Enter acepta y se corrige solo lo que está mal.
+5. **Persona**: `aprobar.py` muestra lo nuevo en una línea; Enter acepta, "p" lo acepta como patrón y se corrige solo
+   lo que está mal.
    Lo aprobado pasa al diccionario, y hasta entonces esas filas salen con *REVISAR: sí* en el Excel.
 
 Dos nombres que difieren en un número (BN 20 y BN 30) nunca se corrigen solos por parecido: los ve el modelo y los
@@ -71,8 +77,10 @@ El Excel queda en `salida/`. Las grillas no se suben al repo.
 ## La web
 
 `web/` es lo mismo con pantalla: subir las grillas, ver qué resolvió cada capa, revisar los nombres nuevos con su
-contexto (día, hora, qué va antes y después), bajar el Excel, el historial de corridas y el diccionario para buscar y
-corregir. Llama a las mismas funciones de `procesar.py`; lo que cambia es dónde vive el diccionario.
+contexto (día, hora, qué va antes y después) y aceptarlos de a uno o todos juntos, bajar el Excel, las corridas con
+lo que trabajó el modelo en cada una, y el diccionario agrupado por programa para buscar, cambiar un título en todos sus
+nombres de una vez, sacar una entrada y cambiar el nombre de la señal (el que llevan los eventos de un semanal).
+Llama a las mismas funciones de `procesar.py`; lo que cambia es dónde vive el diccionario.
 
 - **La base** (PostgreSQL en Railway, SQLite local) tiene el diccionario, cada corrida con las filas que leyó el lector
   y los pendientes. El archivo de la señal no se guarda: se lee desde una carpeta temporal que se borra al terminar.

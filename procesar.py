@@ -1,5 +1,5 @@
 """Arma el EPG de una señal desde sus grillas. Cada señal tiene su lector en senales/; los nombres se corrigen en capas:
-diccionario aprobado → parecido de texto → propuesta del modelo, y todo lo nuevo queda para aprobar.
+diccionario aprobado → patrón de un programa → parecido de texto → propuesta del modelo, y lo nuevo queda para aprobar.
 Uso: python procesar.py <señal> <grilla> [<grilla> ...] [--hora FILA=HH:MM ...]"""
 import argparse, csv, datetime as dt, difflib, importlib, json, os, re, sys, unicodedata, urllib.request
 from pathlib import Path
@@ -18,6 +18,12 @@ COLUMNAS_DEL_NOMBRE = {'NRO TEMP': 'número de temporada', 'TIT TEMP': 'año o n
 NUMERICAS = {'NRO TEMP', 'AÑO', 'NRO CAP'}
 # No es una columna: dice qué pasa con el programa en una grilla semanal.
 TIPOS = {'pelicula', 'evento', 'programa'}
+# "PARECE TERAPIA | RAFA OLIVEIRA": el programa, un separador y lo que cambia cada semana.
+CON_SEPARADOR = re.compile(r'^(.+?)\s*(\||:|\s-\s)\s*(.+)$')
+# Palabras que van en minúscula en un nombre propio: "Família do Ré Mi", "Ana de la Vega".
+CHICAS = {'de', 'da', 'do', 'das', 'dos', 'e', 'em', 'na', 'no', 'nas', 'nos', 'a', 'o', 'as', 'os', 'y', 'la', 'el',
+          'las', 'los', 'del', 'al', 'en', 'con', 'por', 'para', 'com', 'um', 'uma', 'of', 'the', 'and'}
+CAPAS = ('diccionario', 'patrón', 'parecido', 'modelo', 'sin propuesta')
 
 
 class Frenado(Exception):
@@ -50,7 +56,75 @@ def normalizar(texto):
 
 def reparto(valor):
     """Una entrada del diccionario como {columna: valor}. Las que guardan solo un texto son el título."""
-    return {'TIT PRINC': valor} if isinstance(valor, str) else dict(valor)
+    if isinstance(valor, str):
+        return {'TIT PRINC': valor}
+    return {k: v for k, v in valor.items() if k != 'RESTO'}
+
+
+def es_patron(valor):
+    return isinstance(valor, dict) and 'RESTO' in valor
+
+
+def con_estilo(texto, estilo):
+    """La parte que cambia de un patrón, escrita como se aprendió del ejemplo aprobado."""
+    if estilo != 'nombre':
+        return texto
+    palabras = texto.lower().split()
+    return ' '.join(p if i and p in CHICAS else p[:1].upper() + p[1:] for i, p in enumerate(palabras))
+
+
+def estilo_de(resto, aprobado):
+    """'nombre' si se escribió como nombre propio, 'tal cual' si se dejó como vino, y si no 'modelo':
+    una frase con nombres propios adentro no se puede escribir bien con una regla."""
+    if aprobado == con_estilo(resto, 'nombre'):
+        return 'nombre'
+    return 'tal cual' if aprobado == resto else 'modelo'
+
+
+def crear_patron(crudo, aprobado):
+    """(clave, valor) del patrón que sale de aprobar así un nombre con separador, o None si no se puede:
+    la parte que sigue al separador tiene que haber ido entera a una columna de texto."""
+    if not (m := CON_SEPARADOR.match(crudo)):
+        return None
+    resto = m.group(3).strip()
+    columna = next((c for c in COLUMNAS_DEL_NOMBRE if c not in NUMERICAS and aprobado.get(c)
+                    and normalizar(str(aprobado[c])) == normalizar(resto)), None)
+    if not columna:
+        return None
+    valor = {k: v for k, v in aprobado.items() if k not in (columna, 'PATRON')}
+    valor['RESTO'] = {'columna': columna, 'estilo': estilo_de(resto, str(aprobado[columna]))}
+    return f'{m.group(1).strip()} {m.group(2).strip()}', valor
+
+
+def buscar_patron(crudo, diccionario):
+    """(clave, lo que sigue al separador) del patrón más largo que le corresponde al nombre, o None."""
+    mejor = None
+    for clave, valor in diccionario.items():
+        if not es_patron(valor):
+            continue
+        base, sep = clave[:-1].strip(), clave[-1]
+        separador = r'\s-\s' if sep == '-' else re.escape(sep)
+        if (m := re.match(re.escape(base) + r'\s*' + separador + r'\s*(.+)$', crudo)) and \
+                (mejor is None or len(clave) > len(mejor[0])):
+            mejor = (clave, m.group(1).strip())
+    return mejor
+
+
+def reparto_de_patron(valor, resto, escrito=None):
+    """El reparto del patrón con la parte que cambia en su columna; escrito, si ya la escribió el modelo."""
+    r = reparto(valor)
+    r[valor['RESTO']['columna']] = escrito or con_estilo(resto, valor['RESTO']['estilo'])
+    return r
+
+
+def conocido(crudo, diccionario):
+    """(reparto, capa) si el nombre ya está resuelto sin preguntar a nadie: por el diccionario o por un patrón
+    que no necesita al modelo. Si no, None."""
+    if crudo in diccionario:
+        return reparto(diccionario[crudo]), 'diccionario'
+    if (patron := buscar_patron(crudo, diccionario)) and diccionario[patron[0]]['RESTO']['estilo'] != 'modelo':
+        return reparto_de_patron(diccionario[patron[0]], patron[1]), 'patrón'
+    return None
 
 
 def limpiar_reparto(propuesta):
@@ -58,6 +132,8 @@ def limpiar_reparto(propuesta):
     salida = {'TIT PRINC': str(propuesta.get('TIT PRINC') or '').strip()}
     if (tipo := str(propuesta.get('TIPO') or '').lower()) in TIPOS:
         salida['TIPO'] = tipo
+    if propuesta.get('PATRON') is True:
+        salida['PATRON'] = True
     for col in COLUMNAS_DEL_NOMBRE:
         v = propuesta.get(col)
         if v in (None, ''):
@@ -72,7 +148,8 @@ def por_parecido(crudo, diccionario):
     """La clave conocida más parecida, o None. Compara sin tildes, signos ni mayúsculas."""
     n = normalizar(crudo)
     # Un número distinto casi siempre es otro programa (BN 20 y BN 30): esos nunca cuentan como parecidos.
-    claves = {normalizar(k): k for k in diccionario if re.findall(r'\d+', normalizar(k)) == re.findall(r'\d+', n)}
+    claves = {normalizar(k): k for k, v in diccionario.items()
+              if not es_patron(v) and re.findall(r'\d+', normalizar(k)) == re.findall(r'\d+', n)}
     if n in claves:
         return claves[n]
     cerca = difflib.get_close_matches(n, list(claves), n=1, cutoff=PARECIDO_MINIMO)
@@ -91,15 +168,18 @@ def leer_clave():
 
 
 def pedido_al_modelo(crudos, diccionario):
-    ejemplos = {k: reparto(v) for k, v in list(diccionario.items())[:40]}
+    ejemplos = {k: reparto(v) for k, v in list(diccionario.items())[:40] if not es_patron(v)}
     columnas = '\n'.join(f'- "{c}": {desc}' for c, desc in COLUMNAS_DEL_NOMBRE.items())
     return (
         'Estos nombres de programas de una grilla de TV no están en el diccionario.\n'
         'Para cada uno, proponé cómo se escribe el título (TIT PRINC) según las reglas. Si el texto trae pegado algo que va '
         f'en otra columna, separalo. Columnas posibles:\n{columnas}\n'
         'Poné solo las columnas que el texto trae de verdad. Agregá "TIPO": "pelicula", "evento" (torneo, partido, '
-        'evento especial) o "programa" (todo lo que se repite igual cada semana). Si no sabés qué programa es, '
-        'decilo en "nota" en vez de inventar.\n\n'
+        'evento especial) o "programa" (todo lo que se repite igual cada semana). Si el nombre es un programa '
+        'seguido de un separador (| : -) y una parte que cambia cada semana (el invitado, el tema del capítulo), '
+        'mandá esa parte a TIT CAP y agregá "PATRON": true; si lo que sigue es parte del nombre del programa '
+        '("COPA LIBERTADORES HIGHLIGHTS"), no. Los nombres propios van siempre con mayúscula. Si no sabés qué '
+        'programa es, decilo en "nota" en vez de inventar.\n\n'
         f'Ejemplos ya aprobados (como vino → como va):\n{json.dumps(ejemplos, ensure_ascii=False, indent=1)}\n\n'
         f'Nombres nuevos:\n{json.dumps(crudos, ensure_ascii=False)}\n\n'
         'Contestá SOLO un JSON: {"<como vino>": {"TIT PRINC": "<como va>", "<columna>": <valor>, "TIPO": "<tipo>", '
@@ -128,21 +208,32 @@ def proponer_con_modelo(senal, crudos, diccionario):
 
 def resolver_nombres(senal, crudos, diccionario):
     """{crudo: reparto} para el Excel, los pendientes a aprobar, cuántos resolvió cada capa y el problema del modelo."""
-    repartos, pendientes, al_modelo = {}, [], []
-    capas = {'diccionario': 0, 'parecido': 0, 'modelo': 0, 'sin propuesta': 0}
+    repartos, pendientes, al_modelo, capitulos = {}, [], [], {}
+    capas = dict.fromkeys(CAPAS, 0)
     for crudo in crudos:
-        if crudo in diccionario:
-            repartos[crudo] = reparto(diccionario[crudo])
-            capas['diccionario'] += 1
-        elif conocido := por_parecido(crudo, diccionario):
-            repartos[crudo] = reparto(diccionario[conocido])
+        if ya := conocido(crudo, diccionario):
+            repartos[crudo], capa = ya
+            capas[capa] += 1
+        elif patron := buscar_patron(crudo, diccionario):
+            # Patrón cuya parte que cambia es una frase: el programa está resuelto, la frase la escribe el modelo.
+            capitulos[crudo] = patron
+        elif parecido := por_parecido(crudo, diccionario):
+            repartos[crudo] = reparto(diccionario[parecido])
             pendientes.append({'crudo': crudo, 'propuesta': repartos[crudo], 'capa': 'parecido',
-                               'nota': f'se parece a "{conocido}"'})
+                               'nota': f'se parece a "{parecido}"'})
             capas['parecido'] += 1
         else:
             al_modelo.append(crudo)
 
-    propuestas, problema = proponer_con_modelo(senal, al_modelo, diccionario) if al_modelo else ({}, None)
+    restos = [resto for _, resto in capitulos.values()]
+    pedido = al_modelo + [r for r in restos if r not in al_modelo]
+    propuestas, problema = proponer_con_modelo(senal, pedido, diccionario) if pedido else ({}, None)
+    for crudo, (clave, resto) in capitulos.items():
+        escrito = ((propuestas or {}).get(resto) or {}).get('TIT PRINC')
+        repartos[crudo] = reparto_de_patron(diccionario[clave], resto, escrito)
+        pendientes.append({'crudo': crudo, 'propuesta': repartos[crudo], 'capa': 'patrón',
+                           'nota': f'capítulo de {repartos[crudo]["TIT PRINC"]}: revisá cómo quedó escrito'})
+        capas['patrón'] += 1
     for crudo in al_modelo:
         p = (propuestas or {}).get(crudo) or {}
         if (r := limpiar_reparto(p))['TIT PRINC']:
@@ -173,6 +264,7 @@ def armar(senal, leido, repartos, sin_aprobar, es_semanal):
         if f['crudo'] is None:
             continue
         r = dict(repartos[f['crudo']])
+        r.pop('PATRON', None)
         if tipo := r.pop('TIPO', None):
             f['tipo'] = None if tipo == 'programa' else tipo
         for col, valor in r.items():
