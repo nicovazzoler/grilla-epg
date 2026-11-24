@@ -16,6 +16,19 @@ COLUMNAS_DEL_NOMBRE = {'NRO TEMP': 'número de temporada', 'TIT TEMP': 'año o n
                        'AÑO': 'año de una película', 'NRO CAP': 'número de capítulo o episodio',
                        'TIT CAP': 'título del capítulo, partido o etapa'}
 NUMERICAS = {'NRO TEMP', 'AÑO', 'NRO CAP'}
+# No es una columna: dice qué pasa con el programa en una grilla semanal.
+TIPOS = {'pelicula', 'evento', 'programa'}
+
+
+class Frenado(Exception):
+    """Horarios fuera de orden: una de las dos horas está mal tipeada en la grilla."""
+    def __init__(self, antes, ahora):
+        self.filas = [{'ref': f['ref'], 'inicio': f['inicio'], 'nombre': f['crudo'] or f['datos']['TIT PRINC']}
+                      for f in (antes, ahora)]
+        super().__init__(
+            f'horarios fuera de orden el {DIAS[ahora["inicio"].weekday()]} {ahora["inicio"]:%d/%m}.\n'
+            + ''.join(f'  {f["ref"]}: {f["inicio"]:%H:%M} {f["nombre"]}\n' for f in self.filas)
+            + 'Una de las dos horas está mal: revisá la grilla.')
 
 
 def senales():
@@ -41,8 +54,10 @@ def reparto(valor):
 
 
 def limpiar_reparto(propuesta):
-    """El título y las columnas permitidas, con los números como números."""
+    """El título, las columnas permitidas y el TIPO, con los números como números."""
     salida = {'TIT PRINC': str(propuesta.get('TIT PRINC') or '').strip()}
+    if (tipo := str(propuesta.get('TIPO') or '').lower()) in TIPOS:
+        salida['TIPO'] = tipo
     for col in COLUMNAS_DEL_NOMBRE:
         v = propuesta.get(col)
         if v in (None, ''):
@@ -82,20 +97,21 @@ def pedido_al_modelo(crudos, diccionario):
         'Estos nombres de programas de una grilla de TV no están en el diccionario.\n'
         'Para cada uno, proponé cómo se escribe el título (TIT PRINC) según las reglas. Si el texto trae pegado algo que va '
         f'en otra columna, separalo. Columnas posibles:\n{columnas}\n'
-        'Poné solo las columnas que el texto trae de verdad. Si no sabés qué programa es, decilo en "nota" '
-        'en vez de inventar.\n\n'
+        'Poné solo las columnas que el texto trae de verdad. Agregá "TIPO": "pelicula", "evento" (torneo, partido, '
+        'evento especial) o "programa" (todo lo que se repite igual cada semana). Si no sabés qué programa es, '
+        'decilo en "nota" en vez de inventar.\n\n'
         f'Ejemplos ya aprobados (como vino → como va):\n{json.dumps(ejemplos, ensure_ascii=False, indent=1)}\n\n'
         f'Nombres nuevos:\n{json.dumps(crudos, ensure_ascii=False)}\n\n'
-        'Contestá SOLO un JSON: {"<como vino>": {"TIT PRINC": "<como va>", "<columna>": <valor>, "nota": "<vacío o la duda>"}}'
+        'Contestá SOLO un JSON: {"<como vino>": {"TIT PRINC": "<como va>", "<columna>": <valor>, "TIPO": "<tipo>", '
+        '"nota": "<vacío o la duda>"}}'
     )
 
 
 def proponer_con_modelo(senal, crudos, diccionario):
-    """{crudo: {'TIT PRINC', columnas..., 'nota'}} propuesto por el modelo, o None si no hay clave o falló el pedido."""
+    """({crudo: {'TIT PRINC', columnas..., 'nota'}}, None) o (None, por qué no hubo propuesta)."""
     clave = leer_clave()
     if not clave:
-        print('  (sin ANTHROPIC_API_KEY: lo nuevo queda pendiente sin propuesta)')
-        return None
+        return None, 'sin ANTHROPIC_API_KEY: lo nuevo queda pendiente sin propuesta'
     reglas = (AQUI / 'reglas' / f'{senal}.md').read_text(encoding='utf-8')
     # temperature 0: ante el mismo pedido, la misma respuesta.
     cuerpo = json.dumps({'model': MODELO, 'max_tokens': 4000, 'temperature': 0, 'system': reglas,
@@ -105,14 +121,13 @@ def proponer_con_modelo(senal, crudos, diccionario):
     try:
         with urllib.request.urlopen(req, timeout=120) as r:
             texto = json.load(r)['content'][0]['text']
-        return json.loads(texto[texto.index('{'):texto.rindex('}') + 1])
+        return json.loads(texto[texto.index('{'):texto.rindex('}') + 1]), None
     except Exception as e:
-        print(f'  (no se pudo consultar el modelo: {e}; lo nuevo queda pendiente sin propuesta)')
-        return None
+        return None, f'no se pudo consultar el modelo ({e}): lo nuevo queda pendiente sin propuesta'
 
 
 def resolver_nombres(senal, crudos, diccionario):
-    """{crudo: reparto} para el Excel, los pendientes a aprobar y cuántos resolvió cada capa."""
+    """{crudo: reparto} para el Excel, los pendientes a aprobar, cuántos resolvió cada capa y el problema del modelo."""
     repartos, pendientes, al_modelo = {}, [], []
     capas = {'diccionario': 0, 'parecido': 0, 'modelo': 0, 'sin propuesta': 0}
     for crudo in crudos:
@@ -127,7 +142,7 @@ def resolver_nombres(senal, crudos, diccionario):
         else:
             al_modelo.append(crudo)
 
-    propuestas = proponer_con_modelo(senal, al_modelo, diccionario) if al_modelo else {}
+    propuestas, problema = proponer_con_modelo(senal, al_modelo, diccionario) if al_modelo else ({}, None)
     for crudo in al_modelo:
         p = (propuestas or {}).get(crudo) or {}
         if (r := limpiar_reparto(p))['TIT PRINC']:
@@ -139,16 +154,41 @@ def resolver_nombres(senal, crudos, diccionario):
             repartos[crudo] = {'TIT PRINC': crudo}
             pendientes.append({'crudo': crudo, 'propuesta': {}, 'capa': 'sin propuesta', 'nota': ''})
             capas['sin propuesta'] += 1
-    return repartos, pendientes, capas
+    return repartos, pendientes, capas, problema
 
 
-def frenar_si_desordenado(filas):
-    for antes, ahora in zip(filas, filas[1:]):
+def leer_grillas(senal, archivos, horas):
+    """Lo que leyó el lector de la señal. Frena si los horarios no van en orden."""
+    leido = importlib.import_module(f'senales.{senal}').leer(archivos, horas)
+    for antes, ahora in zip(leido['filas'], leido['filas'][1:]):
         if ahora['inicio'] <= antes['inicio']:
-            sys.exit(f'\nFRENADO: horarios fuera de orden el {DIAS[ahora["inicio"].weekday()]} {ahora["inicio"]:%d/%m}.\n'
-                     f'  {antes["ref"]}: {antes["inicio"]:%H:%M} {antes["crudo"] or antes["datos"]["TIT PRINC"]}\n'
-                     f'  {ahora["ref"]}: {ahora["inicio"]:%H:%M} {ahora["crudo"] or ahora["datos"]["TIT PRINC"]}\n'
-                     'Una de las dos horas está mal: revisá la grilla. En RBTV se pasa la buena con --hora FILA=HH:MM')
+            raise Frenado(antes, ahora)
+    return leido
+
+
+def armar(senal, leido, repartos, sin_aprobar, es_semanal):
+    """(filas del EPG con sus fines, cierre): los nombres puestos, lo propio de la señal y, si va, la semana estirada."""
+    filas = leido['filas']
+    for f in filas:
+        if f['crudo'] is None:
+            continue
+        r = dict(repartos[f['crudo']])
+        if tipo := r.pop('TIPO', None):
+            f['tipo'] = None if tipo == 'programa' else tipo
+        for col, valor in r.items():
+            # Lo que el lector sacó de la grilla manda sobre lo que se separó del nombre.
+            if col == 'TIT PRINC' or f['datos'].get(col) in (None, ''):
+                f['datos'][col] = valor
+        if f['crudo'] in sin_aprobar:
+            f['datos']['REVISAR'] = 'sí'
+    lector = importlib.import_module(f'senales.{senal}')
+    if hasattr(lector, 'completar'):
+        lector.completar(filas)
+    cierre = leido['cierre']
+    if es_semanal:
+        filas, cierre = semanal.estirar(filas, cierre, leido['etiqueta'])
+    poner_fines(filas, cierre)
+    return filas, cierre
 
 
 def avisos(bloques):
@@ -181,34 +221,22 @@ def main():
     a = args.parse_args()
     horas = {int(f): dt.datetime.strptime(h, '%H:%M').time() for f, h in (x.split('=') for x in a.hora)}
 
-    lector = importlib.import_module(f'senales.{a.senal}')
-    leido = lector.leer(a.grillas, horas)
+    try:
+        leido = leer_grillas(a.senal, a.grillas, horas)
+    except Frenado as e:
+        sys.exit(f'\nFRENADO: {e} En RBTV se pasa la buena con --hora FILA=HH:MM')
     filas = leido['filas']
-    frenar_si_desordenado(filas)
 
     dicc_path = diccionario_de(a.senal)
     diccionario = json.loads(dicc_path.read_text(encoding='utf-8')) if dicc_path.exists() else {}
     crudos = list(dict.fromkeys(f['crudo'] for f in filas if f['crudo'] is not None))
     print(f'{len(filas)} programas, {len(crudos)} nombres distintos')
-    repartos, pendientes, capas = resolver_nombres(a.senal, crudos, diccionario)
-    sin_aprobar = {p['crudo'] for p in pendientes}
-
-    for f in filas:
-        if f['crudo'] is None:
-            continue
-        for col, valor in repartos[f['crudo']].items():
-            # Lo que el lector sacó de la grilla manda sobre lo que se separó del nombre.
-            if col == 'TIT PRINC' or f['datos'].get(col) in (None, ''):
-                f['datos'][col] = valor
-        if f['crudo'] in sin_aprobar:
-            f['datos']['REVISAR'] = 'sí'
-    if hasattr(lector, 'completar'):
-        lector.completar(filas)
-    cierre = leido['cierre']
+    repartos, pendientes, capas, problema = resolver_nombres(a.senal, crudos, diccionario)
+    if problema:
+        print(f'  ({problema})')
+    filas, cierre = armar(a.senal, leido, repartos, {p['crudo'] for p in pendientes}, a.semanal)
     if a.semanal:
-        filas, cierre = semanal.estirar(filas, cierre, leido['etiqueta'])
-        print(f'Semanal: la última semana se repite hasta el {cierre:%d/%m %H:%M}')
-    poner_fines(filas, cierre)
+        print(f'Semanal: la última semana se repite; el último programa termina el {cierre:%d/%m %H:%M}')
     idioma = leido.get('idioma', 'es')
     salida = guardar(filas, leido['canal'], AQUI / 'salida', idioma)
     errores = errores_de_formato(filas, idioma)

@@ -13,7 +13,8 @@ Los nombres de los programas se corrigen en capas:
 4. **Persona**: `aprobar.py` muestra lo nuevo en una línea; Enter acepta y se corrige solo lo que está mal.
    Lo aprobado pasa al diccionario, y hasta entonces esas filas salen con *REVISAR: sí* en el Excel.
 
-Dos nombres que difieren en un número (BN 20 y BN 30) nunca cuentan como parecidos: casi siempre son programas distintos.
+Dos nombres que difieren en un número (BN 20 y BN 30) nunca se corrigen solos por parecido: los ve el modelo y los
+aprueba una persona.
 
 Cada semana el modelo ve solo lo nuevo, así que su uso baja en vez de crecer. Cada corrida queda en `registro.csv`.
 
@@ -34,13 +35,15 @@ en ninguna fila, y TIT ORIG, TIT ING y TIT PORT tampoco si la señal los trae.
 ## Semanal
 
 Algunas señales mandan semanas que terminan a mitad de mes y el EPG se completa hasta fin de ese mes repitiendo la
-última semana: `python procesar.py <señal> <grillas> --semanal`. En los días repetidos:
+última semana: `python procesar.py <señal> <grillas> --semanal`. No entra ningún programa que empiece en el mes
+siguiente, y el último del mes dura lo que dura aunque termine después. En los días repetidos:
 
 - Las películas pasan a su ciclo ("Cine de Oro", "Butaca América") o a "Película" si no tienen, sin ningún otro dato.
 - Los torneos y eventos especiales pasan al nombre de la señal, también sin ningún otro dato.
 - El resto queda igual, sin NRO CAP ni TIT CAP.
 
-Qué es película y qué es evento lo marca el lector de cada señal.
+Qué es película y qué es evento lo marca el lector de cada señal y, para los nombres nuevos, lo propone el modelo
+como TIPO junto con el resto (película, evento o programa) y queda en el diccionario al aprobarlo.
 
 ## Señales
 

@@ -8,11 +8,10 @@ SIN_CAPITULO = ('NRO CAP', 'TIT CAP')
 OTROS_TITULOS = ('TIT ORIG', 'TIT ING', 'TIT PORT')
 
 
-def fin_de_mes(cierre):
-    """El cierre a fin del mes del último día de la grilla, a la misma hora en que arranca el día."""
+def mes_siguiente(cierre):
+    """Las 00:00 del 1° del mes que sigue al último día de la grilla: desde ahí no puede empezar ningún programa."""
     ultimo = cierre - dt.timedelta(days=1)
-    primero_siguiente = (ultimo.replace(day=28) + dt.timedelta(days=4)).replace(day=1)
-    return dt.datetime.combine(primero_siguiente.date(), cierre.time())
+    return dt.datetime.combine((ultimo.replace(day=28) + dt.timedelta(days=4)).replace(day=1), dt.time())
 
 
 def repetido(fila, etiqueta):
@@ -26,14 +25,17 @@ def repetido(fila, etiqueta):
 
 
 def estirar(filas, cierre, etiqueta):
-    """(filas con las semanas repetidas, nuevo cierre)."""
-    hasta = fin_de_mes(cierre)
+    """(filas con las semanas repetidas, nuevo cierre).
+    No entra nada que empiece en el mes siguiente; el último programa dura hasta donde empezaría el próximo."""
+    limite = mes_siguiente(cierre)
+    if filas[-1]['inicio'] >= limite:
+        return filas, cierre
     semana = [f for f in filas if f['inicio'] >= cierre - dt.timedelta(days=7)]
     nuevas, vuelta = list(filas), 1
-    while cierre + dt.timedelta(days=7 * (vuelta - 1)) < hasta:
+    while True:
         for f in semana:
             inicio = f['inicio'] + dt.timedelta(days=7 * vuelta)
-            if inicio < hasta:
-                nuevas.append({**repetido(f, etiqueta), 'inicio': inicio})
+            if inicio >= limite:
+                return nuevas, inicio
+            nuevas.append({**repetido(f, etiqueta), 'inicio': inicio})
         vuelta += 1
-    return nuevas, max(hasta, cierre)
