@@ -28,7 +28,19 @@ En una señal en portugués o en inglés, su título y su capítulo van en el lu
 
 Antes de terminar se controla el formato de cada celda: textos de hasta 99 caracteres (2000 las sinopsis y argumentos),
 DUR de 1 a 720, AÑO de 4 dígitos, DEST A o M, TT (v), (d), (r) o (g), DOB y SUB con 1, SAP, CC y LS con X.
-Lo que no cumple se lista como error de formato.
+Lo que no cumple se lista como error de formato. TIT PRINC (o el título del idioma de la señal) no puede quedar vacío
+en ninguna fila, y TIT ORIG, TIT ING y TIT PORT tampoco si la señal los trae.
+
+## Semanal
+
+Algunas señales mandan semanas que terminan a mitad de mes y el EPG se completa hasta fin de ese mes repitiendo la
+última semana: `python procesar.py <señal> <grillas> --semanal`. En los días repetidos:
+
+- Las películas pasan a su ciclo ("Cine de Oro", "Butaca América") o a "Película" si no tienen, sin ningún otro dato.
+- Los torneos y eventos especiales pasan al nombre de la señal, también sin ningún otro dato.
+- El resto queda igual, sin NRO CAP ni TIT CAP.
+
+Qué es película y qué es evento lo marca el lector de cada señal.
 
 ## Señales
 

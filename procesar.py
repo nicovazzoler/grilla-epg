@@ -4,6 +4,7 @@ Uso: python procesar.py <señal> <grilla> [<grilla> ...] [--hora FILA=HH:MM ...]
 import argparse, csv, datetime as dt, difflib, importlib, json, os, re, sys, unicodedata, urllib.request
 from pathlib import Path
 from escribir_epg import DIAS, errores_de_formato, guardar, minutos, poner_fines
+import semanal
 
 AQUI = Path(__file__).parent
 MODELO = 'claude-haiku-4-5-20251001'
@@ -176,6 +177,7 @@ def main():
     args.add_argument('senal', choices=senales(), metavar='señal', help=', '.join(senales()))
     args.add_argument('grillas', nargs='+')
     args.add_argument('--hora', action='append', default=[], help='FILA=HH:MM para una hora mal tipeada (RBTV)')
+    args.add_argument('--semanal', action='store_true', help='repite la última semana hasta fin de mes')
     a = args.parse_args()
     horas = {int(f): dt.datetime.strptime(h, '%H:%M').time() for f, h in (x.split('=') for x in a.hora)}
 
@@ -202,7 +204,11 @@ def main():
             f['datos']['REVISAR'] = 'sí'
     if hasattr(lector, 'completar'):
         lector.completar(filas)
-    poner_fines(filas, leido['cierre'])
+    cierre = leido['cierre']
+    if a.semanal:
+        filas, cierre = semanal.estirar(filas, cierre, leido['etiqueta'])
+        print(f'Semanal: la última semana se repite hasta el {cierre:%d/%m %H:%M}')
+    poner_fines(filas, cierre)
     idioma = leido.get('idioma', 'es')
     salida = guardar(filas, leido['canal'], AQUI / 'salida', idioma)
     errores = errores_de_formato(filas, idioma)

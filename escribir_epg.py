@@ -18,6 +18,8 @@ IDIOMAS = {
 }
 
 TEXTO_CORTO, TEXTO_LARGO = 99, 2000
+# Si la columna está en el EPG, ninguna fila la puede tener vacía.
+TITULOS_OBLIGATORIOS = ('TIT ORIG', 'TIT PRINC', 'TIT ING', 'TIT PORT')
 LIMITES = {
     'DUR': ('entero', 720), 'NRO TEMP': ('entero', None), 'NRO CAP': ('entero', None), 'AÑO': ('año', None),
     'DEST': ('valores', {'A', 'M'}), 'TT': ('valores', {'(v)', '(d)', '(r)', '(g)'}),
@@ -54,9 +56,15 @@ def fila_de(bloque, idioma):
 
 def errores_de_formato(bloques, idioma):
     """Lo que el sistema que recibe el EPG rechazaría: textos largos, valores que no existen, números que no son."""
+    filas = [fila_de(b, idioma) for b in bloques]
+    principal = IDIOMAS[idioma].get('TIT PRINC', 'TIT PRINC')
+    presentes = {c for f in filas for c, v in f.items() if v not in (None, '')} | {principal}
     errores = []
-    for n, b in enumerate(bloques, 1):
-        for col, valor in fila_de(b, idioma).items():
+    for n, f in enumerate(filas, 1):
+        for col in TITULOS_OBLIGATORIOS:
+            if col in presentes and f.get(col) in (None, ''):
+                errores.append(f'N {n}: {col} vacío')
+        for col, valor in f.items():
             if valor in (None, '') or col == 'REVISAR':
                 continue
             tipo, limite = LIMITES.get(col, ('texto', TEXTO_CORTO))
