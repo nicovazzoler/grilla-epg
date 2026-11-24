@@ -59,6 +59,7 @@ como TIPO junto con el resto (película, evento o programa) y queda en el diccio
 | `america` | Excel en cuadrícula | El programa empieza en el borde del recuadro, no donde está el nombre |
 | `monterrey` | PDF | Los recuadros se arman con las líneas del PDF; conductores a A1–A3 |
 | `canal51` | Word | Títulos de películas mal escritos; estreno solo la primera vez en la semana |
+| `clarosports` | Excel en lista | El torneo y el partido vienen pegados; la fecha, mes/día leída al revés |
 
 Agregar una señal es sumar su lector en `senales/`, sus reglas en `reglas/` y su diccionario en `diccionario/`.
 
