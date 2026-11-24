@@ -7,7 +7,7 @@ from pathlib import Path
 from sqlalchemy import select
 from escribir_epg import DIAS, FIJAS, errores_de_formato, fila_de, guardar, minutos, orden, IDIOMAS
 from procesar import MINUTOS_A_MANO, armar, avisos, leer_grillas, limpiar_reparto, reparto, resolver_nombres, senales
-from web.modelos import Corrida, Entrada, Pendiente
+from web.modelos import Corrida, Entrada, Pendiente, ahora_utc, iso_utc
 
 
 def detectar_senal(nombres):
@@ -94,7 +94,7 @@ def vista(db, corrida):
     columnas = [c for c in orden(idioma) if c == principal or any(t.get(c) not in (None, '') for t in tabla)]
     total = sum(minutos(b) for b in filas)
     return {
-        'id': corrida.id, 'senal': corrida.senal, 'creada': corrida.creada.isoformat(timespec='minutes'),
+        'id': corrida.id, 'senal': corrida.senal, 'creada': iso_utc(corrida.creada),
         'archivos': corrida.archivos, 'semanal': corrida.semanal, 'capas': corrida.capas,
         'problema_modelo': corrida.problema_modelo,
         'pendientes': [{'id': p.id, 'crudo': p.crudo, 'propuesta': p.propuesta, 'capa': p.capa, 'nota': p.nota,
@@ -127,7 +127,7 @@ def aprobar(db, pendiente, propuesta, capa=None):
     if entrada is None:
         entrada = Entrada(senal=senal, crudo=pendiente.crudo)
         db.add(entrada)
-    entrada.reparto, entrada.capa, entrada.aprobada = r, capa or pendiente.capa, dt.datetime.now()
+    entrada.reparto, entrada.capa, entrada.aprobada = r, capa or pendiente.capa, ahora_utc()
     # El mismo nombre puede estar pendiente en otras corridas de la señal: queda resuelto en todas.
     for otro in db.scalars(select(Pendiente).join(Corrida).where(
             Corrida.senal == senal, Pendiente.crudo == pendiente.crudo, Pendiente.estado != 'aprobado')):

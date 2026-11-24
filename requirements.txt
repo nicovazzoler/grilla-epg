@@ -5,5 +5,5 @@ pdfplumber
 fastapi
 uvicorn
 sqlalchemy
-psycopg2-binary
+psycopg[binary]
 python-multipart

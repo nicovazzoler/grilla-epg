@@ -8,6 +8,16 @@ class Base(DeclarativeBase):
     pass
 
 
+def ahora_utc():
+    """La hora en UTC, sin zona: así se guarda todo. La pantalla la muestra en la hora del navegador."""
+    return dt.datetime.now(dt.timezone.utc).replace(tzinfo=None)
+
+
+def iso_utc(momento):
+    """Para la API: con la Z, el navegador sabe que es UTC y la pasa a hora argentina."""
+    return momento.isoformat(timespec='minutes') + 'Z'
+
+
 class Entrada(Base):
     """Un nombre aprobado: cómo vino en la grilla y cómo va repartido en columnas."""
     __tablename__ = 'diccionario'
@@ -19,7 +29,7 @@ class Entrada(Base):
     reparto: Mapped[dict] = mapped_column(JSON)
     # De dónde salió: repo (la carga inicial), parecido, modelo o a mano.
     capa: Mapped[str] = mapped_column(String(20))
-    aprobada: Mapped[dt.datetime] = mapped_column(DateTime, default=dt.datetime.now)
+    aprobada: Mapped[dt.datetime] = mapped_column(DateTime, default=ahora_utc)
 
 
 class Corrida(Base):
@@ -28,7 +38,7 @@ class Corrida(Base):
 
     id: Mapped[int] = mapped_column(primary_key=True)
     senal: Mapped[str] = mapped_column(String(40), index=True)
-    creada: Mapped[dt.datetime] = mapped_column(DateTime, default=dt.datetime.now, index=True)
+    creada: Mapped[dt.datetime] = mapped_column(DateTime, default=ahora_utc, index=True)
     archivos: Mapped[list] = mapped_column(JSON)
     semanal: Mapped[bool] = mapped_column(Boolean, default=False)
     # canal, etiqueta, idioma, cierre y filas, como los devuelve el lector.
