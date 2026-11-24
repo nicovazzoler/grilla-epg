@@ -1,0 +1,23 @@
+{
+ "NOTICIAS CLARO": "Noticias Claro",
+ "FIT FOR LIFE": "Fit For Life",
+ "PELOTEANDO": "Peloteando",
+ "GOL GOL GOL": "Gol gol gol",
+ "CHECO: NEVER GIVE UP": "Checo: Never Give Up",
+ "CLARO SPORTS EN W RADIO": "Claro Sports en W Radio",
+ "DEPORTES EN CLARO": "Deportes en Claro",
+ "PLAYBOOK": "Playbook",
+ "PLANETA AS": "Planeta AS",
+ "JUGANDO CLARO": "Jugando Claro",
+ "TNA WRESTLING IMPACT": "TNA Wrestling Impact",
+ "FORMULA LATINA": "Fórmula latina",
+ "EL GOLF ES CLARO": "El golf es Claro",
+ "3 ROUNDS": "3 Rounds",
+ "SUPER LIGA DE GRECIA": {"TIT PRINC": "Superliga de Grecia", "TIPO": "evento"},
+ "COPA DE GRECIA": {"TIT PRINC": "Copa de Grecia", "TIPO": "evento"},
+ "WTGL": {"TIT PRINC": "WTGL", "TIPO": "evento"},
+ "CEV CHAMPIONS LEAGUE VOLLEY WOMEN": {"TIT PRINC": "CEV Champions League Volley Women", "TIPO": "evento"},
+ "CEV CL VOLLEY WOMEN": {"TIT PRINC": "CEV Champions League Volley Women", "TIPO": "evento"},
+ "HL UCI BMX FREESTYLE WORLD CUP": {"TIT PRINC": "UCI BMX Freestyle World Cup Highlights", "TIPO": "evento"},
+ "HL FEI WESTERN EUROPEAN LEAGUE": {"TIT PRINC": "FEI Western European League Highlights", "TIPO": "evento"}
+}
