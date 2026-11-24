@@ -3,6 +3,8 @@ import datetime as dt
 import re
 import docx
 
+NOMBRE = 'Canal 51'
+ARCHIVOS = r'canal.?51.*\.docx$'
 MESES = {'enero': 1, 'febrero': 2, 'marzo': 3, 'abril': 4, 'mayo': 5, 'junio': 6, 'julio': 7, 'agosto': 8,
          'septiembre': 9, 'octubre': 10, 'noviembre': 11, 'diciembre': 12}
 CINE = re.compile(r'cine (5 ?-?1?|51 ?[–-] ?[123]|51-[123]|51|clasico)', re.I)

@@ -3,6 +3,11 @@ import datetime as dt
 import re
 import openpyxl
 
+# Para reconocer la grilla por el nombre del archivo.
+NOMBRE = 'RBTV'
+# Una hora mal tipeada se corrige por número de fila (--hora FILA=HH:MM).
+CORRIGE_HORAS = True
+ARCHIVOS = r'RBTV'
 CICLO = re.compile(r'^([^:]+): (.+)$')
 INFOMERCIAL = re.compile(r'INFOMERCIAL \d+ MINUTOS')
 

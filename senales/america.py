@@ -4,6 +4,8 @@ import datetime as dt
 import re
 import xlrd
 
+NOMBRE = 'América TV'
+ARCHIVOS = r'\.xls$'
 MESES = {'ENERO': 1, 'FEBRERO': 2, 'MARZO': 3, 'ABRIL': 4, 'MAYO': 5, 'JUNIO': 6, 'JULIO': 7, 'AGOSTO': 8,
          'SETIEMBRE': 9, 'SEPTIEMBRE': 9, 'OCTUBRE': 10, 'NOVIEMBRE': 11, 'DICIEMBRE': 12}
 # Columna principal de cada día: una celda combinada vale para un día si pisa esa columna.

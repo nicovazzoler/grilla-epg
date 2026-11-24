@@ -68,6 +68,35 @@ python aprobar.py <señal>
 
 El Excel queda en `salida/`. Las grillas no se suben al repo.
 
+## La web
+
+`web/` es lo mismo con pantalla: subir las grillas, ver qué resolvió cada capa, revisar los nombres nuevos con su
+contexto (día, hora, qué va antes y después), bajar el Excel, el historial de corridas y el diccionario para buscar y
+corregir. Llama a las mismas funciones de `procesar.py`; lo que cambia es dónde vive el diccionario.
+
+- **La base** (PostgreSQL en Railway, SQLite local) tiene el diccionario, cada corrida con las filas que leyó el lector
+  y los pendientes. El archivo de la señal no se guarda: se lee desde una carpeta temporal que se borra al terminar.
+  Las corridas se borran a los 30 días.
+- **El diccionario** arranca, la primera vez, con los JSON de `diccionario/`. Desde ahí la fuente es la base; el botón
+  "exportar .json" lo baja en el mismo formato.
+- **El EPG se arma de nuevo cada vez que se pide**, con el diccionario de ese momento: lo que se aprueba entra sin volver
+  a subir la grilla.
+
+Local:
+
+```
+APP_USUARIO=nico APP_CLAVE=algo uvicorn web.app:app --port 8011
+```
+
+En Railway, un servicio desde este repo (arranca con el `Procfile`) más un PostgreSQL, y estas variables:
+
+| Variable | Qué es |
+|---|---|
+| `DATABASE_URL` | La pone Railway al conectar el PostgreSQL |
+| `APP_USUARIO`, `APP_CLAVE` | El único usuario. Sin las dos no entra nadie |
+| `SECRET_KEY` | Firma la sesión. Sin ella anda igual, pero cada deploy te desloguea |
+| `ANTHROPIC_API_KEY` | Para las propuestas del modelo. Sin ella lo nuevo queda pendiente sin propuesta |
+
 ## Revisarlo antes de mandarlo
 
 ```
