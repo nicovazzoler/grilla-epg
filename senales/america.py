@@ -13,6 +13,7 @@ FILA_0, FILA_N, COL_HORA = 7, 85, 2
 CORTE = 5 * 60 + 16          # el día de la grilla arranca 05:16
 CICLOS = {'*MATINEE DE AMERICA*': 'Matinée de América', '*BUTACA AMERICA*': 'Butaca América'}
 ROTULOS = {'*SERIE*', '*DOCUMENTAL*'}
+EVENTOS = ('FUTBOL EN AMERICA', 'CAMPEONATO DE LUCHA')
 # Los actores vienen sueltos dentro del recuadro de la película y no van.
 ACTORES = {'ANTONIO BANDERAS', 'DWAYNE JOHNSON', 'JONATHAN PRYCE', 'JUSTIN LONG', 'MARTA GONZALEZ DE VEGA',
            'MATTHEW GRAY GUBLER', 'MELANIA URBINA', 'ROBERT DOWNEY JR,', 'VALIN SHINYEI'}
@@ -92,12 +93,14 @@ def leer(archivos, horas_corregidas):
                 crudo, temp, tt = limpiar(' '.join(t for t in textos if t not in CICLOS and t not in ROTULOS))
                 minutos = g.hora(top)
                 inicio = dia + dt.timedelta(days=1 if minutos < CORTE else 0, minutes=minutos)
+                tipo = 'pelicula' if ciclo else 'evento' if crudo.startswith(EVENTOS) else None
                 fila = {'ref': f'{DIAS_NOMBRE[n_dia]}, fila {top + 1}', 'inicio': inicio, 'crudo': crudo,
+                        'tipo': tipo, 'ciclo': ciclo,
                         'datos': {'CICLO': ciclo, 'NRO TEMP': temp, 'TT': tt}}
                 # La 05:00 del final de un día y la 05:16 del principio del siguiente son el mismo programa.
                 if filas and (filas[-1]['crudo'], filas[-1]['datos']) == (crudo, fila['datos']):
                     continue
                 filas.append(fila)
-    return {'canal': 'America_TV', 'filas': filas,
+    return {'canal': 'America_TV', 'etiqueta': 'América TV', 'filas': filas,
             'cierre': filas[0]['inicio'].replace(hour=0, minute=0) + dt.timedelta(days=7 * len(archivos), minutes=CORTE)}
 

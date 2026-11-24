@@ -30,8 +30,16 @@ def fecha(dia, mes):
     return d
 
 
+def ciclo_de(texto):
+    """'Cine 51', 'Cine 51-2' o 'Cine clásico', escrito siempre igual."""
+    if 'clasico' in texto.lower():
+        return 'Cine clásico'
+    m = re.search(r'51 ?[–-] ?([123])', texto)
+    return f'Cine 51-{m.group(1)}' if m else 'Cine 51'
+
+
 def separar(texto):
-    """(nombre tal como vino, año, cap, si es película, si es repetición)."""
+    """(nombre tal como vino, año, cap, ciclo si es película, si es repetición)."""
     t = ' '.join(texto.split())
     repriss = bool(re.search(r'repriss', t, re.I))
     if m := CINE.match(t):
@@ -40,12 +48,12 @@ def separar(texto):
         anio = None
         if a := ANIO.match(titulo):
             titulo, anio = a.group(1), int(a.group(2))
-        return titulo, anio, None, True, repriss
+        return titulo, anio, None, ciclo_de(m.group(0)), repriss
     t = OTROS_CICLOS.sub('', t)
     t = re.sub(r'\s*repriss\s*', ' ', t, flags=re.I).strip()
     if m := re.fullmatch(r'El valor de la Familia (\d+)', t):
-        return 'el valor de la familia', None, int(m.group(1)), False, repriss
-    return t.lower(), None, None, False, repriss
+        return 'el valor de la familia', None, int(m.group(1)), None, repriss
+    return t.lower(), None, None, None, repriss
 
 
 def leer(archivos, horas_corregidas):
@@ -62,12 +70,14 @@ def leer(archivos, horas_corregidas):
             h = hora(m.group(1))
             # El día de la grilla va de 06:00 a 06:00: la madrugada es del día calendario siguiente.
             inicio = dt.datetime.combine(dia.date(), h) + dt.timedelta(days=1 if h.hour < 6 else 0)
-            crudo, anio_peli, cap, peli, repriss = separar(m.group(2))
+            crudo, anio_peli, cap, ciclo, repriss = separar(m.group(2))
+            peli = ciclo is not None
             filas.append({'ref': f'semana {semana + 1}, línea {n + 1}', 'inicio': inicio, 'crudo': crudo,
                           'semana': semana, 'peli': peli, 'repriss': repriss,
+                          'tipo': 'pelicula' if peli else None, 'ciclo': ciclo,
                           # Las películas no llevan TT.
                           'datos': {'AÑO': anio_peli, 'NRO CAP': cap, 'TT': '(r)' if repriss and not peli else None}})
-    return {'canal': 'Canal_51', 'filas': filas, 'cierre': filas[0]['inicio'] + dt.timedelta(days=7 * len(archivos))}
+    return {'canal': 'Canal_51', 'etiqueta': 'Canal 51', 'filas': filas, 'cierre': filas[0]['inicio'] + dt.timedelta(days=7 * len(archivos))}
 
 
 def completar(bloques):

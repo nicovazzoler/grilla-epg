@@ -18,6 +18,7 @@ CICLOS = re.compile(r'^(CINE DE ORO|CICLO DE: .+|TELENOVELA|PELICULA MEXICANA)$'
 DURACION = re.compile(r'\s*\d:\d{2}$')
 RATING = re.compile(r'^(AA|A|B|B15|C|D)$')
 ENLACE = re.compile(r'\s*(Enlace Canal 4\.?|EC4)\s*$')
+EVENTOS = ('LIGA MX',)
 # "lunes" en Proyéctese dice de qué día es la repetición: no es título.
 NOTAS = {'lunes'}
 
@@ -59,20 +60,31 @@ def mayus(linea):
     return linea.upper() == linea and re.search(r'[A-ZÁÉÍÓÚÑ]{2}', linea)
 
 
+def nombre_de_ciclo(linea):
+    """El ciclo de películas como se escribe, o None si no es de películas."""
+    if linea.startswith('TELENOVELA'):
+        return None
+    if m := re.fullmatch(r'CICLO DE: (.+)', linea):
+        return f'Ciclo de {m.group(1).title()}'
+    return {'CINE DE ORO': 'Cine de Oro', 'PELICULA MEXICANA': 'Película mexicana'}.get(linea, linea.capitalize())
+
+
 def separar(lineas):
-    """(nombre tal como vino o None, programa ya armado o None, cap, título, tt, conductores, hora escrita adentro)."""
+    """(nombre tal como vino o None, programa ya armado o None, cap, título, tt, conductores, hora escrita adentro,
+    si es película, su ciclo)."""
     lineas = [ENLACE.sub('', l).rstrip(' /') for l in lineas]
     lineas = [l for l in lineas if l and l not in NOTAS]
     if len(lineas) == 1 and CICLOS.match(lineas[0]):
-        return SOLO_CICLO, None, None, None, None, [], None
+        return SOLO_CICLO, None, None, None, None, [], None, True, nombre_de_ciclo(lineas[0])
     if m := re.fullmatch(r'REP\. ALV\. (LEYENDAS(?: \d+)?)', lineas[0]):
         lineas = ['REPORTAJES DE ALVARADO', m.group(1).capitalize()] + lineas[1:]
     nombre, resto, conductores = [], [], []
     tt = cap = inicio = None
-    peli = False
+    peli, ciclo = False, None
     for i, l in enumerate(lineas):
         if i == 0 and CICLOS.match(l):
-            peli = not l.startswith('TELENOVELA')
+            ciclo = nombre_de_ciclo(l)
+            peli = ciclo is not None
             continue
         if l.startswith('Con ') and not mayus(l):
             conductores += re.split(r',\s*|\s+y\s+', l[4:])
@@ -117,7 +129,7 @@ def separar(lineas):
             t = TITULOS_EN_MAYUS.get(r, r)
             titulo.append(TITULOS.get(t, t))
     conductores = [c.replace('Angel', 'Ángel') for c in conductores][:3]
-    return crudo, programa, cap, ' '.join(titulo) or None, None if peli else tt, conductores, inicio
+    return crudo, programa, cap, ' '.join(titulo) or None, None if peli else tt, conductores, inicio, peli, ciclo
 
 
 def juntar_medianoche(filas):
@@ -126,7 +138,8 @@ def juntar_medianoche(filas):
     for f in filas:
         if juntos and juntos[-1]['crudo'] in (SOLO_CICLO, f['crudo']) and f['inicio'].hour == 0 \
                 and f['inicio'] - juntos[-1]['inicio'] <= dt.timedelta(minutes=15):
-            juntos[-1].update(crudo=f['crudo'], datos=f['datos'])
+            juntos[-1].update(crudo=f['crudo'], datos=f['datos'], tipo=f['tipo'] or juntos[-1]['tipo'],
+                              ciclo=f['ciclo'] or juntos[-1]['ciclo'])
             continue
         juntos.append(f)
     return juntos
@@ -142,9 +155,11 @@ def leer(archivos, horas_corregidas):
         for d, desde, lineas in cajas(pdf):
             if not lineas:
                 sys.exit(f'Recuadro vacío: {nombre}, día {d + 1}, minuto {desde}')
-            crudo, programa, cap, titulo, tt, cond, inicio = separar(lineas)
+            crudo, programa, cap, titulo, tt, cond, inicio, peli, ciclo = separar(lineas)
             cond += [None] * (3 - len(cond))
-            filas.append({'ref': f'{nombre}, día {d + 1}', 'crudo': crudo,
+            evento = crudo is not None and crudo.startswith(EVENTOS)
+            filas.append({'ref': f'{nombre}, día {d + 1}', 'crudo': crudo, 'ciclo': ciclo,
+                          'tipo': 'pelicula' if peli else 'evento' if evento else None,
                           'inicio': lunes + dt.timedelta(days=d, minutes=inicio if inicio is not None else desde),
                           'datos': {'TIT PRINC': programa, 'NRO CAP': cap, 'TIT CAP': titulo, 'TT': tt,
                                     'A1': cond[0], 'A2': cond[1], 'A3': cond[2]}})
@@ -152,4 +167,4 @@ def leer(archivos, horas_corregidas):
     if huerfanos := [f'{f["inicio"]:%d/%m %H:%M}' for f in filas if f['crudo'] == SOLO_CICLO]:
         sys.exit(f'Ciclo sin película después: {huerfanos}')
     canal = 'Televisa_Monterrey' + (f'_{canales.pop()}' if len(canales) == 1 else '')
-    return {'canal': canal, 'filas': filas, 'cierre': filas[0]['inicio'] + dt.timedelta(days=7 * len(archivos))}
+    return {'canal': canal, 'etiqueta': 'Televisa Monterrey', 'filas': filas, 'cierre': filas[0]['inicio'] + dt.timedelta(days=7 * len(archivos))}
