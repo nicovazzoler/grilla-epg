@@ -8,10 +8,27 @@ Los nombres de los programas se corrigen en capas:
 
 1. **Diccionario**: lo ya aprobado se corrige solo.
 2. **Parecido de texto**: "MUQLING" se reconoce como "MUQILING" sin llamar a ningún modelo.
-3. **Modelo**: lo que no se parece a nada conocido lo propone Claude, siguiendo las reglas de la señal.
-4. **Persona**: `aprobar.py` muestra lo nuevo, y lo aprobado pasa al diccionario.
+3. **Modelo**: lo que no se parece a nada conocido lo propone Claude, siguiendo las reglas de la señal. Si el nombre
+   trae algo pegado que va en otra columna, lo separa: "BRASILEIRÃO 2026" → TIT PRINC *Brasileirão*, TIT TEMP *2026*.
+4. **Persona**: `aprobar.py` muestra lo nuevo en una línea; Enter acepta y se corrige solo lo que está mal.
+   Lo aprobado pasa al diccionario, y hasta entonces esas filas salen con *REVISAR: sí* en el Excel.
+
+Dos nombres que difieren en un número (BN 20 y BN 30) nunca cuentan como parecidos: casi siempre son programas distintos.
 
 Cada semana el modelo ve solo lo nuevo, así que su uso baja en vez de crecer. Cada corrida queda en `registro.csv`.
+
+## Columnas
+
+Las del formato del EPG, en su orden (`escribir_epg.py`): TIT ORIG, TIT PRINC, CICLO, NRO TEMP, TIT TEMP, NRO CAP,
+TIT CAP, DEST, TT, DIRECTOR, A1–A3, PAIS, AÑO, SIN LARGA, ARG LARGO, DOB, SUB, SAP, CC, LS, GENERO, y los títulos,
+sinopsis y argumentos en inglés y portugués, y RATING. Salen solo las que tienen algún dato.
+
+En una señal en portugués o en inglés, su título y su capítulo van en el lugar de TIT PRINC y TIT CAP
+(TIT PORT y TIT CAP PORT, por ejemplo), y lo que venga en castellano pasa al final.
+
+Antes de terminar se controla el formato de cada celda: textos de hasta 99 caracteres (2000 las sinopsis y argumentos),
+DUR de 1 a 720, AÑO de 4 dígitos, DEST A o M, TT (v), (d), (r) o (g), DOB y SUB con 1, SAP, CC y LS con X.
+Lo que no cumple se lista como error de formato.
 
 ## Señales
 

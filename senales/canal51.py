@@ -66,7 +66,7 @@ def leer(archivos, horas_corregidas):
             filas.append({'ref': f'semana {semana + 1}, línea {n + 1}', 'inicio': inicio, 'crudo': crudo,
                           'semana': semana, 'peli': peli, 'repriss': repriss,
                           # Las películas no llevan TT.
-                          'datos': {'Año': anio_peli, 'Cap.': cap, 'TT': '(r)' if repriss and not peli else None}})
+                          'datos': {'AÑO': anio_peli, 'NRO CAP': cap, 'TT': '(r)' if repriss and not peli else None}})
     return {'canal': 'Canal_51', 'filas': filas, 'cierre': filas[0]['inicio'] + dt.timedelta(days=7 * len(archivos))}
 
 
@@ -76,7 +76,7 @@ def completar(bloques):
     for b in bloques:
         if not b['peli']:
             continue
-        clave = (b['semana'], b['datos']['Programa'])
+        clave = (b['semana'], b['datos']['TIT PRINC'])
         if not b['repriss'] and clave not in vistas:
             b['datos']['DEST'] = 'A'
         vistas.add(clave)

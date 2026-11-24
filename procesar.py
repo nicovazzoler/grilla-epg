@@ -3,13 +3,18 @@ diccionario aprobado → parecido de texto → propuesta del modelo, y todo lo n
 Uso: python procesar.py <señal> <grilla> [<grilla> ...] [--hora FILA=HH:MM ...]"""
 import argparse, csv, datetime as dt, difflib, importlib, json, os, re, sys, unicodedata, urllib.request
 from pathlib import Path
-from escribir_epg import DIAS, guardar, minutos, poner_fines
+from escribir_epg import DIAS, errores_de_formato, guardar, minutos, poner_fines
 
 AQUI = Path(__file__).parent
 MODELO = 'claude-haiku-4-5-20251001'
 PARECIDO_MINIMO = 0.85
 # Minutos que llevaba armar una grilla a mano: lo que se compara en el registro.
 MINUTOS_A_MANO = 20
+# Lo que puede venir pegado al nombre y el modelo puede separar a su columna.
+COLUMNAS_DEL_NOMBRE = {'NRO TEMP': 'número de temporada', 'TIT TEMP': 'año o nombre de la temporada (ej. 2026 de un torneo)',
+                       'AÑO': 'año de una película', 'NRO CAP': 'número de capítulo o episodio',
+                       'TIT CAP': 'título del capítulo, partido o etapa'}
+NUMERICAS = {'NRO TEMP', 'AÑO', 'NRO CAP'}
 
 
 def senales():
@@ -29,10 +34,30 @@ def normalizar(texto):
     return ' '.join(re.sub(r'[^\w\s]', ' ', sin_tildes.lower()).split())
 
 
+def reparto(valor):
+    """Una entrada del diccionario como {columna: valor}. Las que guardan solo un texto son el título."""
+    return {'TIT PRINC': valor} if isinstance(valor, str) else dict(valor)
+
+
+def limpiar_reparto(propuesta):
+    """El título y las columnas permitidas, con los números como números."""
+    salida = {'TIT PRINC': str(propuesta.get('TIT PRINC') or '').strip()}
+    for col in COLUMNAS_DEL_NOMBRE:
+        v = propuesta.get(col)
+        if v in (None, ''):
+            continue
+        if col in NUMERICAS and str(v).isdigit():
+            v = int(v)
+        salida[col] = v
+    return salida
+
+
 def por_parecido(crudo, diccionario):
     """La clave conocida más parecida, o None. Compara sin tildes, signos ni mayúsculas."""
-    claves = {normalizar(k): k for k in diccionario}
-    if (n := normalizar(crudo)) in claves:
+    n = normalizar(crudo)
+    # Un número distinto casi siempre es otro programa (BN 20 y BN 30): esos nunca cuentan como parecidos.
+    claves = {normalizar(k): k for k in diccionario if re.findall(r'\d+', normalizar(k)) == re.findall(r'\d+', n)}
+    if n in claves:
         return claves[n]
     cerca = difflib.get_close_matches(n, list(claves), n=1, cutoff=PARECIDO_MINIMO)
     return claves[cerca[0]] if cerca else None
@@ -49,24 +74,31 @@ def leer_clave():
     return None
 
 
+def pedido_al_modelo(crudos, diccionario):
+    ejemplos = {k: reparto(v) for k, v in list(diccionario.items())[:40]}
+    columnas = '\n'.join(f'- "{c}": {desc}' for c, desc in COLUMNAS_DEL_NOMBRE.items())
+    return (
+        'Estos nombres de programas de una grilla de TV no están en el diccionario.\n'
+        'Para cada uno, proponé cómo se escribe el título (TIT PRINC) según las reglas. Si el texto trae pegado algo que va '
+        f'en otra columna, separalo. Columnas posibles:\n{columnas}\n'
+        'Poné solo las columnas que el texto trae de verdad. Si no sabés qué programa es, decilo en "nota" '
+        'en vez de inventar.\n\n'
+        f'Ejemplos ya aprobados (como vino → como va):\n{json.dumps(ejemplos, ensure_ascii=False, indent=1)}\n\n'
+        f'Nombres nuevos:\n{json.dumps(crudos, ensure_ascii=False)}\n\n'
+        'Contestá SOLO un JSON: {"<como vino>": {"TIT PRINC": "<como va>", "<columna>": <valor>, "nota": "<vacío o la duda>"}}'
+    )
+
+
 def proponer_con_modelo(senal, crudos, diccionario):
-    """{crudo: {'nombre', 'nota'}} propuesto por el modelo, o None si no hay clave o falló el pedido."""
+    """{crudo: {'TIT PRINC', columnas..., 'nota'}} propuesto por el modelo, o None si no hay clave o falló el pedido."""
     clave = leer_clave()
     if not clave:
         print('  (sin ANTHROPIC_API_KEY: lo nuevo queda pendiente sin propuesta)')
         return None
-    ejemplos = dict(list(diccionario.items())[:40])
-    pedido = (
-        'Estos nombres de programas de una grilla de TV no están en el diccionario.\n'
-        'Para cada uno, proponé cómo se escribe según las reglas. Si no sabés qué programa es, '
-        'decilo en "nota" en vez de inventar.\n\n'
-        f'Ejemplos ya aprobados (como vino → como va):\n{json.dumps(ejemplos, ensure_ascii=False, indent=1)}\n\n'
-        f'Nombres nuevos:\n{json.dumps(crudos, ensure_ascii=False)}\n\n'
-        'Contestá SOLO un JSON: {"<como vino>": {"nombre": "<como va>", "nota": "<vacío o la duda>"}}'
-    )
     reglas = (AQUI / 'reglas' / f'{senal}.md').read_text(encoding='utf-8')
-    cuerpo = json.dumps({'model': MODELO, 'max_tokens': 4000, 'system': reglas,
-                         'messages': [{'role': 'user', 'content': pedido}]}).encode()
+    # temperature 0: ante el mismo pedido, la misma respuesta.
+    cuerpo = json.dumps({'model': MODELO, 'max_tokens': 4000, 'temperature': 0, 'system': reglas,
+                         'messages': [{'role': 'user', 'content': pedido_al_modelo(crudos, diccionario)}]}).encode()
     req = urllib.request.Request('https://api.anthropic.com/v1/messages', data=cuerpo, headers={
         'x-api-key': clave, 'anthropic-version': '2023-06-01', 'content-type': 'application/json'})
     try:
@@ -79,16 +111,16 @@ def proponer_con_modelo(senal, crudos, diccionario):
 
 
 def resolver_nombres(senal, crudos, diccionario):
-    """{crudo: nombre} para el Excel, los pendientes a aprobar y cuántos resolvió cada capa."""
-    nombres, pendientes, al_modelo = {}, [], []
+    """{crudo: reparto} para el Excel, los pendientes a aprobar y cuántos resolvió cada capa."""
+    repartos, pendientes, al_modelo = {}, [], []
     capas = {'diccionario': 0, 'parecido': 0, 'modelo': 0, 'sin propuesta': 0}
     for crudo in crudos:
         if crudo in diccionario:
-            nombres[crudo] = diccionario[crudo]
+            repartos[crudo] = reparto(diccionario[crudo])
             capas['diccionario'] += 1
         elif conocido := por_parecido(crudo, diccionario):
-            nombres[crudo] = diccionario[conocido]
-            pendientes.append({'crudo': crudo, 'propuesta': diccionario[conocido], 'capa': 'parecido',
+            repartos[crudo] = reparto(diccionario[conocido])
+            pendientes.append({'crudo': crudo, 'propuesta': repartos[crudo], 'capa': 'parecido',
                                'nota': f'se parece a "{conocido}"'})
             capas['parecido'] += 1
         else:
@@ -96,25 +128,25 @@ def resolver_nombres(senal, crudos, diccionario):
 
     propuestas = proponer_con_modelo(senal, al_modelo, diccionario) if al_modelo else {}
     for crudo in al_modelo:
-        p = (propuestas or {}).get(crudo)
-        if p and p.get('nombre'):
-            nombres[crudo] = p['nombre']
-            pendientes.append({'crudo': crudo, 'propuesta': p['nombre'], 'capa': 'modelo', 'nota': p.get('nota', '')})
+        p = (propuestas or {}).get(crudo) or {}
+        if (r := limpiar_reparto(p))['TIT PRINC']:
+            repartos[crudo] = r
+            pendientes.append({'crudo': crudo, 'propuesta': r, 'capa': 'modelo', 'nota': p.get('nota') or ''})
             capas['modelo'] += 1
         else:
             # Sin propuesta sale como vino: se ve en el Excel y queda pendiente.
-            nombres[crudo] = crudo
-            pendientes.append({'crudo': crudo, 'propuesta': '', 'capa': 'sin propuesta', 'nota': ''})
+            repartos[crudo] = {'TIT PRINC': crudo}
+            pendientes.append({'crudo': crudo, 'propuesta': {}, 'capa': 'sin propuesta', 'nota': ''})
             capas['sin propuesta'] += 1
-    return nombres, pendientes, capas
+    return repartos, pendientes, capas
 
 
 def frenar_si_desordenado(filas):
     for antes, ahora in zip(filas, filas[1:]):
         if ahora['inicio'] <= antes['inicio']:
             sys.exit(f'\nFRENADO: horarios fuera de orden el {DIAS[ahora["inicio"].weekday()]} {ahora["inicio"]:%d/%m}.\n'
-                     f'  {antes["ref"]}: {antes["inicio"]:%H:%M} {antes["crudo"] or antes["datos"]["Programa"]}\n'
-                     f'  {ahora["ref"]}: {ahora["inicio"]:%H:%M} {ahora["crudo"] or ahora["datos"]["Programa"]}\n'
+                     f'  {antes["ref"]}: {antes["inicio"]:%H:%M} {antes["crudo"] or antes["datos"]["TIT PRINC"]}\n'
+                     f'  {ahora["ref"]}: {ahora["inicio"]:%H:%M} {ahora["crudo"] or ahora["datos"]["TIT PRINC"]}\n'
                      'Una de las dos horas está mal: revisá la grilla. En RBTV se pasa la buena con --hora FILA=HH:MM')
 
 
@@ -122,7 +154,7 @@ def avisos(bloques):
     salida = []
     for b in bloques:
         if minutos(b) > 240:
-            salida.append(f'{DIAS[b["inicio"].weekday()]} {b["inicio"]:%d/%m %H:%M} {b["datos"]["Programa"]}: '
+            salida.append(f'{DIAS[b["inicio"].weekday()]} {b["inicio"]:%d/%m %H:%M} {b["datos"]["TIT PRINC"]}: '
                           f'{minutos(b)} min, ¿falta algo después?')
     return salida
 
@@ -156,15 +188,24 @@ def main():
     diccionario = json.loads(dicc_path.read_text(encoding='utf-8')) if dicc_path.exists() else {}
     crudos = list(dict.fromkeys(f['crudo'] for f in filas if f['crudo'] is not None))
     print(f'{len(filas)} programas, {len(crudos)} nombres distintos')
-    nombres, pendientes, capas = resolver_nombres(a.senal, crudos, diccionario)
+    repartos, pendientes, capas = resolver_nombres(a.senal, crudos, diccionario)
+    sin_aprobar = {p['crudo'] for p in pendientes}
 
     for f in filas:
-        if f['crudo'] is not None:
-            f['datos']['Programa'] = nombres[f['crudo']]
+        if f['crudo'] is None:
+            continue
+        for col, valor in repartos[f['crudo']].items():
+            # Lo que el lector sacó de la grilla manda sobre lo que se separó del nombre.
+            if col == 'TIT PRINC' or f['datos'].get(col) in (None, ''):
+                f['datos'][col] = valor
+        if f['crudo'] in sin_aprobar:
+            f['datos']['REVISAR'] = 'sí'
     if hasattr(lector, 'completar'):
         lector.completar(filas)
     poner_fines(filas, leido['cierre'])
-    salida = guardar(filas, leido['canal'], AQUI / 'salida')
+    idioma = leido.get('idioma', 'es')
+    salida = guardar(filas, leido['canal'], AQUI / 'salida', idioma)
+    errores = errores_de_formato(filas, idioma)
     pendientes_de(a.senal).write_text(json.dumps(pendientes, ensure_ascii=False, indent=2), encoding='utf-8')
     anotar_corrida(a.senal, a.grillas, capas)
 
@@ -175,6 +216,12 @@ def main():
     print(f'\nTotal: {total} minutos ({total / 1440:g} días)')
     for aviso in avisos(filas):
         print(f'  AVISO: {aviso}')
+    if errores:
+        print(f'\n{len(errores)} ERRORES DE FORMATO (el sistema los rechazaría):')
+        for e in errores[:20]:
+            print(f'  {e}')
+        if len(errores) > 20:
+            print(f'  ... y {len(errores) - 20} más')
     print(f'\nEPG: {salida}')
     if pendientes:
         print(f'{len(pendientes)} nombres para aprobar: python aprobar.py {a.senal}')

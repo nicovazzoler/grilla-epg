@@ -93,7 +93,7 @@ def leer(archivos, horas_corregidas):
                 minutos = g.hora(top)
                 inicio = dia + dt.timedelta(days=1 if minutos < CORTE else 0, minutes=minutos)
                 fila = {'ref': f'{DIAS_NOMBRE[n_dia]}, fila {top + 1}', 'inicio': inicio, 'crudo': crudo,
-                        'datos': {'Ciclo': ciclo, 'Temp.': temp, 'TT': tt}}
+                        'datos': {'CICLO': ciclo, 'NRO TEMP': temp, 'TT': tt}}
                 # La 05:00 del final de un día y la 05:16 del principio del siguiente son el mismo programa.
                 if filas and (filas[-1]['crudo'], filas[-1]['datos']) == (crudo, fila['datos']):
                     continue

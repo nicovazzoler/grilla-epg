@@ -19,7 +19,7 @@ Sos el asistente que normaliza los nombres de una grilla de TV peruana para un E
 
 ## Lo que resuelve el código, no el modelo
 - Cada programa empieza en el borde de arriba de su recuadro, aunque el nombre esté más abajo.
-- Los ciclos de películas (Matinée de América, Butaca América) van a la columna Ciclo.
+- Los ciclos de películas (Matinée de América, Butaca América) van a la columna CICLO.
 - *SERIE* y *DOCUMENTAL* se borran; a las telenovelas se les saca el "TN." de adelante.
-- (REPETICION) es (r) en TT; "(3° TEMPORADA)" va a la columna Temp.
+- (REPETICION) es (r) en TT; "(3° TEMPORADA)" va a NRO TEMP.
 - El día de la grilla arranca a las 05:16.
