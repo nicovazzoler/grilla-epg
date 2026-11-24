@@ -181,6 +181,11 @@ async function verCorrida(id, enfocar = null) {
   const faltan = c.pendientes.filter((p) => p.estado !== 'aprobado');
   const listos = c.pendientes.filter((p) => p.estado === 'aprobado');
   const parecidos = faltan.filter((p) => p.capa === 'parecido');
+  const conPropuesta = faltan.filter((p) => p.propuesta && p.propuesta['TIT PRINC']);
+  const aceptarTodas = (capa) => async () => {
+    await api(`/api/corridas/${c.id}/aprobar-propuestas${capa ? `?capa=${capa}` : ''}`, { method: 'POST' });
+    verCorrida(c.id);
+  };
   const nombreSenal = (senales.find((s) => s.id === c.senal) || {}).nombre || c.senal;
 
   v.replaceChildren(
@@ -196,12 +201,10 @@ async function verCorrida(id, enfocar = null) {
     c.epg.avisos.map((a) => el('p', { class: 'alerta' }, `aviso: ${a}`)),
     el('div', { class: 'acciones' },
       el('a', { class: 'btn lleno', href: `/api/corridas/${c.id}/excel` }, 'descargar .xlsx'),
-      parecidos.length ? el('button', {
-        class: 'btn', onclick: async () => {
-          await api(`/api/corridas/${c.id}/aprobar-parecidos`, { method: 'POST' });
-          verCorrida(c.id);
-        },
-      }, `aceptar los ${parecidos.length} de parecido`) : null),
+      conPropuesta.length ? el('button', { class: 'btn', onclick: aceptarTodas('') },
+        `aceptar las ${conPropuesta.length} propuestas`) : null,
+      parecidos.length && parecidos.length < conPropuesta.length
+        ? el('button', { class: 'btn', onclick: aceptarTodas('parecido') }, `solo los ${parecidos.length} de parecido`) : null),
     el('h2', {}, faltan.length ? `revisar ${faltan.length}` : 'revisar: no queda nada'),
     faltan.length ? el('p', { class: 'ayuda' }, 'Enter acepta · Esc lo deja para después · las columnas vacías no se guardan') : null,
     el('ul', { class: 'pendientes' }, faltan.map((p) => pendiente(c, p))),
