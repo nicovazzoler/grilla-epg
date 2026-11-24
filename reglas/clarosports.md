@@ -21,6 +21,6 @@ mayúsculas.
 
 ## Lo que resuelve el código, no el modelo
 - La fecha viene mes/día y Excel la lee al revés cuando puede: se toma la que sigue a la fila anterior.
-- VIVO es (v) en TT y DIFERIDO (d); el rating y la sinopsis pasan tal cual.
+- VIVO es (v) en TT y DIFERIDO (d); el rating pasa tal cual y la columna SINOPSIS va a ARG LARGO.
 - Los FILLER se borran: el programa anterior sigue hasta que empieza el siguiente.
 - El feed (Sudamérica, México) va en el nombre del archivo.

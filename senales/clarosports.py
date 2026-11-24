@@ -75,6 +75,6 @@ def leer(archivos, horas_corregidas):
             filas.append({'ref': f'fila {n}', 'inicio': inicio, 'crudo': crudo,
                           'tipo': 'evento' if evento else None, 'ciclo': None,
                           'datos': {'TIT CAP': cap, 'TT': TT.get(limpio(aire).upper()),
-                                    'RATING': limpio(rating) or None, 'SIN LARGA': limpio(sinopsis) or None}})
+                                    'RATING': limpio(rating) or None, 'ARG LARGO': limpio(sinopsis) or None}})
     canal = '_'.join(filter(None, ['Claro_Sports', feed(archivos[0])]))
     return {'canal': canal, 'etiqueta': NOMBRE, 'filas': filas, 'cierre': fin}
