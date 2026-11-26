@@ -84,6 +84,8 @@ bueno como `esperado.xlsx` y, si hace falta, `opciones.json` (`{"semanal": true,
 
 `referencias/` no se sube: son grillas del laburo.
 
+`python -m pytest tests` prueba `marcas.py`, lo que se saca del final de un nombre en todas las señales: repetición, vivo, estreno, capítulo, temporada, año y "Parte 2". Una forma nueva se suma ahí con su caso en `tests/test_marcas.py`, y también los nombres que se tienen que quedar como están.
+
 ## La web
 
 `web/` es lo mismo con pantalla: subir las grillas, ver qué resolvió cada capa, revisar los nombres nuevos con su

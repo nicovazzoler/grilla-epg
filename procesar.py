@@ -5,6 +5,7 @@ import argparse, csv, datetime as dt, difflib, importlib, json, os, re, sys, uni
 from pathlib import Path
 from escribir_epg import DIAS, errores_de_formato, guardar, minutos, poner_fines
 import semanal
+from marcas import separar_marcas
 
 AQUI = Path(__file__).parent
 MODELO = 'claude-haiku-4-5-20251001'
@@ -252,10 +253,25 @@ def resolver_nombres(senal, crudos, diccionario):
     return repartos, pendientes, capas, problema
 
 
+def poner_marcas(fila, idioma):
+    """Saca del nombre lo que se escribe igual en todas las señales (TT, DEST, temporada, capítulo, año).
+    Lo que el lector ya puso en una columna le gana; una parte ("Parte 2") se suma al título del capítulo."""
+    fila['crudo'], marcas = separar_marcas(fila['crudo'], idioma, fila.get('tipo') == 'pelicula')
+    datos = fila['datos']
+    for columna, valor in marcas.items():
+        if columna == 'TIT CAP' and datos.get('TIT CAP'):
+            datos['TIT CAP'] = f'{datos["TIT CAP"]} - {valor}'
+        elif datos.get(columna) in (None, ''):
+            datos[columna] = valor
+
+
 def leer_grillas(senal, archivos, horas):
     """Lo que leyó el lector de la señal. Frena si los horarios no van en orden."""
     leido = importlib.import_module(f'senales.{senal}').leer(archivos, horas)
     filas = leido['filas']
+    for f in filas:
+        if f['crudo']:
+            poner_marcas(f, leido.get('idioma', 'es'))
     for i in range(1, len(filas)):
         if filas[i]['inicio'] <= filas[i - 1]['inicio']:
             raise Frenado(filas, i)
