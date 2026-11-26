@@ -124,6 +124,8 @@ python leer_epg.py salida/<archivo>.xlsx              # las filas en TSV, para g
 
 `leer_epg.py` lee el Excel con la biblioteca estándar: no hace falta openpyxl ni abrir Excel.
 
+Cómo lee cada señal, en castellano y sin código: `docs/LECTORES.md`. Lo pensado para después: `PROXIMOS.md`.
+
 El agente `revisor-epg` (en `.claude/agents/`) hace esa revisión completa: cruza el EPG con los
 pendientes, el diccionario y las reglas de la señal, y reporta por severidad. No modifica nada.
 
