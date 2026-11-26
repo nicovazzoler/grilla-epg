@@ -5,15 +5,19 @@ import unicodedata
 
 # Marcas reconocidas entre paréntesis o después de un separador. Sin acentos: se comparan normalizadas.
 TT = {
-    '(r)': ('REP', 'REPRISE', 'REPRISSE', 'REPRIS', 'REPRISS', 'REPETICION', 'REPETICAO', 'REPLAY', 'R'),
+    '(r)': ('REP', 'REPRISE', 'REPRISSE', 'REPRIS', 'REPRISS', 'REPETICION', 'REPETICAO', 'REPLAY', 'RERUN', 'REPEAT',
+            'ENCORE', 'R'),
     '(v)': ('VIVO', 'EN VIVO', 'AO VIVO', 'LIVE', 'V'),
     '(d)': ('DIFERIDO', 'DIF', 'D'),
     '(g)': ('GRABADO', 'GRAVADO', 'G'),
 }
-DEST = {'A': ('ESTRENO', 'ESTREIA', 'PREMIERE', 'INEDITO', 'INEDITA')}
-# Las únicas que se reconocen sueltas al final, sin paréntesis ni separador: ningún título termina así.
-# "VIVO" o "ESTRENO" sueltos no, porque hay programas que se llaman así ("Lo mejor de Rodeo en Vivo").
-SUELTAS = ('REP', 'REPRISE', 'REPRISSE', 'REPRIS', 'REPRISS', 'REPETICION', 'REPETICAO')
+DEST = {'A': ('ESTRENO', 'ESTREIA', 'PREMIERE', 'INEDITO', 'INEDITA', 'NEW')}
+# En Brasil "Premiere" es también una marca de canales y programas: ahí no se toma como estreno.
+DUDOSAS = {'pt': ('PREMIERE',)}
+# Las que se reconocen sueltas al final, sin paréntesis ni separador. "VIVO" suelto no, porque hay programas
+# que se llaman así ("Lo mejor de Rodeo en Vivo").
+SUELTAS = {'TT': ('REP', 'REPRISE', 'REPRISSE', 'REPRIS', 'REPRISS', 'REPETICION', 'REPETICAO'),
+           'DEST': ('ESTRENO', 'PREMIERE')}
 
 PALABRA_CAP = r'(?:EPISODIO|EPISODE|EP|CAPITULO|CAP|PROGRAMA|PROG|PGM|CHAPTER)'
 PALABRA_TEMP = r'(?:TEMPORADA|TEMP|SEASON)'
@@ -24,9 +28,11 @@ def sin_acentos(texto):
     return unicodedata.normalize('NFKD', texto).encode('ascii', 'ignore').decode().upper()
 
 
-def _marca(palabra):
+def _marca(palabra, idioma):
     """(columna, valor) si la palabra es una marca de TT o DEST conocida."""
     p = sin_acentos(palabra).strip(' .')
+    if p in DUDOSAS.get(idioma, ()):
+        return None
     for valor, formas in TT.items():
         if p in formas:
             return 'TT', valor
@@ -36,12 +42,12 @@ def _marca(palabra):
     return None
 
 
-def _una_del_final(texto):
+def _una_del_final(texto, idioma, pelicula):
     """(texto sin lo último, columna, valor) si el final del nombre es una marca, o None."""
     plano = sin_acentos(texto)
     # "(REPRISE)", "[AO VIVO]"
     if m := re.search(r'\s*[(\[]([^()\[\]]+)[)\]]$', plano):
-        if hallada := _marca(m.group(1)):
+        if hallada := _marca(m.group(1), idioma):
             return texto[:m.start()], *hallada
         if m2 := re.fullmatch(r'\s*(\d{4})\s*', m.group(1)):
             anio = int(m2.group(1))
@@ -51,11 +57,18 @@ def _una_del_final(texto):
             return texto[:m.start()], 'NRO TEMP', int(m2.group(1))
     # "| AO VIVO", " - REP"
     if m := re.search(r'(?:\s*\|\s*|\s+-\s+)([A-Z .]+)$', plano):
-        if hallada := _marca(m.group(1)):
+        if hallada := _marca(m.group(1), idioma):
             return texto[:m.start()], *hallada
-    # "BRASILEIRAO REP", "PARECE TERAPIA REPRISE."
-    if m := re.search(r'\s+(' + '|'.join(SUELTAS) + r')\.?$', plano):
-        return texto[:m.start()], 'TT', '(r)'
+    # "BRASILEIRAO REP", "PERROS ESTRENO"
+    for columna, formas in SUELTAS.items():
+        if (m := re.search(r'\s+(' + '|'.join(formas) + r')\.?$', plano)) and (hallada := _marca(m.group(1), idioma)):
+            return texto[:m.start()], *hallada
+    # "PARTE 2" va al capítulo; en una película es parte del título ("Harry Potter... Parte 2"), y después de un
+    # separador ya es parte del capítulo ("DOCUMENTAL | LA SELVA PARTE 2"), que lo resuelve el patrón.
+    if not pelicula and (m := re.search(SEPARADOR + r'(PARTE|PART|PT\.?)\s*(\d+)$', plano)) \
+            and not re.search(r'\||:|\s-\s', plano[:m.start()]):
+        palabra = texto[m.start(1):m.end(1)]
+        return texto[:m.start()], 'TIT CAP', f'{palabra[:1].upper()}{palabra[1:].lower()} {int(m.group(2))}'
     # "EPISODIO 4", "CAP. 12", "PROGRAMA 32", "PGM 7", con o sin "Nº"
     if m := re.search(SEPARADOR + PALABRA_CAP + r'\.?\s*(?:N[O°º]\.?\s*)?(\d+)$', plano):
         return texto[:m.start()], 'NRO CAP', int(m.group(1))
@@ -70,11 +83,11 @@ def _una_del_final(texto):
     return None
 
 
-def separar_marcas(texto):
+def separar_marcas(texto, idioma='es', pelicula=False):
     """(nombre sin las marcas del final, {columna: valor}). Si quitarlas dejara el nombre vacío, no se quita nada."""
     encontradas = {}
     t = texto.strip()
-    while (hallada := _una_del_final(t)) is not None:
+    while (hallada := _una_del_final(t, idioma, pelicula)) is not None:
         resto, columna, valor = hallada
         resto = resto.rstrip(' |:-')
         if not resto.strip():
