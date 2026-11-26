@@ -1,0 +1,717 @@
+{
+ "2024 BullShooter Invitational Shootout": "BullShooter Invitational Shootout",
+ "2025 Blackbird Cup - Alberta Pro Roller Hockey League": "Blackbird Cup - Alberta Pro Roller Hockey League",
+ "2025 Extreme Archery Championship": "Extreme Archery Championship",
+ "2025 Slippery Stairs": "ESPN8: The Ocho",
+ "2026 Big League Wiffle Ball World Series": {
+  "TIT PRINC": "Big League Wiffle Ball World Series",
+  "TIT TEMP": 2026
+ },
+ "2026 Golden Tee Golf World Championship": {
+  "TIT PRINC": "Golden Tee Golf World Championship",
+  "TIT TEMP": 2026
+ },
+ "2026 Housekeeping Games": {
+  "TIT PRINC": "Housekeeping Games",
+  "TIT TEMP": 2026
+ },
+ "2026 National Putting Tour's \"The Putting Zone Shootout\"": {
+  "TIT PRINC": "National Putting Tour's \"The Putting Zone Shootout\"",
+  "TIT TEMP": 2026
+ },
+ "2026 Nok Hockey Championship": {
+  "TIT PRINC": "Nok Hockey Championship",
+  "TIT TEMP": 2026
+ },
+ "2026 OmegaBall Men's Championship": {
+  "TIT PRINC": "OmegaBall Men's Championship",
+  "TIT TEMP": 2026
+ },
+ "2026 Pop-A-Shot 2026 Championship Chicago Qualifier": "Pop-A-Shot 2026 Championship Chicago Qualifier",
+ "2026 Roofball U.S. Open": {
+  "TIT PRINC": "Roofball US Open",
+  "TIT TEMP": 2026
+ },
+ "2026 World Dog Surfing Championships Best Waves": {
+  "TIT PRINC": "World Dog Surfing Championships Best Waves",
+  "TIT TEMP": 2026
+ },
+ "30 For 30: Jordan Rides The Bus": "30 for 30",
+ "30 For 30: Playing For The Mob": {
+  "TIT CAP": "Playing For The Mob",
+  "TIT PRINC": "30 for 30"
+ },
+ "30 For 30: Requiem For The Big East": {
+  "TIT CAP": "Requiem For The Big East",
+  "TIT PRINC": "30 for 30"
+ },
+ "30 for 30: 14 Days in Gainesville": {
+  "TIT CAP": "14 Days in Gainesville",
+  "TIT PRINC": "30 for 30"
+ },
+ "30 for 30: Give Me The Ball!": {
+  "TIT CAP": "Give Me The Ball!",
+  "TIT PRINC": "30 for 30"
+ },
+ "30 for 30: The Greatest Mixtape Ever": "30 for 30",
+ "30 for 30: The Tuck Rule": "30 for 30",
+ "ACC Legends: Leonard Hamilton": "ACC Legends: Leonard Hamilton",
+ "ATP 1000 Tennis Next Gen ATP Finals": {
+  "TIPO": "evento",
+  "TIT PRINC": "ATP 1000 - Next Gen ATP Finals"
+ },
+ "ATP 1000 Tennis Nitto ATP Finals": {
+  "TIPO": "evento",
+  "TIT PRINC": "ATP 1000 - Nitto ATP Finals"
+ },
+ "AWA Wiffle Ball at The Ocho": "AWA Wiffle Ball at The Ocho",
+ "Action Sports Best of BMX: X Games Salt Lake City 2025": "Best of BMX: X Games Salt Lake City",
+ "Action Sports Best of Skateboard: X Games Salt Lake City 2025": "Best of Skateboard: X Games Salt Lake City",
+ "Action Sports Red Bull Flugtag Cincinnati": "Red Bull Flugtag Cincinnati",
+ "Action Sports Red Bull Flugtag: Dallas": "Red Bull Flugtag: Dallas",
+ "Action Sports Red Bull Non-Stock 600": "Red Bull Non-Stock 600",
+ "Action Sports Red Bull Spin Off: DC": "Red Bull Spin Off: DC",
+ "Action Sports Top 10 Countdown: X Games Salt Lake City 2025": "Top 10 Countdown: X Games Salt Lake City",
+ "Action Sports X Games Aspen 2025: Trending Moments - Part 1": "X Games Aspen: Trending Moments",
+ "Action Sports X Games Aspen 2025: Trending Moments - Part 2": "X Games Aspen: Trending Moments",
+ "Action Sports X Games Desert Assassins - Monster Energy Team at King of the Hammers": "X Games Desert Assassins - Monster Energy Team at King of the Hammers",
+ "Action Sports X Games Japan 2023: Trending Moments": "X Games Japan: Trending Moments",
+ "Action Sports X Games Osaka Recap": "X Games Osaka Recap",
+ "Action Sports X Games Presents: Best of Real BMX": "X Games Presents",
+ "Action Sports X Games Presents: Best of Real Street": "X Games Presents",
+ "Action Sports X Games Presents: Monster Energy Trail of Missions 2025": "X Games Presents",
+ "Action Sports X Games Presents: Real MTB": "X Games Presents",
+ "Bare Knuckle Fighting Ice Wars": "Bare Knuckle Fighting",
+ "Basketball 30 for 30: Stolen Gold": {
+  "TIT CAP": "Stolen Gold",
+  "TIT PRINC": "30 for 30"
+ },
+ "Basketball Inside the NBA": "Inside the NBA",
+ "Basketball NBA Action": "NBA Action",
+ "Basketball NBA Courtside": "NBA Courtside",
+ "Basketball NBA Tip-Off": "NBA Tip-Off",
+ "Basketball NBA Today": "NBA Today",
+ "Basketball WNBA Countdown": "WNBA Countdown",
+ "Basketball WNBA Semifinals": {
+  "TIT CAP": "Semifinal",
+  "TIT PRINC": "WNBA"
+ },
+ "Basketball: A Love Story Basketball: A Love Story": "A Love Story",
+ "Best of SC: Stories 2026": {
+  "TIT PRINC": "Best of SC: Stories",
+  "TIT TEMP": "2026"
+ },
+ "Big Day with Peter Schrager": "Big Day with Peter Schrager",
+ "Bike Polo Championship": "Bike Polo Championship",
+ "Blade Masters: Axe & Knife Throwing": "Blade Masters: Axe & Knife Throwing",
+ "Blaster Tag Invitational": "Blaster Tag Invitational",
+ "Bottlesbee Pro Tour": "Bottlesbee Pro Tour",
+ "Brewskee-Ball: Legends of the Lane": "Brewskee-Ball: Legends of the Lane",
+ "Bronco Off Course, Desert Scramble": "Bronco Off Course, Desert Scramble",
+ "Bullshooter Invitational V": "Bullshooter Invitational V",
+ "CONCACAF Caribbean Cup Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "CONCACAF Caribbean Cup"
+ },
+ "Combat Archery All Stars": "Combat Archery All Stars",
+ "Concacaf W Qualifiers Soccer 2026 Concacaf W Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "CONCACAF W Qualifiers",
+  "TIT TEMP": "2026"
+ },
+ "Concacaf W Qualifiers Soccer 2026 Concacaf W Championship (3rd Place Match)": {
+  "TIT CAP": "CONCACAF W Championship, 3rd Place Match",
+  "TIT PRINC": "CONCACAF W Qualifiers",
+  "TIT TEMP": "2026"
+ },
+ "Cross Country Running NCAA Cross Country Championship": "NCAA Cross Country Championship",
+ "Cycling 30 for 30: LANCE (Part 1)": "30 for 30",
+ "Cycling 30 for 30: LANCE (Part 2)": "30 for 30",
+ "Diving Chess: World Tour": "Diving Chess: World Tour",
+ "Dods Diving League - World Tour 2025 - Arendal": {
+  "TIT PRINC": "Dods Diving League",
+  "TIT TEMP": 2025
+ },
+ "Dogs 2023 Corgi Races at the Emerald Downs": "Dogs Corgi Races at the Emerald Downs",
+ "Dogs 2026 Corgi Races at Emerald Downs": {
+  "TIT PRINC": "Dogs Corgi Races at Emerald Downs",
+  "TIT TEMP": 2026
+ },
+ "Donk Toss Bikini Island Challenge": "Donk Toss Bikini Island Challenge",
+ "E60: Heart of Pearl": {
+  "TIT CAP": "Heart of Pearl",
+  "TIT PRINC": "E60"
+ },
+ "E60: Mayra": {
+  "TIT CAP": "Mayra",
+  "TIT PRINC": "E60"
+ },
+ "E60: Second Wind: The Boomer and Gunnar Esiason Story": {
+  "TIT CAP": "Second Wind: The Boomer and Gunnar Esiason Story",
+  "TIT PRINC": "E60"
+ },
+ "ESPN Films Presents \"30 for 30: The Gospel According to Mac\"": {
+  "TIT CAP": "The Gospel According to Mac\"",
+  "TIT PRINC": "30 for 30"
+ },
+ "ESPN Films Presents: The Cave of Adullam": "The Cave of Adullam",
+ "ESPN8: The Ocho Slippery Stairs: Atlantic City, New Jersey": "ESPN8: The Ocho",
+ "ESPN8: The Ocho Slippery Stairs: Ocean City, Maryland": "ESPN8: The Ocho",
+ "ESPN8: The Ocho Slippery Stairs: Rock Hill, South Carolina": "ESPN8: The Ocho",
+ "ESports Microsoft Excel World Championship Finals": "ESports Microsoft Excel World Championship",
+ "FCS Football Selection Show": "FCS Football Selection Show",
+ "FD Racing": "FD Racing",
+ "First Take": "First Take",
+ "Fishing Flats Class Out of Office": "Fishing Flats Class Out of Office",
+ "Fishing Flats Class The Tide Master": "Flats Class",
+ "Fishing Seasons on The Fly Lodge": "Fishing Seasons on The Fly Lodge",
+ "Fishing Seasons on the Fly Bearclaw Lodge": "Seasons on the Fly",
+ "Fling Golf Lowcountry Open": "Fling Golf Lowcountry Open",
+ "FlingGolf All Star Skills Challenge": "FlingGolf All Star Skills Challenge",
+ "FlingGolf: San Diego Open": "San Diego Open",
+ "Football 30 For 30: Run Ricky Run": "30 for 30",
+ "Football 30 for 30: The Minister Of Defense": "30 for 30",
+ "Football NFL Films Presents": "NFL Films Presents",
+ "Football NFL Films Presents: Making History": {
+  "TIT CAP": "Making History",
+  "TIT PRINC": "NFL Films Presents"
+ },
+ "Football NFL Live": "NFL Live",
+ "Football NFL Matchup Week 11": {
+  "TIT CAP": "Week 11",
+  "TIT PRINC": "NFL Matchup"
+ },
+ "Football NFL Matchup Week 5": {
+  "TIT CAP": "Week 5",
+  "TIT PRINC": "NFL Matchup"
+ },
+ "Football SEC Storied: Becoming Hines Ward": {
+  "TIT CAP": "Becoming Hines Ward",
+  "TIT PRINC": "SEC Storied"
+ },
+ "Football SEC Storied: The Book of Manning": {
+  "TIT CAP": "The Book of Manning",
+  "TIT PRINC": "SEC Storied"
+ },
+ "Football Sunday NFL Countdown": "Sunday NFL Countdown",
+ "Formula 1 Motor Sports Fórmula 1 - Practice": {
+  "TIPO": "evento",
+  "TIT PRINC": "Práctica - Fórmula 1"
+ },
+ "Formula 1 Motor Sports Fórmula 1 - Qualifying": {
+  "TIPO": "evento",
+  "TIT PRINC": "Clasificación - Fórmula 1"
+ },
+ "Formula 1 Motor Sports Fórmula 1 - Race": {
+  "TIPO": "evento",
+  "TIT PRINC": "Fórmula 1"
+ },
+ "Freestyle Chess Grand Slam - Paris Final: Best Of Show": "Freestyle Chess Grand Slam - Paris Final: Best Of Show",
+ "Game On: Journey to the NCAA Championship Game On: Journey to the NCAA Women's Volleyball Championship": {
+  "TIT CAP": "Women's Volleyball",
+  "TIT PRINC": "Game On: Journey to the NCAA Championship"
+ },
+ "Game On: Journey to the NCAA Championship: FCS Football": {
+  "TIT CAP": "FCS Football",
+  "TIT PRINC": "Game On: Journey to the NCAA Championship"
+ },
+ "Get Up": "Get Up",
+ "Golf World Champions Cup": {
+  "TIPO": "evento",
+  "TIT PRINC": "World Champions Cup"
+ },
+ "Great Bahamian Crab Races": "Great Bahamian Crab Races",
+ "Hacky Sack 2026 Championship": "Hacky Sack 2026 Championship",
+ "Hollywood Steinholding Invitational": "Hollywood Steinholding Invitational",
+ "Hush Presents Pillow Fight Championship": "Pillow Fight Championship",
+ "IWL WRESTBALL 3x3": "IWL WRESTBALL 3x3",
+ "In Depth with Graham Bensinger: Adrenaline Rush": {
+  "TIT CAP": "Adrenaline Rush",
+  "TIT PRINC": "In Depth with Graham Bensinger"
+ },
+ "In Depth with Graham Bensinger: Basketball Diaries": {
+  "TIT CAP": "Basketball Diaries",
+  "TIT PRINC": "In Depth with Graham Bensinger"
+ },
+ "In Depth with Graham Bensinger: Champions of March": {
+  "TIT CAP": "Champions of March",
+  "TIT PRINC": "In Depth with Graham Bensinger"
+ },
+ "In Depth with Graham Bensinger: John McEnroe": {
+  "TIT CAP": "John McEnroe (2022)",
+  "TIT PRINC": "In Depth with Graham Bensinger"
+ },
+ "In Depth with Graham Bensinger: Pain to Power": {
+  "TIT CAP": "Pain to Power",
+  "TIT PRINC": "In Depth with Graham Bensinger"
+ },
+ "In Depth with Graham Bensinger: Wonder Women": {
+  "TIT CAP": "Wonder Women",
+  "TIT PRINC": "In Depth with Graham Bensinger"
+ },
+ "Magic City Jai-Alai Jai Alai Battle Court Jai-Alai Championship VII": "Magic City Jai-Alai Jai Alai Battle Court Jai-Alai Championship VII",
+ "Major League Paintball, 3v3 World Championship": "Major League Paintball - 3v3 World Championship",
+ "Meadowlands Racetrack Wiener Dog Derby": "Meadowlands Racetrack Wiener Dog Derby",
+ "Mixed Martial Arts 30 for 30: Be Water": "30 for 30",
+ "Motorcycle Racing MotoGP - Races": {
+  "TIPO": "evento",
+  "TIT PRINC": "Races"
+ },
+ "NBA Basketball": {
+  "TIPO": "evento",
+  "TIT PRINC": "NBA"
+ },
+ "NBA Basketball 30 For 30: Bad Boys": "30 for 30",
+ "NBA Basketball 30 for 30: This Magic Moment": "30 for 30",
+ "NBA Basketball ESPN Filmes: 30 for 30: Rodman: For Better or Worse": "30 for 30",
+ "NBA Basketball The Hoop Collective": "The Hoop Collective",
+ "NBA Basketball The Last Dance - Episode Eight": "The Last Dance",
+ "NBA Basketball The Last Dance - Episode Five": "The Last Dance",
+ "NBA Basketball The Last Dance - Episode Four": "The Last Dance",
+ "NBA Basketball The Last Dance - Episode Nine": "The Last Dance",
+ "NBA Basketball The Last Dance - Episode One": "The Last Dance",
+ "NBA Basketball The Last Dance - Episode Seven": "The Last Dance",
+ "NBA Basketball The Last Dance - Episode Six": "The Last Dance",
+ "NBA Basketball The Last Dance - Episode Three": "The Last Dance",
+ "NBA Basketball The Last Dance - Episode Two": "The Last Dance",
+ "NCAA Field Hockey Championship": "NCAA Field Hockey Championship",
+ "NCAA Football": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Football"
+ },
+ "NCAA Football ACCN Documentaries We're #1! The Story of 1981 Clemson Football": "We're #1! The Story of 1981 Clemson Football",
+ "NCAA Football Allstate Saturday Kickoff": "NCAA Football // Allstate Saturday Kickoff",
+ "NCAA Football Always College Football": "Always College Football",
+ "NCAA Football Bussin' & Pate On Campus": "NCAA Football Bussin' & Pate On Campus",
+ "NCAA Football CFP Rankings Show College Football Playoff: Top 25": "College Football Playoff: Top 25",
+ "NCAA Football College Gameday Podcast": "College Gameday Podcast",
+ "NCAA Football Decade of Dominance": "NCAA Football Decade of Dominance",
+ "NCAA Football ESPN College Football": "NCAA Football ESPN College Football",
+ "NCAA Football ESPN College Football Primetime": "NCAA Football // ESPN College Football Primetime",
+ "NCAA Football ESPN Films Presents \"30 For 30: Youngstown Boys\"": {
+  "TIT CAP": "Youngstown Boys\"",
+  "TIT PRINC": "30 for 30"
+ },
+ "NCAA Football MAC Championship Game": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Football - MAC Championship Game"
+ },
+ "NCAA Football SEC Championship on ABC": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Football"
+ },
+ "NCAA Football SEC Storied True Character": {
+  "TIT CAP": "True Character",
+  "TIT PRINC": "SEC Storied"
+ },
+ "NCAA Football SEC Storied: The Believer": {
+  "TIT CAP": "The Believer",
+  "TIT PRINC": "SEC Storied"
+ },
+ "NCAA Football SEC on ABC": "NCAA Football // SEC on ABC",
+ "NCAA Football Sun Belt Championship Game": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Football - Sun Belt Championship Game"
+ },
+ "NCAA Football The Path: LSU Football The Difference: LSU Football": "The Path: LSU Football The Difference: LSU Football",
+ "NCAA Football The Season: Ole Miss Football": "The Season: Ole Miss Football",
+ "NCAA Football Them Dawgs": {
+  "TIT CAP": "Them Dawgs",
+  "TIT PRINC": "NCAA Football"
+ },
+ "NCAA Men's Basketball": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Men's Basketball"
+ },
+ "NCAA Men's Basketball 30 For 30: I Hate Christian Laettner": {
+  "TIT CAP": "I Hate Christian Laettner",
+  "TIT PRINC": "30 for 30"
+ },
+ "NCAA Men's Basketball 30 For 30: Survive And Advance": {
+  "TIT CAP": "Survive And Advance",
+  "TIT PRINC": "30 for 30"
+ },
+ "NCAA Men's Basketball 30 for 30: One and Not Done": {
+  "TIT CAP": "One and Not Done",
+  "TIT PRINC": "30 for 30"
+ },
+ "NCAA Men's Basketball College Basketball Scoreboard": "College Basketball Scoreboard",
+ "NCAA Men's Basketball ESPN Films Presents: The Class That Saved Coach K": {
+  "TIT CAP": "The Class That Saved Coach K",
+  "TIT PRINC": "ESPN Films Presents"
+ },
+ "NCAA Men's Basketball Players Era 16 as a part of Feast Week": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Men's Basketball"
+ },
+ "NCAA Men's Basketball Players Era 16 as a part of Feast Week Presented by Lowe's (5th Place)": {
+  "TIT CAP": "Players Era 16",
+  "TIT PRINC": "NCAA Men's Basketball"
+ },
+ "NCAA Men's Basketball Players Era 16 as a part of Feast Week Presented by Lowe's (7th Place)": {
+  "TIT CAP": "Players Era 16",
+  "TIT PRINC": "NCAA Men's Basketball"
+ },
+ "NCAA Men's Basketball Players Era 16 as a part of Feast Week Presented by Lowe's (Consolation #1)": "NCAA Men's Basketball",
+ "NCAA Men's Basketball Players Era 16 as a part of Feast Week Presented by Lowe's (Consolation #2)": {
+  "TIT CAP": "Players Era 16",
+  "TIT PRINC": "NCAA Men's Basketball"
+ },
+ "NCAA Men's Basketball The Fab Five": "NCAA Men's Basketball The Fab Five",
+ "NCAA Men's Basketball The Southwest Maui Invitational as a part of Feast Week": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Men's Basketball - The Southwest Maui Invitational"
+ },
+ "NCAA Men's Basketball The Southwest Maui Invitational as a part of Feast Week Presented by Lowe's (Consolation #1)": "NCAA Men's Basketball // The Southwest Maui Invitational",
+ "NCAA Men's Basketball The Southwest Maui Invitational as a part of Feast Week Presented by Lowe's (Consolation #2)": "NCAA Men's Basketball // The Southwest Maui Invitational",
+ "NCAA Men's Basketball The Tournament: A History of ACC Men's Basketball The Tournament: A History of ACC Men's Basketball": "NCAA Men's Basketball The Tournament: A History of ACC Men's Basketball The Tournament: A History of ACC Men's Basketball",
+ "NCAA Men's Hockey SC Featured SportsCenter Featured: The Michigan": "SportsCenter Featured: The Michigan",
+ "NCAA Men's Soccer Championship": "NCAA Men's Soccer Championship",
+ "NCAA Men's Water Polo Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Men's Water Polo Championship"
+ },
+ "NCAA Studio Update": "NCAA Studio Update",
+ "NCAA Women's Basketball": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Women's Basketball"
+ },
+ "NCAA Women's Basketball E60: Only The Strong Survive": {
+  "TIT CAP": "Only The Strong Survive",
+  "TIT PRINC": "E60"
+ },
+ "NCAA Women's Soccer Championship": "NCAA Women's Soccer",
+ "NCAA Women's Soccer SEC Storied: Kick Start": {
+  "TIT CAP": "Kick Start",
+  "TIT PRINC": "SEC Storied"
+ },
+ "NCAA Women's Volleyball": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Women's Volleyball"
+ },
+ "NCAA Women's Volleyball Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Women's Volleyball Championship"
+ },
+ "NCAA Women's Volleyball NCAA Division II Women's Volleyball Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Women's Volleyball NCAA Division II Women's Volleyball Championship"
+ },
+ "NCAA Women's Volleyball NCAA Division III Women's Volleyball Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Women's Volleyball NCAA Division III Women's Volleyball Championship"
+ },
+ "NCAA Women's Volleyball The 5th Set": "NCAA Women's Volleyball The 5th Set",
+ "NCAAF College Football Countdown": "NCAAF College Football Countdown",
+ "NCAAF College Football Final": {
+  "TIT CAP": "Final",
+  "TIT PRINC": "NCAAF College Football"
+ },
+ "NCAAF College Football Live": "NCAAF College Football",
+ "NCAAF College Football Scoreboard": "NCAAF College Football Scoreboard",
+ "NCAAF College GameDay - Football College GameDay Built by The Home Depot": "NCAAF College GameDay",
+ "NCAAF Football": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAAF Football"
+ },
+ "NCAAF Football Autotrader Kickoff": "NCAAF Football // Autotrader Kickoff",
+ "NCAAF Football Championship Drive CFP Rankings Countdown": "NCAAF Football Championship Drive CFP Rankings Countdown",
+ "NCAAF Football ESPNU Instant Classic": "NCAAF Football ESPNU Instant Classic",
+ "NCAAF Football Edward Jones Big 12 Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAAF Football Edward Jones Big 12 Championship"
+ },
+ "NCAAF Football Heisman Trophy Midseason Preview": "NCAAF Football Heisman Trophy Midseason Preview",
+ "NCAAF Football LLH Healthcare American Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAAF Football LLH Healthcare American Championship , Championship"
+ },
+ "NCAAM Basketball": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAAM Basketball"
+ },
+ "NFL Football": {
+  "TIPO": "evento",
+  "TIT PRINC": "NFL"
+ },
+ "NFL Football 30 for 30: The Philly Special": "30 for 30",
+ "NFL Football Fantasy Focus": "Fantasy Focus",
+ "NFL Football Fantasy Focus Countdown": "Fantasy Focus Countdown",
+ "NFL Football Leaguewide": "Leaguewide",
+ "NFL Football Man In The Arena: Tom Brady": "Man in the Arena: Tom Brady",
+ "NFL Football Man in the Arena: Tom Brady": "Man in the Arena: Tom Brady",
+ "NFL Football Man in the Arena: Tom Brady Man in the Arena: The Wheel": "Man in the Arena: Tom Brady",
+ "NFL Football Monday Night Countdown": "NFL Football Monday Night Countdown",
+ "NFL Football Monday Night Postgame": "NFL Monday Night Postgame",
+ "NFL Football Overreaction Monday": "Overreaction Monday",
+ "NFL Football Progressive Monday Night Kickoff": "NFL Progressive Monday Night Kickoff",
+ "NFL Football SC Featured Where Wolf: The Search for ChiefsAholic": "SC Featured Where Wolf",
+ "NFL Football The Breakdown with Peyton and Kuechly": "NFL The Breakdown with Peyton and Kuechly",
+ "NFL Football The Kingdom": "The Kingdom",
+ "NFL Football The Mina Kimes Show featuring Lenny": "The Mina Kimes Show featuring Lenny",
+ "NFL Monday Night Football": {
+  "TIPO": "evento",
+  "TIT PRINC": "NFL Monday Night Football with Peyton and Eli"
+ },
+ "NFL This is Football": "This is Football",
+ "NHL Hockey": {
+  "TIPO": "evento",
+  "TIT PRINC": "NHL"
+ },
+ "NJCAA Football NJCAA DI Football National Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NJCAA Football NJCAA DI Football National Championship"
+ },
+ "NWLA All-Star Game": "NWLA All-Star Game",
+ "NWSL National Women's Soccer League": {
+  "TIPO": "evento",
+  "TIT PRINC": "NWSL National Women's Soccer League"
+ },
+ "National Ball Hockey League: 2025 Tier 1 Championship": {
+  "TIT PRINC": "National Ball Hockey League: Tier 1 Championship",
+  "TIT TEMP": 2025
+ },
+ "NuLu Bock Fest Goat Racing Championships": "NuLu Bock Fest Goat Racing Championships",
+ "OmegaBall": "OmegaBall",
+ "OmegaBall World Invitational": "OmegaBall World Invitational",
+ "Optima MotoRodeo": "Optima MotoRodeo",
+ "PaddleSmash World Championship": "PaddleSmash World Championship",
+ "Pardon The Interruption": "Pardon the Interruption",
+ "Pop-A-Shot 2025 National Championship": "Pop-A-Shot National Championship",
+ "Pop-A-Shot 2026 National Championship": {
+  "TIT PRINC": "Pop-A-Shot National Championship",
+  "TIT TEMP": 2026
+ },
+ "Pop-A-Shot Super Qualifier Boston": "Pop-A-Shot Super Qualifier Boston",
+ "Popdarts East Coast Wildcard": "Popdarts East Coast Wildcard",
+ "Premier Lacrosse League": "Premier Lacrosse League",
+ "Pro Paintball 3v3 National Championship": "Pro Paintball 3v3 National Championship",
+ "Pro Wrestling WWE Survivor Series: WarGames Special": "Pro Wrestling WWE Survivor Series: WarGames Special",
+ "Pro Wrestling WWE Wrestlepalooza Special": "WWE Wrestlepalooza Special",
+ "Pumpkin Sling Championship": "Pumpkin Sling Championship",
+ "SC Featured: The Speech": "SC Featured: The Speech",
+ "SC: Top Plays of 2026": "SC: Top Plays of 2026",
+ "SEC Storied The All-American Cuban Comet": {
+  "TIT CAP": "The All-American Cuban Comet",
+  "TIT PRINC": "SEC Storied"
+ },
+ "SEC Storied: SEVENTEEN": {
+  "TIT CAP": "SEVENTEEN",
+  "TIT PRINC": "SEC Storied"
+ },
+ "SEC Storied: Volunteer for Life": {
+  "TIT CAP": "Volunteer for Life",
+  "TIT PRINC": "SEC Storied"
+ },
+ "Saban": "Saban",
+ "SailGP Series Sailing Racing On The Edge": "Racing on the Edge",
+ "Serie A Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Serie A"
+ },
+ "Slippery Stairs at The Ocho": "ESPN8: The Ocho",
+ "Slippery Stairs: Primetime Chaos Tour": "ESPN8: The Ocho",
+ "Soccer ESPN FC Daily ESPN FC": "ESPN FC Daily",
+ "Soccer Eredivisie Highlight Show Dutch League Highlights": "Dutch League Highlights",
+ "Soccer Futbol Americas": "Futbol Americas",
+ "Soccer Italian Serie A Highlights": "Italian Serie A Highlights",
+ "Soccer USL Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "USL Championship"
+ },
+ "Southern Hoops: A History of SEC Basketball Part Five (1990-1998)": {
+  "TIT CAP": "Part Five , 1990-1998",
+  "TIT PRINC": "Southern Hoops: A History of SEC Basketball"
+ },
+ "Southern Hoops: A History of SEC Basketball Part Four (1980-1989)": {
+  "TIT CAP": "Part Four , 1980-1989",
+  "TIT PRINC": "Southern Hoops: A History of SEC Basketball"
+ },
+ "Southern Hoops: A History of SEC Basketball Part One (1930-1959)": {
+  "TIT CAP": "Part One , 1930-1959",
+  "TIT PRINC": "Southern Hoops: A History of SEC Basketball"
+ },
+ "Southern Hoops: A History of SEC Basketball Part Six (1998-2010)": {
+  "TIT CAP": "Part Six , 1998- 2010",
+  "TIT PRINC": "Southern Hoops: A History of SEC Basketball"
+ },
+ "Southern Hoops: A History of SEC Basketball Part Three (1971-1979)": {
+  "TIT CAP": "Part Three , 1971-1979",
+  "TIT PRINC": "Southern Hoops: A History of SEC Basketball"
+ },
+ "Southern Hoops: A History of SEC Basketball Part Two (1960-1970)": {
+  "TIT CAP": "Part Two , 1960-1970",
+  "TIT PRINC": "Southern Hoops: A History of SEC Basketball"
+ },
+ "Spirit of Yachting: Rolex Middle Sea Race 2026": {
+  "TIT CAP": "Rolex Middle Sea Race",
+  "TIT PRINC": "Spirit of Yachting",
+  "TIT TEMP": 2026
+ },
+ "SportsCenter": "SportsCenter",
+ "SportsCenter with Scott Van Pelt": "SportsCenter with Scott Van Pelt",
+ "Stern Pro Circuit Heads-Up Pinball Invitational": "Stern Pro Circuit Heads-Up Pinball Invitational",
+ "T-Rex World Championship Races at Emerald Downs": "T-Rex World Championship Races at Emerald Downs",
+ "Tennis ATP Uncovered ATP Tour: This Week": "ATP Tour: This Week",
+ "The 2024 Silverback Breaking Invitational": {
+  "TIT PRINC": "The Silverback Breaking Invitational",
+  "TIT TEMP": 2024
+ },
+ "The 2026 Big Boy Soap Hockey Tournament": {
+  "TIT PRINC": "The Big Boy Soap Hockey Tournament",
+  "TIT TEMP": 2026
+ },
+ "The 4th Annual BullShooter Invitational Shootout": "The 4th Annual BullShooter Invitational Shootout",
+ "The Domonique Foxworth Show": "The Domonique Foxworth Show",
+ "The Golics": "The Golics",
+ "The Goodyear Blimp Tri in the Sky": "The Goodyear Blimp Tri in the Sky",
+ "The National Dodgeball League Championship Games": "The National Dodgeball League Championship Games",
+ "The Pat McAfee Show": "The Pat McAfee Show",
+ "The Popdarts Championship": "The Popdarts Championship",
+ "The World Axe and Knife Throwing Championship IX": "The World Axe and Knife Throwing Championship IX",
+ "The World Series of Armwrestling Season 4 Finals": "The World Series of Armwrestling",
+ "TrueSouth: Athens": {
+  "TIT CAP": "Athens",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Austin, TX": {
+  "TIT CAP": "Austin, TX",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Birmingham": {
+  "TIT CAP": "Birmingham",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Bowman": {
+  "TIT CAP": "Bowman",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Buford Highway, GA": {
+  "TIT CAP": "Buford Highway, GA",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Charleston, SC": {
+  "TIT CAP": "Charleston, SC",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Clinton, GA": {
+  "TIT CAP": "Clinton, GA",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Dublin": {
+  "TIT CAP": "Dublin",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Hazen, AR": {
+  "TIT CAP": "Hazen, AR",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Jacksonville, FL": {
+  "TIT CAP": "Jacksonville, FL",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Jasper, AL": {
+  "TIT CAP": "Jasper, AL",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Lexington, TN": {
+  "TIT CAP": "Lexington, TN",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Little Rock, AR": {
+  "TIT CAP": "Little Rock, AR",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Memphis": {
+  "TIT CAP": "Memphis",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Mobile Bay": {
+  "TIT CAP": "Mobile Bay",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: New Orleans": {
+  "TIT CAP": "New Orleans",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Ocean Springs, MS": {
+  "TIT CAP": "Ocean Springs, MS",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Oklahoma City": {
+  "TIT CAP": "Oklahoma City",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Rayne, LA": {
+  "TIT CAP": "Rayne, LA",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Season Eight Behind-the-Scenes": {
+  "TIT CAP": "Season Eight Behind-the-Scenes",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Season Five, Episode Five": {
+  "TIT CAP": "Season Five, Episode Five",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Season Four, Episode Five": {
+  "TIT CAP": "Season Four, Episode Five",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Season Seven Behind-the-Scenes": {
+  "TIT CAP": "Season Seven Behind-the-Scenes",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Season Six, Episode Five": {
+  "TIT CAP": "Season Six, Episode Five",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Shreveport": {
+  "TIT CAP": "Shreveport",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: St. Louis": {
+  "TIT CAP": "St. Louis",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: The Shoals, AL": {
+  "TIT CAP": "The Shoals, AL",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Tompkinsville": {
+  "TIT CAP": "Tompkinsville",
+  "TIT PRINC": "TrueSouth"
+ },
+ "TrueSouth: Upstate, SC": {
+  "TIT CAP": "Upstate, SC",
+  "TIT PRINC": "TrueSouth"
+ },
+ "Turf Wars Adult Kickball Tournament - LIVE on ESPN8": "Turf Wars Adult Kickball Tournament - LIVE on ESPN8",
+ "Turf Wars Adult Kickball | Battle of The Stars": "Turf Wars Adult Kickball | Battle of The Stars",
+ "Turf Wars Kickball Tournament": "Turf Wars Kickball Tournament",
+ "Two Goalies All Goalie Game": "Two Goalies All Goalie Game",
+ "US Polo Association 2026 Breakaway: Polo in College": "US Polo Association Breakaway: Polo in College",
+ "US Polo Association 2026 Breakaway: Polo in the Palm Beaches": "US Polo Association Breakaway: Polo in the Palm Beaches",
+ "US Quadball Invitational": "US Quadball Invitational",
+ "USA Jigsaw Nationals": "USA Jigsaw Nationals",
+ "USA vs Canada Dodgeball Showcase": "ESPN8: The Ocho",
+ "United Grid League - New York Wolves vs Tampa Bay Brigade": "United Grid League",
+ "Unsportsmanlike with Evan, Canty and Michelle": "Unsportsmanlike with Evan, Canty and Michelle",
+ "Viii Sports 2024 National Championship": {
+  "TIT PRINC": "Viii Sports National Championship",
+  "TIT TEMP": 2024
+ },
+ "WFT World Championships of Foosball": "WFT World Championships of Foosball",
+ "WJF 20: The Ultimate Overall Championship": "WJF 20: The Ultimate Overall Championship",
+ "WWE Pro Wrestling Wrestlepalooza 2026 Kickoff Show": "Wrestlepalooza Kickoff Show",
+ "World Axe & Knife Throwing Championship 2025": {
+  "TIT PRINC": "World Axe & Knife Throwing Championship",
+  "TIT TEMP": 2025
+ },
+ "World Juggling Federation Championships": "World Juggling Federation Championships",
+ "X GAMES Skateboarding SC Featured: The 900": "SC Featured: The 900",
+ "Yachting Sailing SailGP: Abu Dhabi": {
+  "TIT CAP": "Abu Dhabi",
+  "TIT PRINC": "SailGP"
+ }
+}

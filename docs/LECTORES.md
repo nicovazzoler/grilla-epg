@@ -109,6 +109,48 @@ muevan las columnas (las lee por posición).
 
 ---
 
+## ESPN LATAM, Premium e ING — Programming Grid (Excel en lista)
+
+**Cómo viene:** un .xls por señal ("173A - Programming Grid (fecha).xls"), una fila por programa con fecha, inicio,
+fin, tipo de aire (Live, Tape, Same Day, Live Tape to Air), closed caption y un título de varios renglones: programa,
+estadio, ciudad y "TAPE: fecha". Las horas ya vienen en la de la señal. `espn_latam` lee las LATAM y Premium;
+`espn_ing` (1A, 4A, 76A, 99A) usa el mismo lector con su propio diccionario.
+
+**Qué hace:**
+- El nombre viene como "<torneo> <deporte> <partido>" ("Liga MX Soccer Puebla vs. Atlético de San Luis (Jornada 17)"): el torneo
+  con el deporte va al diccionario y TIT CAP queda equipos, instancia y estadio, sin ciudad ni país ni ranking (#9).
+- Sin partido, la instancia entre paréntesis ("(Semifinals)") va a TIT CAP con el estadio; el GP que cambia cada
+  semana ("Fórmula 1 - GP Qatar - Prácticas #1") también, y la temporada al final ("2026-2027") va a TIT TEMP.
+- Live es (v), Tape y Live Tape to Air (g), Same Day (d). Closed caption con algo es CC X.
+- Un hueco de 10 minutos o más entre el fin de un programa y el siguiente es "A confirmar" (en tramos de 720); uno
+  más corto lo absorbe el anterior.
+- Dos programas a la misma hora: los idénticos se borran (queda el hueco); si no, va el de Airing # más alto.
+- En LATAM, un partido de hasta 60 minutos o que la grilla marca "Compactos" sale "Compacto - <torneo>".
+- TIT ING y TIT CAP ING repiten TIT PRINC y TIT CAP.
+
+**Qué lo puede romper:** un deporte nuevo que no está en la lista (el partido queda entero en el nombre), que
+renombren las columnas (las busca por el encabezado) o que la columna "Last Fmt Change" empiece a traer datos en otro
+formato.
+
+---
+
+## ESPN Brasil — Schedule List (Excel en lista)
+
+**Cómo viene:** un .xls con la hoja "Schedule List": canal, fecha ("Fri 11/27/2026", mes/día), hora, nombre, LTS,
+rival y sinopsis. No trae hora de fin.
+
+**Qué hace:**
+- La fase al final del nombre ("Copa Messi: Semifinal", "MLB World Series, Jogo 5") va al capítulo, después del
+  rival: en castellano en TIT CAP ("vs.", "Cuartos de final") y en portugués en TIT CAP PORT ("x", "Quartas de final").
+- LTS: L es (v), R es (r), S es (d) y T es estreno (DEST A).
+- El último programa dura 240 minutos.
+- Sale con TIT PRINC y TIT CAP primero, como los EPG a mano, y TIT PORT, TIT ING y sus capítulos al final.
+
+**Qué lo puede romper:** una fase que no está en la lista (queda en el nombre y va al diccionario) o que cambien las
+columnas (las lee por posición).
+
+---
+
 ## Lo que tienen en común
 
 Casi todo lo que los rompe es lo mismo: **leen por posición** (la columna C, la altura en la página) y **reconocen

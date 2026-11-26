@@ -2,7 +2,8 @@
 Es para antes de un PR que toque un lector o el armado: si algo se movió sin querer, lo dice.
 
 Cada caso es una carpeta referencias/<señal>/<caso>/ con las grillas, esperado.xlsx y, si hace falta,
-opciones.json ({"semanal": true, "horas": {"288": "20:30"}}).
+opciones.json ({"semanal": true, "horas": {"288": "20:30"}, "desde": "2026-11-21 00:00"}).
+"desde" es para un esperado que cubre solo el final de la grilla: lo de antes no se compara.
 Uso: python probar.py [señal]"""
 import datetime as dt
 import json
@@ -49,6 +50,9 @@ def probar(caso):
     esperado = leer_excel(caso / 'esperado.xlsx')
 
     leido = leer_grillas(senal, grillas, horas)
+    if desde := opciones.get('desde'):
+        desde = dt.datetime.strptime(desde, '%Y-%m-%d %H:%M')
+        leido['filas'] = [f for f in leido['filas'] if f['inicio'] >= desde]
     repartos = repartos_del_esperado(leido, esperado)
     filas, _ = armar(senal, leido, repartos, set(), opciones.get('semanal', False))
     with tempfile.TemporaryDirectory() as carpeta:
