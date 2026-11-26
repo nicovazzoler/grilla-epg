@@ -119,14 +119,11 @@
   "TIT PRINC": "CONCACAF W Qualifiers",
   "TIT TEMP": "2026"
  },
- "Concacaf W Qualifiers Soccer 2026 Concacaf W Championship (3rd Place Match)": {
-  "TIT CAP": "CONCACAF W Championship, 3rd Place Match",
-  "TIT PRINC": "CONCACAF W Qualifiers",
-  "TIT TEMP": "2026"
- },
  "Cross Country Running NCAA Cross Country Championship": "NCAA Cross Country Championship",
- "Cycling 30 for 30: LANCE (Part 1)": "30 for 30",
- "Cycling 30 for 30: LANCE (Part 2)": "30 for 30",
+ "Cycling 30 for 30: LANCE": {
+  "TIPO": "evento",
+  "TIT PRINC": "30 for 30"
+ },
  "Diving Chess: World Tour": "Diving Chess: World Tour",
  "Dods Diving League - World Tour 2025 - Arendal": {
   "TIT PRINC": "Dods Diving League",
@@ -344,26 +341,11 @@
   "TIPO": "evento",
   "TIT PRINC": "NCAA Men's Basketball"
  },
- "NCAA Men's Basketball Players Era 16 as a part of Feast Week Presented by Lowe's (5th Place)": {
-  "TIT CAP": "Players Era 16",
-  "TIT PRINC": "NCAA Men's Basketball"
- },
- "NCAA Men's Basketball Players Era 16 as a part of Feast Week Presented by Lowe's (7th Place)": {
-  "TIT CAP": "Players Era 16",
-  "TIT PRINC": "NCAA Men's Basketball"
- },
- "NCAA Men's Basketball Players Era 16 as a part of Feast Week Presented by Lowe's (Consolation #1)": "NCAA Men's Basketball",
- "NCAA Men's Basketball Players Era 16 as a part of Feast Week Presented by Lowe's (Consolation #2)": {
-  "TIT CAP": "Players Era 16",
-  "TIT PRINC": "NCAA Men's Basketball"
- },
  "NCAA Men's Basketball The Fab Five": "NCAA Men's Basketball The Fab Five",
  "NCAA Men's Basketball The Southwest Maui Invitational as a part of Feast Week": {
   "TIPO": "evento",
   "TIT PRINC": "NCAA Men's Basketball - The Southwest Maui Invitational"
  },
- "NCAA Men's Basketball The Southwest Maui Invitational as a part of Feast Week Presented by Lowe's (Consolation #1)": "NCAA Men's Basketball // The Southwest Maui Invitational",
- "NCAA Men's Basketball The Southwest Maui Invitational as a part of Feast Week Presented by Lowe's (Consolation #2)": "NCAA Men's Basketball // The Southwest Maui Invitational",
  "NCAA Men's Basketball The Tournament: A History of ACC Men's Basketball The Tournament: A History of ACC Men's Basketball": "NCAA Men's Basketball The Tournament: A History of ACC Men's Basketball The Tournament: A History of ACC Men's Basketball",
  "NCAA Men's Hockey SC Featured SportsCenter Featured: The Michigan": "SportsCenter Featured: The Michigan",
  "NCAA Men's Soccer Championship": "NCAA Men's Soccer Championship",

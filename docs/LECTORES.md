@@ -120,8 +120,11 @@ estadio, ciudad y "TAPE: fecha". Las horas ya vienen en la de la señal. `espn_l
 - El nombre viene como "<torneo> <deporte> <partido>" ("Liga MX Soccer Puebla vs. Atlético de San Luis (Jornada 17)"): el torneo
   con el deporte va al diccionario y TIT CAP queda equipos, instancia, estadio, ciudad y país, sin ranking (#9) ni
   "null". Si pasa los 99 caracteres del EPG, va hasta el estadio y, si tampoco entra, hasta la instancia.
-- Sin partido, la instancia entre paréntesis ("(Semifinals)") va a TIT CAP con el estadio; el GP que cambia cada
-  semana ("Fórmula 1 - GP Qatar - Prácticas #1") también, y la temporada al final ("2026-2027") va a TIT TEMP.
+- Sin partido, la instancia entre paréntesis ("(Semifinals)") va a TIT CAP con el estadio, la ciudad y el país; el
+  GP que cambia cada semana ("Fórmula 1 - GP Qatar - Prácticas #1") también, con la práctica o la carrera, y la
+  temporada al final ("2026-2027") va a TIT TEMP.
+- El lugar solo se saca de los programas de estudio: "Studio"/"Estudio", la ciudad sola ("New York") o SportsCenter.
+  Un torneo o un evento sin instancia ("NCAA Men's Soccer Championship") lleva igual su estadio en TIT CAP.
 - Live es (v), Tape y Live Tape to Air (g), Same Day (d). Closed caption con algo es CC X.
 - Un hueco de 5 minutos o más entre el fin de un programa y el siguiente es "A confirmar" (en tramos de 720); uno
   más corto lo absorbe el anterior.

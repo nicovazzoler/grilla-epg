@@ -105,10 +105,6 @@
   "TIT PRINC": "CONCACAF W Championship",
   "TIT TEMP": 2026
  },
- "Concacaf W Qualifiers Soccer 2026 Concacaf W Championship (3rd Place Match)": {
-  "TIT PRINC": "CONCACAF W Championship",
-  "TIT TEMP": 2026
- },
  "Copa Libertadores Soccer": {
   "TIPO": "evento",
   "TIT PRINC": "Copa Libertadores"
@@ -497,8 +493,8 @@
  "Soccer Italian Serie A Highlights": "Italian Serie A Highlights",
  "Soccer Italian Serie A Highlights Goles de la Serie A": "Goles de la Serie A",
  "Soccer LALIGA Highlights Goles de LaLiga": "Goles de LaLiga",
- "Soccer Liga Expansión MX (Final (Partido de Ida))": {
-  "TIT CAP": "Final - Ida",
+ "Soccer Liga Expansión MX": {
+  "TIPO": "evento",
   "TIT PRINC": "Liga Expansión MX"
  },
  "Soccer Liga MX": {

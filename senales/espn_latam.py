@@ -30,7 +30,10 @@ DEPORTES = ('Soccer', 'Football', 'Basketball', 'Hockey', 'Rugby Union', 'Rugby 
 PARTIDO = re.compile(r'^(.*?\b(?:' + '|'.join(DEPORTES) + r'))\s+(.+?\svs\.\s.+)$')
 # Más amplio que marcas.ETAPA: en ESPN un paréntesis con estas palabras siempre es la instancia.
 ETAPA = re.compile(r'\b(?:Final|Semifinal|Quarterfinal|Cuartos|Octavos|Jornada|Fecha|Ronda|Round|Ruedas|Fase|D[ií]a|'
-                   r'Day|Championship|Game|Leg|Ida|Vuelta|Playoff)', re.I)
+                   r'Day|Championship|Game|Leg|Ida|Vuelta|Playoff|Play-In|Consolation|Place|Bracket|Group|Grupo|'
+                   r'Regional|Heat|Qualif|Clasificaci|Part)', re.I)
+# Un programa de estudio no lleva el lugar: "Studio Mexico", "Estudio ESPN Sur" o la ciudad sola ("New York").
+ESTUDIO = re.compile(r'\b(?:Studio|Estudio)\b', re.I)
 PAIS = re.compile(r'\([A-Z]{3}\)')
 # "Goles de LaLiga 2026-2027"; en "Campeón UCL 2025-2026" la temporada es parte del título de la cápsula.
 TEMPORADA = re.compile(r'\s+(\d{4}-(?:\d{4}|\d{2}))$')
@@ -58,7 +61,8 @@ def sin_numeral(texto):
 
 def instancia_al_final(texto, todas=False):
     """(texto sin la instancia, instancia o None). Con todas, cualquier paréntesis que no sea un país ("(ARG)")."""
-    m = re.search(r'\s*\(([^()]+)\)$', texto)
+    # Admite un paréntesis adentro: "(Final (Partido de Vuelta))".
+    m = re.search(r'\s*\(((?:[^()]|\([^()]*\))+)\)$', texto)
     if not m or PAIS.fullmatch(m.group(0).strip()) or not (todas or ETAPA.search(m.group(1))):
         return texto, None
     return texto[:m.start()], sin_numeral(m.group(1))
@@ -91,24 +95,24 @@ def partido_de(nombre, sitio):
 
 
 def gran_premio(nombre):
-    """("Fórmula 1 - Prácticas", "GP Las Vegas - Prácticas 1"): el GP cambia cada semana y va al capítulo."""
+    """("Fórmula 1 - Prácticas", "GP Las Vegas - Prácticas 1"): el GP cambia cada semana; el capítulo lleva todo lo
+    que sigue al primer guion, para no perder la práctica, la clasificación o la carrera."""
     # "MotoGP- Repsol Grand Prix of Portugal" también separa: el guion con espacio de un solo lado.
     partes = re.split(r'\s+-\s+|(?<=\S)-\s+', nombre)
     if len(partes) < 2:
         return nombre, None
-    quedan, cambia = [partes[0]], []
+    quedan, hay_gp = [partes[0]], False
     for parte in partes[1:]:
         if GRAN_PREMIO.match(parte):
-            cambia.append(parte)
-        elif m := re.match(r'^(.+?)\s+(GP\s.+)$', parte):
+            hay_gp = True
+        elif m := re.match(r'^(.+?)\s+GP\s.+$', parte):
+            hay_gp = True
             quedan.append(m.group(1))
-            cambia.append(m.group(2))
-        elif cambia and (m := re.match(r'^(.+?)\s*#(\d+)$', parte)):
-            quedan.append(m.group(1))
-            cambia.append(f'{m.group(1)} {m.group(2)}')
         else:
-            quedan.append(parte)
-    return (' - '.join(quedan), ' - '.join(cambia)) if cambia else (nombre, None)
+            quedan.append(re.sub(r'\s*#\d+$', '', parte))
+    if not hay_gp:
+        return nombre, None
+    return ' - '.join(quedan), ' - '.join(sin_numeral(p) for p in partes[1:])
 
 
 def separar(nombre, sitio):
@@ -116,16 +120,14 @@ def separar(nombre, sitio):
     if partido := partido_de(nombre, sitio):
         torneo, cap, compacto = partido
         return torneo, {'TIT CAP': cap}, True, compacto
-    datos = {}
+    datos, cap = {}, None
     nombre, instancia = instancia_al_final(nombre)
-    if instancia:
-        datos['TIT CAP'] = capitulo_con_sitio(None, instancia, sitio)[0]
     nombre, gp = gran_premio(nombre)
     if gp:
-        datos['TIT CAP'] = capitulo(gp, datos.get('TIT CAP'))
+        cap = gp
     elif m := re.search(r'\s+-\s+([^-]+?)\s*#(\d+)$', nombre):
         # "LPF 2026 - Resumen Fecha #16": lo que cambia cada semana va al capítulo.
-        datos['TIT CAP'] = capitulo(f'{m.group(1)} {m.group(2)}', datos.get('TIT CAP'))
+        cap = f'{m.group(1)} {m.group(2)}'
         nombre = f'{nombre[:m.start()]} - {m.group(1)}'
     elif m := re.search(r'\s+#(\d+)$', nombre):
         datos['NRO CAP'] = int(m.group(1))
@@ -133,7 +135,14 @@ def separar(nombre, sitio):
     if (m := TEMPORADA.search(nombre)) and 'Campe' not in nombre:
         datos['TIT TEMP'] = m.group(1)
         nombre = nombre[:m.start()]
+    lugar = [] if de_estudio(nombre, sitio) else sitio
+    if cap or instancia or lugar:
+        datos['TIT CAP'] = capitulo_con_sitio(cap, instancia, lugar)[0]
     return nombre, datos, bool(instancia or gp), False
+
+
+def de_estudio(nombre, sitio):
+    return not sitio or 'SportsCenter' in nombre or bool(ESTUDIO.search(sitio[0])) or sitio[0] in sitio[1:2]
 
 
 def hora(fecha, valor):
