@@ -118,19 +118,22 @@ estadio, ciudad y "TAPE: fecha". Las horas ya vienen en la de la señal. `espn_l
 
 **Qué hace:**
 - El nombre viene como "<torneo> <deporte> <partido>" ("Liga MX Soccer Puebla vs. Atlético de San Luis (Jornada 17)"): el torneo
-  con el deporte va al diccionario y TIT CAP queda equipos, instancia y estadio, sin ciudad ni país ni ranking (#9).
+  con el deporte va al diccionario y TIT CAP queda equipos, instancia, estadio, ciudad y país, sin ranking (#9) ni
+  "null". Si pasa los 99 caracteres del EPG, va hasta el estadio y, si tampoco entra, hasta la instancia.
 - Sin partido, la instancia entre paréntesis ("(Semifinals)") va a TIT CAP con el estadio; el GP que cambia cada
   semana ("Fórmula 1 - GP Qatar - Prácticas #1") también, y la temporada al final ("2026-2027") va a TIT TEMP.
 - Live es (v), Tape y Live Tape to Air (g), Same Day (d). Closed caption con algo es CC X.
-- Un hueco de 10 minutos o más entre el fin de un programa y el siguiente es "A confirmar" (en tramos de 720); uno
+- Un hueco de 5 minutos o más entre el fin de un programa y el siguiente es "A confirmar" (en tramos de 720); uno
   más corto lo absorbe el anterior.
-- Dos programas a la misma hora: los idénticos se borran (queda el hueco); si no, va el de Airing # más alto.
-- En LATAM, un partido de hasta 60 minutos o que la grilla marca "Compactos" sale "Compacto - <torneo>".
+- Dos programas a la misma hora se borran los dos: ese tramo queda "A confirmar".
+- Un partido de hasta 80 minutos (o que la grilla marca "Compactos") que no es Live sale "Compacto - <torneo>" en
+  LATAM y "Compact - <torneo>" en ING.
+- El aviso "OJO! EDICIÓN …" va por el código del programa (Sport Code): SRMB y SRLB son la edición de USA, SRCNO la
+  de Chile y BOKS "Es el show".
 - TIT ING y TIT CAP ING repiten TIT PRINC y TIT CAP.
 
 **Qué lo puede romper:** un deporte nuevo que no está en la lista (el partido queda entero en el nombre), que
-renombren las columnas (las busca por el encabezado) o que la columna "Last Fmt Change" empiece a traer datos en otro
-formato.
+renombren las columnas (las busca por el encabezado) o que ESPN cambie los códigos de programa de los avisos.
 
 ---
 
@@ -141,9 +144,10 @@ rival y sinopsis. No trae hora de fin.
 
 **Qué hace:**
 - La fase al final del nombre ("Copa Messi: Semifinal", "MLB World Series, Jogo 5") va al capítulo, después del
-  rival: en castellano en TIT CAP ("vs.", "Cuartos de final") y en portugués en TIT CAP PORT ("x", "Quartas de final").
+  rival: traducida en TIT CAP ("vs.", "Cuartos de final") y como viene en TIT CAP PORT ("x", "Quartas-de-Final").
 - LTS: L es (v), R es (r), S es (d) y T es estreno (DEST A).
-- El último programa dura 240 minutos.
+- El último programa dura 240 minutos. Un partido de hasta 80 minutos que no es L va "Compacto - " en TIT PRINC y
+  TIT PORT.
 - Sale con TIT PRINC y TIT CAP primero, como los EPG a mano, y TIT PORT, TIT ING y sus capítulos al final.
 
 **Qué lo puede romper:** una fase que no está en la lista (queda en el nombre y va al diccionario) o que cambien las

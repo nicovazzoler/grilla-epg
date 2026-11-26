@@ -10,7 +10,7 @@ KnockOut", "Soccer Futbol Picante Noche Futbol Picante".
 - Si el nombre viene repetido ("SportsCenter Medianoche SportsCenter", "Soccer ESPN F90 Chile ESPN F90"), va una
   sola vez: *SportsCenter*, *Colombia ESPN F90*.
 - Los torneos, con el nombre con que los dice ESPN: *LALIGA ea sports*, *Premier League*, *ESPN Knockout*.
-- Un aviso como "OJO! EDICIÓN …" adelante del nombre se deja: sirve para pautar.
+- "OJO! EDICIÓN …" adelante del nombre no lo escribas: lo pone el código según el programa.
 - Las siglas, como se escriben: "NBA", "NFL", "ATP", "UEFA", "CONMEBOL".
 
 ## Dudas
@@ -18,7 +18,8 @@ KnockOut", "Soccer Futbol Picante Noche Futbol Picante".
   Una persona lo revisa antes de que entre al diccionario.
 
 ## Lo que resuelve el código, no el modelo
-- El partido va a TIT CAP: equipos, instancia y estadio ("Lille vs. Bayern Munich, Final, Stade Pierre Mauroy").
-- "Compacto - " adelante lo pone el código, según la duración del partido (hasta 60 minutos): no lo escribas.
+- El partido va a TIT CAP: equipos, instancia, estadio, ciudad y país ("Lille vs. Bayern Munich, Final, Stade Pierre
+  Mauroy, Lille, France").
+- "Compacto - " adelante lo pone el código (partido de hasta 80 minutos que no es en vivo): no lo escribas.
 - TT sale del tipo de aire (Live, Tape, Same Day); los huecos de la grilla son "A confirmar".
 - TIT ING y TIT CAP ING llevan lo mismo que TIT PRINC y TIT CAP.

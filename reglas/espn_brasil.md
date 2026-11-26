@@ -17,6 +17,7 @@ en portugués y el título va en portugués.
 
 ## Lo que resuelve el código, no el modelo
 - La fase al final ("Semifinal", "Quartas-de-Final", "Jogo 5") va al capítulo, traducida al castellano en TIT CAP
-  y en portugués en TIT CAP PORT, después del rival ("River Plate vs. Atlético de Madrid, Semifinal").
+  y como viene en TIT CAP PORT, después del rival ("River Plate vs. Atlético de Madrid, Semifinal").
+- "Compacto - " adelante lo pone el código (partido de hasta 80 minutos que no es en vivo).
 - LTS: L es (v), R es (r), S es (d) y T es estreno (DEST A).
 - TIT PORT, TIT ING y sus capítulos llevan lo mismo que TIT PRINC y TIT CAP (con " x " en el rival en portugués).

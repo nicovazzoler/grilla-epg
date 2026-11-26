@@ -55,7 +55,7 @@
   "TIPO": "evento",
   "TIT PRINC": "ESPN Knockout"
  },
- "Boxing ESPN KnockOut": "OJO! EDICIÓN 'ES EL SHOW' || Boxing ESPN KnockOut",
+ "Boxing ESPN KnockOut": "Boxing ESPN KnockOut",
  "Bundesliga Soccer": {
   "TIPO": "evento",
   "TIT PRINC": "Bundesliga"
@@ -536,7 +536,7 @@
  },
  "SportsCenter": "SportsCenter",
  "SportsCenter Argentina SportsCenter": "SportsCenter",
- "SportsCenter Chile SportsCenter": "OJO! EDICIÓN CHILE || SportsCenter Chile SportsCenter",
+ "SportsCenter Chile SportsCenter": "SportsCenter Chile SportsCenter",
  "SportsCenter Medianoche SportsCenter": "SportsCenter",
  "SportsCenter Mediodía SportsCenter": "SportsCenter",
  "SportsCenter Noche SportsCenter": "SportsCenter",

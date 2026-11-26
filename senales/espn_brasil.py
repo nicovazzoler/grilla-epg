@@ -10,12 +10,11 @@ ARCHIVOS = r'^ESPN\d.*\.xls$'
 LTS = {'L': ('TT', '(v)'), 'R': ('TT', '(r)'), 'S': ('TT', '(d)'), 'T': ('DEST', 'A')}
 # La grilla no dice cuándo termina el último programa: en el EPG va con 240 minutos.
 ULTIMO = dt.timedelta(minutes=240)
-# La etapa que cierra el nombre ("Copa Messi: Semifinal", "MLB World Series, Jogo 5"): va al capítulo, traducida.
+# La etapa que cierra el nombre ("Copa Messi: Semifinal", "MLB World Series, Jogo 5") va al capítulo: traducida en
+# TIT CAP y como viene en TIT CAP PORT.
 FASE = re.compile(r'(?:Final\b.*|Semifina(?:l|is)|Quartas[- ]de[- ]Final|Oitavas[- ]de[- ]Final|'
                   r'(?:Primeira|Segunda|Terceira) Fase|Fase de Grupos|Play-Off de Acesso|Ida|Volta|Jogo \d+)', re.I)
-TRADUCCION = {'quartas de final': ('Cuartos de final', 'Quartas de final'),
-              'oitavas de final': ('Octavos de final', 'Oitavas de final'),
-              'ida': ('Ida', 'Jogo de ida'), 'volta': ('Vuelta', 'Jogo de volta')}
+TRADUCCION = {'quartas de final': 'Cuartos de final', 'oitavas de final': 'Octavos de final', 'volta': 'Vuelta'}
 
 
 def rival(texto):
@@ -32,9 +31,8 @@ def fase(nombre):
     if corte == len(partes):
         return nombre, None, None
     fases = [p.group(0).strip() for p in partes[corte:]]
-    es = [TRADUCCION.get(f.lower().replace('-', ' '), (f, f))[0] for f in fases]
-    pt = [TRADUCCION.get(f.lower().replace('-', ' '), (f, f))[1] for f in fases]
-    return nombre[:partes[corte].start()].rstrip(' :,'), ' - '.join(es), ' - '.join(pt)
+    es = [TRADUCCION.get(f.lower().replace('-', ' '), f) for f in fases]
+    return nombre[:partes[corte].start()].rstrip(' :,'), ' - '.join(es), ' - '.join(fases)
 
 
 def hora(valor):
@@ -69,12 +67,18 @@ def leer(archivos, horas_corregidas):
                 datos['TIT TEMP'] = m.group(1)
                 crudo = crudo[:m.start()]
             filas.append({'ref': f'fila {n + 1}', 'inicio': inicio, 'crudo': crudo,
-                          'tipo': 'evento' if equipos else None, 'ciclo': None, 'datos': datos})
+                          'tipo': 'evento' if equipos else None, 'ciclo': None, 'datos': datos,
+                          'compacto': bool(equipos and ' vs. ' in equipos) and espn_latam.limpio(lts).upper() != 'L'})
+    cierre = filas[-1]['inicio'] + ULTIMO
+    # Sin hora de fin, la duración es hasta que empieza el siguiente.
+    for f, siguiente in zip(filas, [g['inicio'] for g in filas[1:]] + [cierre]):
+        f['compacto'] = f['compacto'] and siguiente - f['inicio'] <= espn_latam.DURACION_COMPACTO
     # El EPG a mano tiene la disposición de las señales en castellano, con el portugués al final.
     return {'canal': f'{canal or "ESPN"}_Brasil', 'etiqueta': NOMBRE, 'idioma': 'es', 'filas': filas,
-            'cierre': filas[-1]['inicio'] + ULTIMO}
+            'cierre': cierre}
 
 
 def completar(filas):
+    espn_latam.poner_compacto(filas, espn_latam.COMPACTO)
     espn_latam.copiar_titulos(filas, (('TIT PORT', 'TIT PRINC'), ('TIT CAP PORT', 'TIT CAP'),
                                       ('TIT ING', 'TIT PRINC'), ('TIT CAP ING', 'TIT CAP')))

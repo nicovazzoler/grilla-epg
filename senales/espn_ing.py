@@ -6,9 +6,10 @@ ARCHIVOS = r'^(?:' + '|'.join(espn_latam.CODIGOS_ING) + r') - Programming Grid.*
 
 
 def leer(archivos, horas_corregidas):
-    # "Compacto" es una palabra de los EPG en castellano: acá un partido corto queda con su nombre.
-    return espn_latam.leer_grilla(archivos, horas_corregidas, NOMBRE, compactos=False)
+    return espn_latam.leer_grilla(archivos, horas_corregidas, NOMBRE)
 
 
 def completar(filas):
+    espn_latam.poner_compacto(filas, 'Compact - ')
+    espn_latam.poner_avisos(filas)
     espn_latam.copiar_titulos(filas)

@@ -1,26 +1,29 @@
 """ESPN LATAM y Premium: la "Programming Grid" en .xls, una fila por programa con inicio, fin, tipo de aire y un título
 de varios renglones (programa, estadio, ciudad, "TAPE: fecha"). ESPN ING usa este mismo lector."""
-import collections
 import datetime as dt
 import re
 import unicodedata
 from pathlib import Path
 import xlrd
+from escribir_epg import TEXTO_CORTO
 
 NOMBRE = 'ESPN LATAM'
 # Las ING vienen igual pero son otra familia, con su diccionario: este lector no las toma.
 CODIGOS_ING = ('1A', '4A', '76A', '99A')
 ARCHIVOS = r'^(?!(?:' + '|'.join(CODIGOS_ING) + r') )\d+A - Programming Grid.*\.xls$'
-COLUMNAS = {'fecha': 'Date', 'inicio': 'Start', 'fin': 'End', 'emision': 'Airing #',
-            'titulo': 'Title / Competitor / Site / Tape Date', 'cc': 'Closed Caption', 'tipo': 'Type',
-            'cargada': 'Last Fmt Change'}
+COLUMNAS = {'fecha': 'Date', 'inicio': 'Start', 'fin': 'End', 'codigo': 'Sport Code',
+            'titulo': 'Title / Competitor / Site / Tape Date', 'cc': 'Closed Caption', 'tipo': 'Type'}
 TT = {'LIVE': '(v)', 'TAPE': '(g)', 'SAME DAY': '(d)', 'LIVE TAPE TO AIR': '(g)'}
 A_CONFIRMAR = 'A confirmar'
-HUECO_MINIMO = dt.timedelta(minutes=10)
+HUECO_MINIMO = dt.timedelta(minutes=5)
 # El EPG no acepta más de 720 minutos: un hueco más largo se tapa en tramos.
 TRAMO_MAXIMO = dt.timedelta(minutes=720)
-DURACION_COMPACTO = dt.timedelta(minutes=60)
+# Un partido corto que no es en vivo es un compacto.
+DURACION_COMPACTO = dt.timedelta(minutes=80)
 COMPACTO = 'Compacto - '
+# El aviso va por el código del programa (Sport Code): sirve para elegir bien la edición al pautar.
+AVISOS = {'SRMB': 'OJO! EDICIÓN DE USA', 'SRLB': 'OJO! EDICIÓN DE USA', 'SRCNO': 'OJO! EDICIÓN CHILE',
+          'BOKS': "OJO! EDICIÓN 'ES EL SHOW'"}
 # El nombre viene como "<torneo> <deporte> <partido>": el deporte es lo único fijo para saber dónde se corta.
 DEPORTES = ('Soccer', 'Football', 'Basketball', 'Hockey', 'Rugby Union', 'Rugby League', 'Tennis', 'Boxing',
             'Baseball', 'Volleyball', 'Golf', 'Motor Sports', 'Motorcycle Racing', 'Cricket', 'Handball', 'MMA')
@@ -42,10 +45,11 @@ def limpio(texto):
 
 
 def renglones(titulo):
-    """(nombre, estadio o None): el primer renglón es el programa, el segundo el estadio; la ciudad y el TAPE no van."""
+    """(nombre, [estadio, ciudad, …, país]): el primer renglón es el programa; el TAPE y el "null" no van."""
     todos = [limpio(r) for r in str(titulo).replace('\r', '').split('\n') if r.strip()]
     sitio = [r for r in todos[1:] if not r.startswith('TAPE:')]
-    return (todos[0] if todos else ''), (sitio[0] if sitio else None)
+    partes = sitio[:1] + [p.strip() for r in sitio[1:] for p in r.split(',')]
+    return (todos[0] if todos else ''), [p for p in partes if p and p.lower() != 'null']
 
 
 def sin_numeral(texto):
@@ -64,8 +68,18 @@ def capitulo(*partes):
     return ', '.join(p for p in partes if p) or None
 
 
-def partido_de(nombre, estadio):
-    """(torneo con el deporte, TIT CAP, si es un compacto) o None si el nombre no es un partido."""
+def capitulo_con_sitio(equipos, instancia, sitio):
+    """(TIT CAP, hasta dónde llegó): todo lo que venga mientras entre en el EPG; si no, hasta el estadio y, si
+    tampoco, hasta el último elemento que entre."""
+    for hasta, partes in (('todo', [equipos, instancia, *sitio]), ('estadio', [equipos, instancia, *sitio[:1]]),
+                          ('instancia', [equipos, instancia]), ('equipos', [equipos])):
+        if (cap := capitulo(*partes)) is None or len(cap) <= TEXTO_CORTO:
+            return cap, hasta
+    return capitulo(equipos)[:TEXTO_CORTO], 'cortado'
+
+
+def partido_de(nombre, sitio):
+    """(torneo con el deporte, TIT CAP, si la grilla dice "Compactos") o None si el nombre no es un partido."""
     if not (m := PARTIDO.match(nombre)):
         return None
     torneo, partido = m.group(1), m.group(2)
@@ -73,7 +87,7 @@ def partido_de(nombre, estadio):
     partido = partido.removeprefix('Compactos ')
     equipos, instancia = instancia_al_final(partido, todas=True)
     equipos = re.sub(r'(^|\s)#\d+\s', r'\1', equipos)
-    return torneo, capitulo(equipos, instancia, estadio), compacto
+    return torneo, capitulo_con_sitio(equipos, instancia, sitio)[0], compacto
 
 
 def gran_premio(nombre):
@@ -97,15 +111,15 @@ def gran_premio(nombre):
     return (' - '.join(quedan), ' - '.join(cambia)) if cambia else (nombre, None)
 
 
-def separar(nombre, estadio):
+def separar(nombre, sitio):
     """(crudo para el diccionario, {columna: valor}, si es un evento, si es un compacto)."""
-    if partido := partido_de(nombre, estadio):
+    if partido := partido_de(nombre, sitio):
         torneo, cap, compacto = partido
         return torneo, {'TIT CAP': cap}, True, compacto
     datos = {}
     nombre, instancia = instancia_al_final(nombre)
     if instancia:
-        datos['TIT CAP'] = capitulo(instancia, estadio)
+        datos['TIT CAP'] = capitulo_con_sitio(None, instancia, sitio)[0]
     nombre, gp = gran_premio(nombre)
     if gp:
         datos['TIT CAP'] = capitulo(gp, datos.get('TIT CAP'))
@@ -144,25 +158,13 @@ def filas_de(archivo, horas_corregidas):
         fin = hora(dia, v[col['fin']])
         if fin <= inicio:
             fin += dt.timedelta(days=1)
-        emision = str(v[col['emision']]).strip()
-        salida.append({'n': n + 1, 'inicio': inicio, 'fin': fin, 'v': v, 'col': col, 'valores': tuple(map(str, v)),
-                       'orden': (str(v[col['cargada']]).strip() if 'cargada' in col else '',
-                                 int(emision) if emision.isdigit() else 0)})
+        salida.append({'n': n + 1, 'inicio': inicio, 'fin': fin, 'v': v, 'col': col})
     return salida
 
 
 def sin_superpuestos(filas):
-    """Dos programas a la misma hora: va el que se cargó último ("Last Fmt Change" y, si viene vacía, el Airing # más
-    alto). Los idénticos se borran todos: el hueco que dejan se tapa con "A confirmar"."""
-    salida = []
-    for _, grupo in _por_inicio(filas):
-        if len(grupo) == 1:
-            salida += grupo
-            continue
-        veces = collections.Counter(f['valores'] for f in grupo)
-        if distintas := [f for f in grupo if veces[f['valores']] == 1]:
-            salida.append(max(distintas, key=lambda f: f['orden']))
-    return salida
+    """Dos programas a la misma hora no se sabe cuál va: se borran todos y ese tramo queda "A confirmar"."""
+    return [f for _, grupo in _por_inicio(filas) if len(grupo) == 1 for f in grupo]
 
 
 def _por_inicio(filas):
@@ -184,21 +186,23 @@ def huecos(desde, hasta):
     return filas
 
 
-def leer_grilla(archivos, horas_corregidas, etiqueta, compactos):
-    """El leer() de la familia; con compactos, un partido de hasta 60 minutos es un compacto."""
+def leer_grilla(archivos, horas_corregidas, etiqueta):
+    """El leer() de la familia."""
     filas, fin_anterior = [], None
     for archivo in archivos:
         for f in sin_superpuestos(filas_de(archivo, horas_corregidas)):
             v, col = f['v'], f['col']
             if fin_anterior and f['inicio'] - fin_anterior >= HUECO_MINIMO:
                 filas += huecos(fin_anterior, f['inicio'])
-            nombre, estadio = renglones(v[col['titulo']])
-            crudo, datos, evento, compacto = separar(nombre, estadio)
-            datos.update({'TT': TT.get(limpio(v[col['tipo']]).upper()), 'CC': 'X' if limpio(v[col['cc']]) else None})
-            corto = PARTIDO.match(nombre) and f['fin'] - f['inicio'] <= DURACION_COMPACTO
-            compacto = compactos and (compacto or bool(corto))
+            nombre, sitio = renglones(v[col['titulo']])
+            crudo, datos, evento, compacto = separar(nombre, sitio)
+            aire = limpio(v[col['tipo']]).upper()
+            datos.update({'TT': TT.get(aire), 'CC': 'X' if limpio(v[col['cc']]) else None})
+            corto = bool(PARTIDO.match(nombre)) and f['fin'] - f['inicio'] <= DURACION_COMPACTO
             filas.append({'ref': f'fila {f["n"]}', 'inicio': f['inicio'], 'crudo': crudo,
-                          'tipo': 'evento' if evento else None, 'ciclo': None, 'compacto': compacto, 'datos': datos})
+                          'tipo': 'evento' if evento else None, 'ciclo': None,
+                          'codigo': limpio(v[col['codigo']]), 'compacto': (compacto or corto) and aire != 'LIVE',
+                          'datos': datos})
             fin_anterior = f['fin']
     codigo = re.match(r'\s*(\d+A)\b', Path(archivos[0]).name)
     return {'canal': f'ESPN_{codigo.group(1) if codigo else "LATAM"}', 'etiqueta': etiqueta, 'idioma': 'es',
@@ -206,7 +210,7 @@ def leer_grilla(archivos, horas_corregidas, etiqueta, compactos):
 
 
 def leer(archivos, horas_corregidas):
-    return leer_grilla(archivos, horas_corregidas, NOMBRE, compactos=True)
+    return leer_grilla(archivos, horas_corregidas, NOMBRE)
 
 
 def copiar_titulos(filas, columnas=(('TIT ING', 'TIT PRINC'), ('TIT CAP ING', 'TIT CAP'))):
@@ -217,13 +221,25 @@ def copiar_titulos(filas, columnas=(('TIT ING', 'TIT PRINC'), ('TIT CAP ING', 'T
                 f['datos'][destino] = f['datos'].get(origen)
 
 
-def completar(filas):
-    # El diccionario guarda el torneo sin "Compacto - ": que lo sea o no lo decide la duración de cada fila.
+def poner_compacto(filas, prefijo):
+    # El diccionario guarda el torneo sin el prefijo: que sea compacto lo decide cada fila.
+    for f in filas:
+        if f['crudo'] is None:
+            continue
+        titulo = (f['datos'].get('TIT PRINC') or '').removeprefix(COMPACTO).removeprefix('Compact - ')
+        if f.get('compacto') and not titulo.startswith(('ESPN Compact', 'Compact')):
+            titulo = prefijo + titulo
+        f['datos']['TIT PRINC'] = titulo
+
+
+def poner_avisos(filas):
     for f in filas:
         titulo = f['datos'].get('TIT PRINC') or ''
-        if f['crudo'] is not None:
-            titulo = titulo.removeprefix(COMPACTO)
-            if f.get('compacto') and not titulo.startswith('ESPN Compact'):
-                titulo = COMPACTO + titulo
-            f['datos']['TIT PRINC'] = titulo
+        if (aviso := AVISOS.get(f.get('codigo'))) and not titulo.startswith('OJO!'):
+            f['datos']['TIT PRINC'] = f'{aviso} || {titulo}'
+
+
+def completar(filas):
+    poner_compacto(filas, COMPACTO)
+    poner_avisos(filas)
     copiar_titulos(filas)
