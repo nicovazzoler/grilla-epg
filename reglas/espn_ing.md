@@ -8,6 +8,8 @@ EPG. La grilla escribe el deporte en el medio del nombre: "NCAA Football ESPN Co
 - El deporte que la grilla repite ("Football", "Basketball") no va cuando ya está en el nombre de la liga:
   "NBA Basketball" → *NBA*; "NFL Football Monday Night Postgame" → *NFL Monday Night Postgame*.
 - "Presented by …" no va (lo saca el código antes).
+- Las series documentales ("30 for 30", "E60", "SC Featured") son el título y el documental, el capítulo: eso lo separa
+  el código. "ESPN Films" es un ciclo y el documental es el título.
 - "OJO! EDICIÓN DE USA ||" adelante del nombre no lo escribas: lo pone el código según el programa.
 
 ## Dudas

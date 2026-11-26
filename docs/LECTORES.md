@@ -123,8 +123,11 @@ estadio, ciudad y "TAPE: fecha". Las horas ya vienen en la de la señal. `espn_l
 - Sin partido, la instancia entre paréntesis ("(Semifinals)") va a TIT CAP con el estadio, la ciudad y el país; el
   GP que cambia cada semana ("Fórmula 1 - GP Qatar - Prácticas #1") también, con la práctica o la carrera, y la
   temporada al final ("2026-2027") va a TIT TEMP.
-- El lugar solo se saca de los programas de estudio: "Studio"/"Estudio", la ciudad sola ("New York") o SportsCenter.
-  Un torneo o un evento sin instancia ("NCAA Men's Soccer Championship") lleva igual su estadio en TIT CAP.
+- El lugar va solo en torneos y eventos: partidos, GP, lo que trae instancia y los campeonatos sin ella ("NCAA Men's
+  Soccer Championship"). Un programa no lo lleva, ni de estudio ni desde un estadio ("NFL Live" en el Superdome).
+- Series documentales ("30 for 30", "E60", "SC Featured", "In Depth with Graham Bensinger"): la serie es el programa
+  y lo que sigue, el capítulo. "ESPN Films" (y "ESPN Filmes" en Brasil) es un ciclo: va a CICLO, el documental a TIT
+  PRINC y la fila es película, así en un semanal pasa a su ciclo.
 - Live es (v), Tape y Live Tape to Air (g), Same Day (d). Closed caption con algo es CC X.
 - Un hueco de 5 minutos o más entre el fin de un programa y el siguiente es "A confirmar" (en tramos de 720); uno
   más corto lo absorbe el anterior.

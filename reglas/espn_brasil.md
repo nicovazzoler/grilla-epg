@@ -7,7 +7,8 @@ en portugués y el título va en portugués.
 - Solo la primera letra del nombre y los nombres propios con mayúscula: *Basquete universitário*,
   *Show da rodada da Premier League*, *Campeonato italiano*. Las siglas y las marcas, como se escriben: *NBA*,
   *SportsCenter*, *ESPN KnockOut*, *UEFA Champions League*.
-- Lo que está antes de los dos puntos queda si es parte del nombre ("ATP Masters 1000: Paris"); "ESPN Filmes:" no va.
+- Lo que está antes de los dos puntos queda si es parte del nombre ("ATP Masters 1000: Paris"). "ESPN Filmes" es un
+  ciclo: lo separa el código y el título es el documental ("Setting the Tempo").
 - Si después de los dos puntos viene lo que cambia cada vez (un invitado, un tema), va a TIT CAP:
   "Bola da Vez: Joyce Ardies" → TIT PRINC *Bola da vez*, TIT CAP *Joyce Ardies*.
 

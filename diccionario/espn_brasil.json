@@ -12,6 +12,7 @@
   "TIT PRINC": "WTA Tour Magazine",
   "TIT TEMP": "2026"
  },
+ "30 for 30": "30 for 30",
  "AFC Champions League Elite": {
   "TIPO": "evento",
   "TIT PRINC": "AFC Champions League Elite"
@@ -184,12 +185,6 @@
   "TIT PRINC": "Destaques da CONMEBOL Libertadores",
   "TIT TEMP": "2026"
  },
- "ESPN Filmes: 30 for 30: Give Me The Ball!": {
-  "TIT CAP": "Give Me The Ball",
-  "TIT PRINC": "30 for 30"
- },
- "ESPN Filmes: Saban": "Saban",
- "ESPN Filmes: Setting the Tempo": "Setting the Tempo",
  "ESPN KnockOut": {
   "TIPO": "evento",
   "TIT PRINC": "ESPN KnockOut"
@@ -514,6 +509,8 @@
   "TIPO": "evento",
   "TIT PRINC": "SEC/ACC Men's Challenge, a Wendy's Blockbuster"
  },
+ "Saban": "Saban",
+ "Setting the Tempo": "Setting the Tempo",
  "Show da Rodada da EFL": "Show da rodada da EFL",
  "Show da Rodada da Premier League": "Show da rodada da Premier League",
  "Show da Rodada do Italiano": "Show da rodada do Italiano",

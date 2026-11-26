@@ -57,17 +57,21 @@ def leer(archivos, horas_corregidas):
             inicio = dia + hora(horas_corregidas.get(n + 1, h))
             nombre = re.sub(r'\s*\(se necessário\)', '', espn_latam.limpio(nombre))
             crudo, fase_es, fase_pt = fase(nombre)
-            datos = {}
+            datos, ciclo = {}, None
+            if documental := espn_latam.serie_o_ciclo(nombre):
+                crudo, datos['TIT CAP'], ciclo = documental
+                datos['CICLO'] = ciclo
             if marca := LTS.get(espn_latam.limpio(lts).upper()):
                 datos[marca[0]] = marca[1]
-            if (equipos := rival(contra)) or fase_es:
+            if ((equipos := rival(contra)) or fase_es) and not documental:
                 datos['TIT CAP'] = espn_latam.capitulo(equipos, fase_es)
                 datos['TIT CAP PORT'] = espn_latam.capitulo(equipos and equipos.replace(' vs. ', ' x '), fase_pt)
             if m := espn_latam.TEMPORADA.search(crudo):
                 datos['TIT TEMP'] = m.group(1)
                 crudo = crudo[:m.start()]
             filas.append({'ref': f'fila {n + 1}', 'inicio': inicio, 'crudo': crudo,
-                          'tipo': 'evento' if equipos else None, 'ciclo': None, 'datos': datos,
+                          'tipo': 'pelicula' if ciclo else 'evento' if equipos else None, 'ciclo': ciclo,
+                          'datos': datos,
                           'compacto': bool(equipos and ' vs. ' in equipos) and espn_latam.limpio(lts).upper() != 'L'})
     cierre = filas[-1]['inicio'] + ULTIMO
     # Sin hora de fin, la duración es hasta que empieza el siguiente.

@@ -36,25 +36,7 @@
   "TIT PRINC": "World Dog Surfing Championships Best Waves",
   "TIT TEMP": 2026
  },
- "30 For 30: Jordan Rides The Bus": "30 for 30",
- "30 For 30: Playing For The Mob": {
-  "TIT CAP": "Playing For The Mob",
-  "TIT PRINC": "30 for 30"
- },
- "30 For 30: Requiem For The Big East": {
-  "TIT CAP": "Requiem For The Big East",
-  "TIT PRINC": "30 for 30"
- },
- "30 for 30: 14 Days in Gainesville": {
-  "TIT CAP": "14 Days in Gainesville",
-  "TIT PRINC": "30 for 30"
- },
- "30 for 30: Give Me The Ball!": {
-  "TIT CAP": "Give Me The Ball!",
-  "TIT PRINC": "30 for 30"
- },
- "30 for 30: The Greatest Mixtape Ever": "30 for 30",
- "30 for 30: The Tuck Rule": "30 for 30",
+ "30 for 30": "30 for 30",
  "ACC Legends: Leonard Hamilton": "ACC Legends: Leonard Hamilton",
  "ATP 1000 Tennis Next Gen ATP Finals": {
   "TIPO": "evento",
@@ -82,10 +64,6 @@
  "Action Sports X Games Presents: Monster Energy Trail of Missions 2025": "X Games Presents",
  "Action Sports X Games Presents: Real MTB": "X Games Presents",
  "Bare Knuckle Fighting Ice Wars": "Bare Knuckle Fighting",
- "Basketball 30 for 30: Stolen Gold": {
-  "TIT CAP": "Stolen Gold",
-  "TIT PRINC": "30 for 30"
- },
  "Basketball Inside the NBA": "Inside the NBA",
  "Basketball NBA Action": "NBA Action",
  "Basketball NBA Courtside": "NBA Courtside",
@@ -120,10 +98,6 @@
   "TIT TEMP": "2026"
  },
  "Cross Country Running NCAA Cross Country Championship": "NCAA Cross Country Championship",
- "Cycling 30 for 30: LANCE": {
-  "TIPO": "evento",
-  "TIT PRINC": "30 for 30"
- },
  "Diving Chess: World Tour": "Diving Chess: World Tour",
  "Dods Diving League - World Tour 2025 - Arendal": {
   "TIT PRINC": "Dods Diving League",
@@ -135,23 +109,7 @@
   "TIT TEMP": 2026
  },
  "Donk Toss Bikini Island Challenge": "Donk Toss Bikini Island Challenge",
- "E60: Heart of Pearl": {
-  "TIT CAP": "Heart of Pearl",
-  "TIT PRINC": "E60"
- },
- "E60: Mayra": {
-  "TIT CAP": "Mayra",
-  "TIT PRINC": "E60"
- },
- "E60: Second Wind: The Boomer and Gunnar Esiason Story": {
-  "TIT CAP": "Second Wind: The Boomer and Gunnar Esiason Story",
-  "TIT PRINC": "E60"
- },
- "ESPN Films Presents \"30 for 30: The Gospel According to Mac\"": {
-  "TIT CAP": "The Gospel According to Mac\"",
-  "TIT PRINC": "30 for 30"
- },
- "ESPN Films Presents: The Cave of Adullam": "The Cave of Adullam",
+ "E60": "E60",
  "ESPN8: The Ocho Slippery Stairs: Atlantic City, New Jersey": "ESPN8: The Ocho",
  "ESPN8: The Ocho Slippery Stairs: Ocean City, Maryland": "ESPN8: The Ocho",
  "ESPN8: The Ocho Slippery Stairs: Rock Hill, South Carolina": "ESPN8: The Ocho",
@@ -166,8 +124,6 @@
  "Fling Golf Lowcountry Open": "Fling Golf Lowcountry Open",
  "FlingGolf All Star Skills Challenge": "FlingGolf All Star Skills Challenge",
  "FlingGolf: San Diego Open": "San Diego Open",
- "Football 30 For 30: Run Ricky Run": "30 for 30",
- "Football 30 for 30: The Minister Of Defense": "30 for 30",
  "Football NFL Films Presents": "NFL Films Presents",
  "Football NFL Films Presents: Making History": {
   "TIT CAP": "Making History",
@@ -222,34 +178,10 @@
  "Hollywood Steinholding Invitational": "Hollywood Steinholding Invitational",
  "Hush Presents Pillow Fight Championship": "Pillow Fight Championship",
  "IWL WRESTBALL 3x3": "IWL WRESTBALL 3x3",
- "In Depth with Graham Bensinger: Adrenaline Rush": {
-  "TIT CAP": "Adrenaline Rush",
-  "TIT PRINC": "In Depth with Graham Bensinger"
- },
- "In Depth with Graham Bensinger: Basketball Diaries": {
-  "TIT CAP": "Basketball Diaries",
-  "TIT PRINC": "In Depth with Graham Bensinger"
- },
- "In Depth with Graham Bensinger: Champions of March": {
-  "TIT CAP": "Champions of March",
-  "TIT PRINC": "In Depth with Graham Bensinger"
- },
- "In Depth with Graham Bensinger: John McEnroe": {
-  "TIT CAP": "John McEnroe (2022)",
-  "TIT PRINC": "In Depth with Graham Bensinger"
- },
- "In Depth with Graham Bensinger: Pain to Power": {
-  "TIT CAP": "Pain to Power",
-  "TIT PRINC": "In Depth with Graham Bensinger"
- },
- "In Depth with Graham Bensinger: Wonder Women": {
-  "TIT CAP": "Wonder Women",
-  "TIT PRINC": "In Depth with Graham Bensinger"
- },
+ "In Depth with Graham Bensinger": "In Depth with Graham Bensinger",
  "Magic City Jai-Alai Jai Alai Battle Court Jai-Alai Championship VII": "Magic City Jai-Alai Jai Alai Battle Court Jai-Alai Championship VII",
  "Major League Paintball, 3v3 World Championship": "Major League Paintball - 3v3 World Championship",
  "Meadowlands Racetrack Wiener Dog Derby": "Meadowlands Racetrack Wiener Dog Derby",
- "Mixed Martial Arts 30 for 30: Be Water": "30 for 30",
  "Motorcycle Racing MotoGP - Races": {
   "TIPO": "evento",
   "TIT PRINC": "Races"
@@ -258,9 +190,6 @@
   "TIPO": "evento",
   "TIT PRINC": "NBA"
  },
- "NBA Basketball 30 For 30: Bad Boys": "30 for 30",
- "NBA Basketball 30 for 30: This Magic Moment": "30 for 30",
- "NBA Basketball ESPN Filmes: 30 for 30: Rodman: For Better or Worse": "30 for 30",
  "NBA Basketball The Hoop Collective": "The Hoop Collective",
  "NBA Basketball The Last Dance - Episode Eight": "The Last Dance",
  "NBA Basketball The Last Dance - Episode Five": "The Last Dance",
@@ -285,10 +214,6 @@
  "NCAA Football Decade of Dominance": "NCAA Football Decade of Dominance",
  "NCAA Football ESPN College Football": "NCAA Football ESPN College Football",
  "NCAA Football ESPN College Football Primetime": "NCAA Football // ESPN College Football Primetime",
- "NCAA Football ESPN Films Presents \"30 For 30: Youngstown Boys\"": {
-  "TIT CAP": "Youngstown Boys\"",
-  "TIT PRINC": "30 for 30"
- },
  "NCAA Football MAC Championship Game": {
   "TIPO": "evento",
   "TIT PRINC": "NCAA Football - MAC Championship Game"
@@ -320,23 +245,7 @@
   "TIPO": "evento",
   "TIT PRINC": "NCAA Men's Basketball"
  },
- "NCAA Men's Basketball 30 For 30: I Hate Christian Laettner": {
-  "TIT CAP": "I Hate Christian Laettner",
-  "TIT PRINC": "30 for 30"
- },
- "NCAA Men's Basketball 30 For 30: Survive And Advance": {
-  "TIT CAP": "Survive And Advance",
-  "TIT PRINC": "30 for 30"
- },
- "NCAA Men's Basketball 30 for 30: One and Not Done": {
-  "TIT CAP": "One and Not Done",
-  "TIT PRINC": "30 for 30"
- },
  "NCAA Men's Basketball College Basketball Scoreboard": "College Basketball Scoreboard",
- "NCAA Men's Basketball ESPN Films Presents: The Class That Saved Coach K": {
-  "TIT CAP": "The Class That Saved Coach K",
-  "TIT PRINC": "ESPN Films Presents"
- },
  "NCAA Men's Basketball Players Era 16 as a part of Feast Week": {
   "TIPO": "evento",
   "TIT PRINC": "NCAA Men's Basketball"
@@ -347,7 +256,6 @@
   "TIT PRINC": "NCAA Men's Basketball - The Southwest Maui Invitational"
  },
  "NCAA Men's Basketball The Tournament: A History of ACC Men's Basketball The Tournament: A History of ACC Men's Basketball": "NCAA Men's Basketball The Tournament: A History of ACC Men's Basketball The Tournament: A History of ACC Men's Basketball",
- "NCAA Men's Hockey SC Featured SportsCenter Featured: The Michigan": "SportsCenter Featured: The Michigan",
  "NCAA Men's Soccer Championship": "NCAA Men's Soccer Championship",
  "NCAA Men's Water Polo Championship": {
   "TIPO": "evento",
@@ -357,10 +265,6 @@
  "NCAA Women's Basketball": {
   "TIPO": "evento",
   "TIT PRINC": "NCAA Women's Basketball"
- },
- "NCAA Women's Basketball E60: Only The Strong Survive": {
-  "TIT CAP": "Only The Strong Survive",
-  "TIT PRINC": "E60"
  },
  "NCAA Women's Soccer Championship": "NCAA Women's Soccer",
  "NCAA Women's Soccer SEC Storied: Kick Start": {
@@ -416,7 +320,6 @@
   "TIPO": "evento",
   "TIT PRINC": "NFL"
  },
- "NFL Football 30 for 30: The Philly Special": "30 for 30",
  "NFL Football Fantasy Focus": "Fantasy Focus",
  "NFL Football Fantasy Focus Countdown": "Fantasy Focus Countdown",
  "NFL Football Leaguewide": "Leaguewide",
@@ -427,7 +330,6 @@
  "NFL Football Monday Night Postgame": "NFL Monday Night Postgame",
  "NFL Football Overreaction Monday": "Overreaction Monday",
  "NFL Football Progressive Monday Night Kickoff": "NFL Progressive Monday Night Kickoff",
- "NFL Football SC Featured Where Wolf: The Search for ChiefsAholic": "SC Featured Where Wolf",
  "NFL Football The Breakdown with Peyton and Kuechly": "NFL The Breakdown with Peyton and Kuechly",
  "NFL Football The Kingdom": "The Kingdom",
  "NFL Football The Mina Kimes Show featuring Lenny": "The Mina Kimes Show featuring Lenny",
@@ -471,7 +373,7 @@
  "Pro Wrestling WWE Survivor Series: WarGames Special": "Pro Wrestling WWE Survivor Series: WarGames Special",
  "Pro Wrestling WWE Wrestlepalooza Special": "WWE Wrestlepalooza Special",
  "Pumpkin Sling Championship": "Pumpkin Sling Championship",
- "SC Featured: The Speech": "SC Featured: The Speech",
+ "SC Featured": "SC Featured",
  "SC: Top Plays of 2026": "SC: Top Plays of 2026",
  "SEC Storied The All-American Cuban Comet": {
   "TIT CAP": "The All-American Cuban Comet",
@@ -544,6 +446,8 @@
   "TIT TEMP": 2026
  },
  "The 4th Annual BullShooter Invitational Shootout": "The 4th Annual BullShooter Invitational Shootout",
+ "The Cave of Adullam": "The Cave of Adullam",
+ "The Class That Saved Coach K": "The Class That Saved Coach K",
  "The Domonique Foxworth Show": "The Domonique Foxworth Show",
  "The Golics": "The Golics",
  "The Goodyear Blimp Tri in the Sky": "The Goodyear Blimp Tri in the Sky",
@@ -691,7 +595,6 @@
   "TIT TEMP": 2025
  },
  "World Juggling Federation Championships": "World Juggling Federation Championships",
- "X GAMES Skateboarding SC Featured: The 900": "SC Featured: The 900",
  "Yachting Sailing SailGP: Abu Dhabi": {
   "TIT CAP": "Abu Dhabi",
   "TIT PRINC": "SailGP"

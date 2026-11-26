@@ -26,14 +26,24 @@ AVISOS = {'SRMB': 'OJO! EDICIÓN DE USA', 'SRLB': 'OJO! EDICIÓN DE USA', 'SRCNO
           'BOKS': "OJO! EDICIÓN 'ES EL SHOW'"}
 # El nombre viene como "<torneo> <deporte> <partido>": el deporte es lo único fijo para saber dónde se corta.
 DEPORTES = ('Soccer', 'Football', 'Basketball', 'Hockey', 'Rugby Union', 'Rugby League', 'Tennis', 'Boxing',
-            'Baseball', 'Volleyball', 'Golf', 'Motor Sports', 'Motorcycle Racing', 'Cricket', 'Handball', 'MMA')
+            'Baseball', 'Volleyball', 'Golf', 'Motor Sports', 'Motorcycle Racing', 'Cricket', 'Handball', 'MMA',
+            'Wrestling')
 PARTIDO = re.compile(r'^(.*?\b(?:' + '|'.join(DEPORTES) + r'))\s+(.+?\svs\.\s.+)$')
 # Más amplio que marcas.ETAPA: en ESPN un paréntesis con estas palabras siempre es la instancia.
 ETAPA = re.compile(r'\b(?:Final|Semifinal|Quarterfinal|Cuartos|Octavos|Jornada|Fecha|Ronda|Round|Ruedas|Fase|D[ií]a|'
                    r'Day|Championship|Game|Leg|Ida|Vuelta|Playoff|Play-In|Consolation|Place|Bracket|Group|Grupo|'
-                   r'Regional|Heat|Qualif|Clasificaci|Part)', re.I)
-# Un programa de estudio no lleva el lugar: "Studio Mexico", "Estudio ESPN Sur" o la ciudad sola ("New York").
-ESTUDIO = re.compile(r'\b(?:Studio|Estudio)\b', re.I)
+                   r'Regional|Heat|Qualif|Clasificaci)', re.I)
+# El lugar va solo en torneos y eventos: un programa (de estudio o desde un estadio) no lo lleva.
+EVENTO = re.compile(r'\b(?:Championships?|Campeonato|Cup|Copa|Tournament|Torneo|Invitational|Classic|Open)\b')
+PROGRAMA = re.compile(r'\b(?:Highlights|Show|Film|Live|Countdown|Journey|Tonight|Today)\b')
+# "MLB Baseball Milwaukee Brewers": la liga y el deporte seguidos de un equipo es un partido sin rival en la grilla.
+LIGA_Y_EQUIPO = re.compile(r'^(?:MLB|NBA|WNBA|NFL|NHL|MLS) (?:Baseball|Basketball|Football|Hockey|Soccer) \S')
+# "ESPN Films" es un ciclo de documentales, como los ciclos de cine; el documental es el título.
+CICLO = re.compile(r'ESPN (Film(?:e?s)?)(?:\s+(?:Presents|Pres\.|Presented by))?\s*:?\s*', re.I)
+# Series documentales: la serie es el programa y lo que sigue, el capítulo.
+SERIES = {'30 for 30': r'30 for 30', 'E60': r'E:?60(?: Pictures)?', 'SC Featured': r'(?:SC|SportsCenter) Featured',
+          'In Depth with Graham Bensinger': r'In Depth with Graham Bensinger'}
+SERIE = re.compile('|'.join(f'(?P<s{i}>{r})' for i, r in enumerate(SERIES.values())), re.I)
 PAIS = re.compile(r'\([A-Z]{3}\)')
 # "Goles de LaLiga 2026-2027"; en "Campeón UCL 2025-2026" la temporada es parte del título de la cápsula.
 TEMPORADA = re.compile(r'\s+(\d{4}-(?:\d{4}|\d{2}))$')
@@ -115,6 +125,30 @@ def gran_premio(nombre):
     return ' - '.join(quedan), ' - '.join(sin_numeral(p) for p in partes[1:])
 
 
+def sin_mayusculas(texto):
+    """'LANCE (Part 1)' -> 'Lance (Part 1)': una palabra toda en mayúsculas de 5 letras o más no es una sigla."""
+    return re.sub(r'\b[A-ZÁÉÍÓÚÑ]{5,}\b', lambda m: m.group(0).title(), texto)
+
+
+def limpiar_capitulo(texto):
+    texto = re.sub(r'\s+(?:Presented|Pres\.|presented) by\s+[^()]+$', '', texto.strip(' :-–"'))
+    return sin_mayusculas(texto.strip(' :-–"')) or None
+
+
+def serie_o_ciclo(nombre):
+    """(crudo, TIT CAP, ciclo) si es un documental de una serie ("30 for 30: Lance") o del ciclo ESPN Films."""
+    ciclo = None
+    if m := CICLO.search(nombre):
+        ciclo, nombre = f'ESPN {m.group(1).title()}', nombre[m.end():]
+    if series := list(SERIE.finditer(nombre)):
+        ultima = series[-1]
+        serie = list(SERIES)[int(next(k for k, v in ultima.groupdict().items() if v)[1:])]
+        return serie, limpiar_capitulo(nombre[ultima.end():]), ciclo
+    if ciclo:
+        return limpiar_capitulo(nombre), None, ciclo
+    return None
+
+
 def separar(nombre, sitio):
     """(crudo para el diccionario, {columna: valor}, si es un evento, si es un compacto)."""
     if partido := partido_de(nombre, sitio):
@@ -135,14 +169,12 @@ def separar(nombre, sitio):
     if (m := TEMPORADA.search(nombre)) and 'Campe' not in nombre:
         datos['TIT TEMP'] = m.group(1)
         nombre = nombre[:m.start()]
-    lugar = [] if de_estudio(nombre, sitio) else sitio
+    evento = bool(instancia or gp)
+    de_torneo = (EVENTO.search(nombre) or LIGA_Y_EQUIPO.match(nombre)) and not PROGRAMA.search(nombre)
+    lugar = sitio if evento or de_torneo else []
     if cap or instancia or lugar:
         datos['TIT CAP'] = capitulo_con_sitio(cap, instancia, lugar)[0]
-    return nombre, datos, bool(instancia or gp), False
-
-
-def de_estudio(nombre, sitio):
-    return not sitio or 'SportsCenter' in nombre or bool(ESTUDIO.search(sitio[0])) or sitio[0] in sitio[1:2]
+    return nombre, datos, evento, False
 
 
 def hora(fecha, valor):
@@ -204,12 +236,17 @@ def leer_grilla(archivos, horas_corregidas, etiqueta):
             if fin_anterior and f['inicio'] - fin_anterior >= HUECO_MINIMO:
                 filas += huecos(fin_anterior, f['inicio'])
             nombre, sitio = renglones(v[col['titulo']])
-            crudo, datos, evento, compacto = separar(nombre, sitio)
+            ciclo = None
+            if documental := serie_o_ciclo(nombre):
+                crudo, cap, ciclo = documental
+                datos, evento, compacto = {'TIT CAP': cap, 'CICLO': ciclo}, False, False
+            else:
+                crudo, datos, evento, compacto = separar(nombre, sitio)
             aire = limpio(v[col['tipo']]).upper()
             datos.update({'TT': TT.get(aire), 'CC': 'X' if limpio(v[col['cc']]) else None})
             corto = bool(PARTIDO.match(nombre)) and f['fin'] - f['inicio'] <= DURACION_COMPACTO
             filas.append({'ref': f'fila {f["n"]}', 'inicio': f['inicio'], 'crudo': crudo,
-                          'tipo': 'evento' if evento else None, 'ciclo': None,
+                          'tipo': 'pelicula' if ciclo else 'evento' if evento else None, 'ciclo': ciclo,
                           'codigo': limpio(v[col['codigo']]), 'compacto': (compacto or corto) and aire != 'LIVE',
                           'datos': datos})
             fin_anterior = f['fin']
