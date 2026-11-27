@@ -25,6 +25,21 @@ CASOS = [
     ('SUPERNATURAL S02E05', 'en', False, 'SUPERNATURAL', {'NRO TEMP': 2, 'NRO CAP': 5}),
     ('TITANIC (1997)', 'es', True, 'TITANIC', {'AÑO': 1997}),
     ('EL CHAVO PARTE 2', 'es', False, 'EL CHAVO', {'TIT CAP': 'Parte 2'}),
+    # Episodio entre paréntesis
+    ('SETTING THE TEMPO (EPISODE 1)', 'en', False, 'SETTING THE TEMPO', {'NRO CAP': 1}),
+    ('ESPN Filmes: Setting the Tempo (Episódio 3)', 'pt', False, 'ESPN Filmes: Setting the Tempo', {'NRO CAP': 3}),
+    ('THE KINGDOM (Ep. 4)', 'en', False, 'THE KINGDOM', {'NRO CAP': 4}),
+    # Etapa de un torneo
+    ('USL CHAMPIONSHIP (FINAL)', 'es', False, 'USL CHAMPIONSHIP', {'TIT CAP': 'FINAL'}),
+    ('Copa Potrero (Semifinal #2)', 'es', False, 'Copa Potrero', {'TIT CAP': 'Semifinal 2'}),
+    ('Rolex Paris Masters (Cuartos de Final)', 'es', False, 'Rolex Paris Masters', {'TIT CAP': 'Cuartos de Final'}),
+    ('Copa Potrero (Octavos de final)', 'es', False, 'Copa Potrero', {'TIT CAP': 'Octavos de final'}),
+    ('Copa Libertadores (Final - Vuelta)', 'es', False, 'Copa Libertadores', {'TIT CAP': 'Final - Vuelta'}),
+    ('LIGA MX (JORNADA 17)', 'es', False, 'LIGA MX', {'TIT CAP': 'JORNADA 17'}),
+    # Patrocinador
+    ('Monday Night Countdown Presented by DraftKings Sportsbook', 'en', False, 'Monday Night Countdown', {}),
+    ('WTA Finals Riyadh presented by PIF Riyadh', 'en', False, 'WTA Finals Riyadh', {}),
+    ('The Kingdom Presented by State Farm (Ep. 4)', 'en', False, 'The Kingdom', {'NRO CAP': 4}),
     # Varias juntas, de atrás para adelante
     ('LA REINA DEL SUR TEMPORADA 2 CAPITULO 14 (REPRISE)', 'es', False, 'LA REINA DEL SUR',
      {'TT': '(r)', 'NRO CAP': 14, 'NRO TEMP': 2}),
@@ -39,6 +54,15 @@ CASOS = [
     ('FUTEBOL PREMIERE', 'pt', False, 'FUTEBOL PREMIERE', {}),
     ('HARRY POTTER PARTE 2', 'es', True, 'HARRY POTTER PARTE 2', {}),
     ('DOCUMENTAL | LA SELVA PARTE 2', 'es', False, 'DOCUMENTAL | LA SELVA PARTE 2', {}),
+    ('LA HORA FINAL', 'es', False, 'LA HORA FINAL', {}),
+    ('GALA (FINALISTAS)', 'es', False, 'GALA (FINALISTAS)', {}),
+    ('PESCA (JORNADA DE PESCA)', 'es', False, 'PESCA (JORNADA DE PESCA)', {}),
+    ('SPORTSCENTER (FIN DE SEMANA)', 'es', False, 'SPORTSCENTER (FIN DE SEMANA)', {}),
+    ('ATP FINALS (ROUND ROBIN)', 'en', False, 'ATP FINALS (ROUND ROBIN)', {}),
+    ('SEC CHAMPIONSHIP PRESENTED BY DR PEPPER (CHAMPIONSHIP)', 'en', False,
+     'SEC CHAMPIONSHIP PRESENTED BY DR PEPPER (CHAMPIONSHIP)', {}),
+    ('PRESENTED BY ACME', 'en', False, 'PRESENTED BY ACME', {}),
+    ('EL CAPITAL (CAPITULO)', 'es', False, 'EL CAPITAL (CAPITULO)', {}),
 ]
 
 

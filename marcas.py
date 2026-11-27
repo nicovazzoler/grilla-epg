@@ -1,5 +1,5 @@
 """Lo que viene pegado al final de un nombre y se escribe igual en todas las señales: TT, DEST, temporada,
-capítulo y año. Lo usa procesar.py con cada fila, después del lector: lo que el lector ya sacó le gana."""
+capítulo, año, la etapa de un torneo y el patrocinador. Lo usa procesar.py con cada fila, después del lector: lo que el lector ya sacó le gana."""
 import re
 import unicodedata
 
@@ -22,6 +22,11 @@ SUELTAS = {'TT': ('REP', 'REPRISE', 'REPRISSE', 'REPRIS', 'REPRISS', 'REPETICION
 PALABRA_CAP = r'(?:EPISODIO|EPISODE|EP|CAPITULO|CAP|PROGRAMA|PROG|PGM|CHAPTER)'
 PALABRA_TEMP = r'(?:TEMPORADA|TEMP|SEASON)'
 SEPARADOR = r'(?:\s*[|:]\s*|\s+-\s+|\s+)'
+# La etapa de un torneo entre paréntesis: "(Final)", "(Semifinal #2)", "(Final - Vuelta)", "(Jornada 17)".
+ETAPA = re.compile(r'(?:(?:SEMI)?FINAL(?:ES|S)?|(?:CUARTOS|OCTAVOS|DIECISEISAVOS) DE FINAL)(?:\s*#?\s*\d+)?'
+                   r'(?:\s*-\s*(?:IDA|VUELTA))?|JORNADA\s*#?\s*\d+')
+# El patrocinador al final no es parte del nombre. Si trae un paréntesis no se toca: podría ser una marca.
+PATROCINADOR = re.compile(r'\s+(?:PRESENTED|PRES\.)\s+BY\s+[^()]+$')
 
 
 def sin_acentos(texto):
@@ -55,6 +60,14 @@ def _una_del_final(texto, idioma, pelicula):
                 return texto[:m.start()], 'AÑO', anio
         if m2 := re.fullmatch(r'\s*(\d+)\s*[°ºAª]?\s*' + PALABRA_TEMP + r'\s*', m.group(1)):
             return texto[:m.start()], 'NRO TEMP', int(m2.group(1))
+        # "(Episode 1)", "(Episódio 3)", "(Ep. 4)"
+        if m2 := re.fullmatch(r'\s*' + PALABRA_CAP + r'\.?\s*(?:N[O°º]\.?\s*)?(\d+)\s*', m.group(1)):
+            return texto[:m.start()], 'NRO CAP', int(m2.group(1))
+        if ETAPA.fullmatch(m.group(1).strip()):
+            etapa = ' '.join(texto[m.start():].strip(' ()[]').replace('#', ' ').split())
+            return texto[:m.start()], 'TIT CAP', etapa
+    if m := PATROCINADOR.search(plano):
+        return texto[:m.start()], None, None
     # "| AO VIVO", " - REP"
     if m := re.search(r'(?:\s*\|\s*|\s+-\s+)([A-Z .]+)$', plano):
         if hallada := _marca(m.group(1), idioma):
@@ -84,7 +97,8 @@ def _una_del_final(texto, idioma, pelicula):
 
 
 def separar_marcas(texto, idioma='es', pelicula=False):
-    """(nombre sin las marcas del final, {columna: valor}). Si quitarlas dejara el nombre vacío, no se quita nada."""
+    """(nombre sin las marcas del final, {columna: valor}). Si quitarlas dejara el nombre vacío, no se quita nada.
+    El patrocinador se borra sin ir a ninguna columna."""
     encontradas = {}
     t = texto.strip()
     while (hallada := _una_del_final(t, idioma, pelicula)) is not None:
@@ -92,7 +106,9 @@ def separar_marcas(texto, idioma='es', pelicula=False):
         resto = resto.rstrip(' |:-')
         if not resto.strip():
             break
-        if columna == 'NRO TEMP' and isinstance(valor, tuple):
+        if columna is None:
+            pass
+        elif columna == 'NRO TEMP' and isinstance(valor, tuple):
             encontradas.setdefault('NRO TEMP', valor[0])
             encontradas.setdefault('NRO CAP', valor[1])
         else:

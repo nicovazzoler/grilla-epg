@@ -60,6 +60,9 @@ como TIPO junto con el resto (película, evento o programa) y queda en el diccio
 | `monterrey` | PDF | Los recuadros se arman con las líneas del PDF; conductores a A1–A3 |
 | `canal51` | Word | Títulos de películas mal escritos; estreno solo la primera vez en la semana |
 | `clarosports` | Excel en lista | El torneo y el partido vienen pegados; la fecha, mes/día leída al revés |
+| `espn_latam` | Excel en lista (Programming Grid) | Las 16 LATAM y Premium: torneo, deporte y partido en un renglón; huecos y superpuestos |
+| `espn_ing` | Excel en lista (Programming Grid) | 1A, 4A, 76A y 99A: el mismo lector que LATAM, en inglés y con su diccionario |
+| `espn_brasil` | Excel en lista (Schedule List) | ESPN 2 a 5: la fase del torneo va al capítulo, traducida; sin hora de fin |
 
 Agregar una señal es sumar su lector en `senales/`, sus reglas en `reglas/` y su diccionario en `diccionario/`.
 
@@ -80,11 +83,12 @@ El Excel queda en `salida/`. Las grillas no se suben al repo.
 `python probar.py` corre cada grilla de `referencias/<señal>/<caso>/` y compara el EPG contra su `esperado.xlsx`,
 celda por celda. Los nombres los toma del esperado, así que lo que prueba es el lector y el armado, no el diccionario:
 si un cambio mueve algo sin querer, dice en qué fila y columna. Un caso nuevo es una carpeta con las grillas, el EPG
-bueno como `esperado.xlsx` y, si hace falta, `opciones.json` (`{"semanal": true, "horas": {"288": "20:30"}}`).
+bueno como `esperado.xlsx` y, si hace falta, `opciones.json` (`{"semanal": true, "horas": {"288": "20:30"}}`). Si
+el esperado cubre solo el final de la grilla, `"desde": "2026-11-21 00:00"` deja afuera lo de antes.
 
 `referencias/` no se sube: son grillas del laburo.
 
-`python -m pytest tests` prueba `marcas.py`, lo que se saca del final de un nombre en todas las señales: repetición, vivo, estreno, capítulo, temporada, año y "Parte 2". Una forma nueva se suma ahí con su caso en `tests/test_marcas.py`, y también los nombres que se tienen que quedar como están.
+`python -m pytest tests` prueba `marcas.py`, lo que se saca del final de un nombre en todas las señales: repetición, vivo, estreno, capítulo, temporada, año, "Parte 2", la etapa de un torneo ("(Semifinal #2)") y el patrocinador ("Presented by …"). Una forma nueva se suma ahí con su caso en `tests/test_marcas.py`, y también los nombres que se tienen que quedar como están.
 
 ## La web
 

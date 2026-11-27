@@ -1,0 +1,552 @@
+{
+ "2026 MLB World Series": {
+  "TIPO": "evento",
+  "TIT PRINC": "MLB World Series",
+  "TIT TEMP": "2026"
+ },
+ "2026 US Open Review Show": {
+  "TIT PRINC": "US Open Review Show",
+  "TIT TEMP": "2026"
+ },
+ "2026 WTA Tour Magazine /": {
+  "TIT PRINC": "WTA Tour Magazine",
+  "TIT TEMP": "2026"
+ },
+ "30 for 30": "30 for 30",
+ "AFC Champions League Elite": {
+  "TIPO": "evento",
+  "TIT PRINC": "AFC Champions League Elite"
+ },
+ "ATP 1000: Paris": "ATP 1000: Paris",
+ "ATP 500: Basel": "ATP 500: Basel",
+ "ATP 500: Basiléia": "ATP 500: Basiléia",
+ "ATP 500: Viena": "ATP 500: Viena",
+ "ATP 75 Florianopolis e ITF 75 Florianopolis": "ATP 75 Florianopolis e ITF 75 Florianopolis",
+ "ATP Challenger 125: Costa do Sauipe": "ATP Challenger 125: Costa do Sauipe",
+ "ATP Masters 1000: Paris": "ATP Masters 1000: Paris",
+ "ATP Masters 1000: Xangai": "ATP Masters 1000: Xangai",
+ "ATP Tour: This Week": "ATP Tour: This Week",
+ "Allstate Kickoff": "Allstate Kickoff",
+ "Americas Rugby Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "Americas Rugby Championship"
+ },
+ "Amistoso Internacional Feminino de Futebol": {
+  "TIPO": "evento",
+  "TIT PRINC": "Amistoso Internacional Feminino de Futebol"
+ },
+ "Aquece NBA": "Aquece NBA-27",
+ "Autotrader Kickoff": "Autotrader Kickoff",
+ "Basquete Universitário": "Basquete universitário",
+ "Basquete Universitário : Jimmy V Men's Classic": {
+  "TIPO": "evento",
+  "TIT PRINC": "Basquete universitário: Jimmy V Men's Classic"
+ },
+ "Basquete Universitário Feminino": {
+  "TIPO": "evento",
+  "TIT PRINC": "Basquete universitário Feminino"
+ },
+ "Basquete Universitário Feminino: SEC/ACC Men's Challenge": {
+  "TIPO": "evento",
+  "TIT PRINC": "Basquete universitário Feminino: SEC/ACC Men's Challenge"
+ },
+ "Basquete Universitário: Players Era 16": {
+  "TIPO": "evento",
+  "TIT PRINC": "Basquete universitário: Players Era 16"
+ },
+ "Basquete Universitário: SEC/ACC Men's Challenge": {
+  "TIPO": "evento",
+  "TIT PRINC": "Basquete universitário: SEC/ACC Men's Challenge"
+ },
+ "Basquete Universitário: State Farm Champions Classic": {
+  "TIPO": "evento",
+  "TIT PRINC": "Basquete universitário: State Farm Champions Classic"
+ },
+ "Bola da Vez": "Bola da vez",
+ "Bola da Vez Melhores Momentos Outubro": {
+  "TIT CAP": "Melhores Momentos Outubro",
+  "TIT PRINC": "Bola da vez"
+ },
+ "Bola da Vez: Agustín Canobbio": {
+  "TIT CAP": "Agustín Canobbio",
+  "TIT PRINC": "Bola da vez"
+ },
+ "Bola da Vez: Aline Pellegrino, diretora de legado da Copa do Mundo feminina.": {
+  "TIT CAP": "Aline Pellegrino, diretora de legado da Copa do Mundo feminina",
+  "TIT PRINC": "Bola da vez"
+ },
+ "Bola da Vez: Carlos Kirmayr": {
+  "TIT CAP": "Carlos Kirmayr",
+  "TIT PRINC": "Bola da vez"
+ },
+ "Bola da Vez: Damián Bobadilla": {
+  "TIT CAP": "Damián Bobadilla",
+  "TIT PRINC": "Bola da vez"
+ },
+ "Bola da Vez: Giovanna Crivelari": {
+  "TIT CAP": "Giovanna Crivelari",
+  "TIT PRINC": "Bola da vez"
+ },
+ "Bola da Vez: Jackson Follmann e Marco Aurélio Souza": {
+  "TIT CAP": "Jackson Follmann e Marco Aurélio Souza",
+  "TIT PRINC": "Bola da vez"
+ },
+ "Bola da Vez: Joyce Ardies": {
+  "TIT CAP": "Joyce Ardies",
+  "TIT PRINC": "Bola da vez"
+ },
+ "Bola de Prata": "Bola de Prata",
+ "CONMEBOL Libertadores": {
+  "TIPO": "evento",
+  "TIT PRINC": "CONMEBOL Libertadores"
+ },
+ "CONMEBOL Sulamericana": {
+  "TIPO": "evento",
+  "TIT PRINC": "CONMEBOL Sulamericana"
+ },
+ "Campemoato Português": {
+  "TIPO": "evento",
+  "TIT PRINC": "Campemoato Português"
+ },
+ "Campeonato Argentino": {
+  "TIPO": "evento",
+  "TIT PRINC": "Campeonato argentino"
+ },
+ "Campeonato Argentino: Torneio Clausura": {
+  "TIT PRINC": "Campeonato argentino // Clausura",
+  "TIT TEMP": "Torneio Clausura"
+ },
+ "Campeonato Argentino: Torneo Clausura": "Campeonato argentino: Torneo Clausura",
+ "Campeonato Brasileiro: Série B": {
+  "TIPO": "evento",
+  "TIT PRINC": "Campeonato Brasileiro: Série B"
+ },
+ "Campeonato Holandês": {
+  "TIPO": "evento",
+  "TIT PRINC": "Campeonato holandês"
+ },
+ "Campeonato Inglês Segunda Divisão": {
+  "TIPO": "evento",
+  "TIT PRINC": "Campeonato inglês: segunda divisão"
+ },
+ "Campeonato Inglês Terceira Divisão": {
+  "TIPO": "evento",
+  "TIT PRINC": "Campeonato Inglês Terceira Divisão"
+ },
+ "Campeonato Italiano": {
+  "TIPO": "evento",
+  "TIT PRINC": "Campeonato italiano"
+ },
+ "Campeonato Português": {
+  "TIPO": "evento",
+  "TIT PRINC": "Campeonato português"
+ },
+ "Campeonato Turco": {
+  "TIPO": "evento",
+  "TIT PRINC": "Campeonato turco"
+ },
+ "Clássicos ESPN": "Clássicos ESPN",
+ "Compacto NFL": {
+  "TIPO": "evento",
+  "TIT PRINC": "Compacto NFL"
+ },
+ "Concacaf W Championship": "CONCACAF W Championship",
+ "Copa Messi": {
+  "TIPO": "evento",
+  "TIT PRINC": "Copa Messi"
+ },
+ "Copa Messi: Disputa 5o lugar": {
+  "TIPO": "evento",
+  "TIT PRINC": "Copa Messi: Disputa 5o lugar"
+ },
+ "Copa Messi: Disputa Terceiro Lugar": "Copa Messi: Disputa Terceiro Lugar",
+ "Copa da Alemanha": {
+  "TIPO": "evento",
+  "TIT PRINC": "Copa da Alemanha"
+ },
+ "Copa da Liga Inglesa": {
+  "TIPO": "evento",
+  "TIT PRINC": "Copa da Liga Inglesa: Oitavas-de-final"
+ },
+ "Copa do Rei da Espanha": {
+  "TIPO": "evento",
+  "TIT PRINC": "Copa do Rei da Espanha"
+ },
+ "DTM 2026: Destaques da Temporada": {
+  "TIT CAP": "Temporada",
+  "TIT PRINC": "Destaques da DTM",
+  "TIT TEMP": "2026"
+ },
+ "Destaques CONMEBOL Sulamericana 2026": {
+  "TIT PRINC": "Destaques CONMEBOL Sulamericana",
+  "TIT TEMP": "2026"
+ },
+ "Destaques da CONMEBOL Libertadores 2026": {
+  "TIT PRINC": "Destaques da CONMEBOL Libertadores",
+  "TIT TEMP": "2026"
+ },
+ "ESPN KnockOut": {
+  "TIPO": "evento",
+  "TIT PRINC": "ESPN KnockOut"
+ },
+ "ESPN KnockOut: PBC": {
+  "TIPO": "evento",
+  "TIT PRINC": "ESPN KnockOut"
+ },
+ "ESPN Knockout: Legacy Fighting Alliance: 246": {
+  "TIT CAP": "Legacy Fighting Alliance: 246",
+  "TIT PRINC": "ESPN KnockOut"
+ },
+ "ESPN League": "ESPN League",
+ "Ecos da Liberta": "Ecos da Liberta",
+ "Ecos da Sula": "Ecos da Sula",
+ "Ecos do Tênis 2026": {
+  "TIT PRINC": "Ecos do Tênis",
+  "TIT TEMP": "2026"
+ },
+ "Eliminatórias Européías para a Copa do Mundo Feminina": {
+  "TIPO": "evento",
+  "TIT PRINC": "Eliminatórias Européías para a Copa do Mundo Feminina"
+ },
+ "Equipe F": "Equipe F",
+ "Especial Libertadores: Campanha do Campeão": "Especial Libertadores: Campanha do Campeão",
+ "Especial Libertadores: Campanha do Palmeiras": "Especial Libertadores: Campanha do Palmeiras",
+ "Especial Libertadores: O Caminho para a Final": {
+  "TIT CAP": "O Caminho para a Final",
+  "TIT PRINC": "Especial Libertadores"
+ },
+ "Especial Rally dos Sertões : Cada qual no seu tempo": "Especial Rally dos Sertões: Cada qual no seu tempo",
+ "Especial Sulamericana: Campanha do Campeão": "Especial Sulamericana: Campanha do Campeão",
+ "Especial Sulamericana: O Caminho para a Final": {
+  "TIT CAP": "O Caminho para a Final",
+  "TIT PRINC": "Especial Sulamericana"
+ },
+ "Especial: America Brasileña": "Especial: America Brasileña",
+ "Especial: Vozes da Saudade": "Especial: Vozes da Saudade",
+ "F1: The Inside Line": "F1: The Inside Line",
+ "Futebol Americano Universitário": {
+  "TIPO": "evento",
+  "TIT PRINC": "Futebol Americano Universitário"
+ },
+ "Futebol Americano Universitário: ACC Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "ACC Championship"
+ },
+ "Futebol Americano Universitário: Big 12 Championship": "Big 12 Championship",
+ "Futebol Americano Universitário: SEC Championship": "SEC Championship",
+ "Golfe: 2026 Abu Dhabi Aldar Championship: Primeira Rodada": {
+  "TIT CAP": "Primeira Rodada",
+  "TIT PRINC": "Abu Dhabi Aldar Championship",
+  "TIT TEMP": "2026"
+ },
+ "Golfe: 2026 Abu Dhabi Aldar Championship: Rodada FInal": {
+  "TIT CAP": "Rodada FInal",
+  "TIT PRINC": "Abu Dhabi Aldar Championship",
+  "TIT TEMP": "2026"
+ },
+ "Golfe: 2026 Abu Dhabi Aldar Championship: Segunda Rodada": {
+  "TIT CAP": "Segunda Rodada",
+  "TIT PRINC": "Abu Dhabi Aldar Championship",
+  "TIT TEMP": "2026"
+ },
+ "Golfe: 2026 Abu Dhabi Aldar Championship: Terceira Rodada": {
+  "TIT CAP": "Terceira Rodada",
+  "TIT PRINC": "Abu Dhabi Aldar Championship",
+  "TIT TEMP": "2026"
+ },
+ "Golfe: 2026 DP World Tour Championship: Primeira Rodada": {
+  "TIT CAP": "Primeira Rodada",
+  "TIT PRINC": "DP World Tour Championship",
+  "TIT TEMP": "2026"
+ },
+ "Golfe: 2026 DP World Tour Championship: Segunda Rodada": {
+  "TIT CAP": "Segunda Rodada",
+  "TIT PRINC": "DP World Tour Championship",
+  "TIT TEMP": "2026"
+ },
+ "Golfe: 2026 DP World Tour Championship: Terceira Rodada": {
+  "TIT CAP": "Terceira Rodada",
+  "TIT PRINC": "DP World Tour Championship",
+  "TIT TEMP": "2026"
+ },
+ "Golfe: Asia-Pacific Amateur Championship: Rodada Final": {
+  "TIT CAP": "Rodada Final",
+  "TIT PRINC": "Asia-Pacific Amateur Championship"
+ },
+ "Golfe: Asia-Pacific Amateur Championship: Segunda Rodada": {
+  "TIT CAP": "Segunda Rodada",
+  "TIT PRINC": "Asia-Pacific Amateur Championship"
+ },
+ "Golfe: Asia-Pacific Amateur Championship: Terceira Rodada": {
+  "TIT CAP": "Terceira Rodada",
+  "TIT PRINC": "Asia-Pacific Amateur Championship"
+ },
+ "In the Arena: Serena Williams": "In the Arena: Serena Williams",
+ "Inside Serie A": "Inside Serie A",
+ "Inside the NBA": "Inside the NBA",
+ "Linha de Passe: Mesa-Redonda": "Linha de passe: mesa-redonda",
+ "MLB": {
+  "TIPO": "evento",
+  "TIT PRINC": "MLB"
+ },
+ "Maratona de Nova Iorque (EUA)": "Maratona de Nova Iorque (EUA)",
+ "Mina de Passe": "Mina de pase",
+ "Momento CBTênis": "Momento CBTênis",
+ "Momento ESPN": "Momento ESPN",
+ "Momento ESPN: MOTO GP HELMETS OFF PEDRO ACOSTA": "MOTO GP HELMETS OFF PEDRO ACOSTA",
+ "Momento ESPN: Tenistas testam força dos forehands": "Tenistas testam força dos forehands",
+ "Monday Night Countdown": "Monday Night Countdown",
+ "Monday Night Football with Peyton and Eli": {
+  "TIPO": "evento",
+  "TIT PRINC": "Monday Night Football with Peyton and Eli"
+ },
+ "Mundial de Motovelocidade : GP da Malásia - Classificação Moto 3": {
+  "TIT CAP": "Mundial de Motovelocidade: GP da Malásia",
+  "TIT PRINC": "Classificação Moto 3"
+ },
+ "Mundial de Motovelocidade : GP da Malásia - Moto 2": {
+  "TIT CAP": "Mundial de Motovelocidade: GP da Malásia",
+  "TIT PRINC": "Moto 2"
+ },
+ "Mundial de Motovelocidade : GP da Malásia - Moto 3": {
+  "TIT CAP": "Mundial de Motovelocidade: GP da Malásia",
+  "TIT PRINC": "Moto 3"
+ },
+ "Mundial de Motovelocidade : GP da Malásia - Moto GP": {
+  "TIT CAP": "Mundial de Motovelocidade: GP da Malásia",
+  "TIT PRINC": "Moto GP"
+ },
+ "Mundial de Motovelocidade : GP da Malásia - Sprint Moto GP": {
+  "TIT CAP": "Mundial de Motovelocidade: GP da Malásia",
+  "TIT PRINC": "Sprint Moto GP"
+ },
+ "Mundial de Motovelocidade : GP da Malásia - Treinos Livres Moto 2": {
+  "TIT CAP": "Mundial de Motovelocidade: GP da Malásia",
+  "TIT PRINC": "Treinos Livres Moto 2"
+ },
+ "Mundial de Motovelocidade : GP da Malásia - Treinos Livres Moto 3": {
+  "TIT CAP": "Mundial de Motovelocidade: GP da Malásia",
+  "TIT PRINC": "Treinos Livres Moto 3"
+ },
+ "Mundial de Motovelocidade : GP de Portugal - Classificação Moto 2": {
+  "TIT CAP": "Mundial de Motovelocidade: GP de Portugal",
+  "TIT PRINC": "Classificação Moto 2"
+ },
+ "Mundial de Motovelocidade : GP de Portugal - Classificação Moto 3": {
+  "TIT CAP": "Mundial de Motovelocidade: GP de Portugal",
+  "TIT PRINC": "Classificação Moto 3"
+ },
+ "Mundial de Motovelocidade : GP de Portugal - Classificação Moto GP": {
+  "TIT CAP": "Mundial de Motovelocidade: GP de Portugal",
+  "TIT PRINC": "Classificação Moto GP"
+ },
+ "Mundial de Motovelocidade : GP de Portugal - Moto 2": {
+  "TIT CAP": "Mundial de Motovelocidade: GP de Portugal",
+  "TIT PRINC": "Moto 2"
+ },
+ "Mundial de Motovelocidade : GP de Portugal - Moto 3": {
+  "TIT CAP": "Mundial de Motovelocidade: GP de Portugal",
+  "TIT PRINC": "Moto 3"
+ },
+ "Mundial de Motovelocidade : GP de Portugal - Moto GP": {
+  "TIT CAP": "Mundial de Motovelocidade: GP de Portugal",
+  "TIT PRINC": "Moto GP"
+ },
+ "Mundial de Motovelocidade : GP de Portugal - Sprint Moto GP": {
+  "TIT CAP": "Mundial de Motovelocidade: GP de Portugal",
+  "TIT PRINC": "Sprint Moto GP"
+ },
+ "Mundial de Motovelocidade : GP de Portugal - Treinos Livres Moto 2": {
+  "TIT CAP": "Mundial de Motovelocidade: GP de Portugal",
+  "TIT PRINC": "Treinos Livres Moto 2"
+ },
+ "Mundial de Motovelocidade : GP de Portugal - Treinos Livres Moto 3": {
+  "TIT CAP": "Mundial de Motovelocidade: GP de Portugal",
+  "TIT PRINC": "Treinos Livres Moto 3"
+ },
+ "Mundial de Motovelocidade : GP de Portugal - Treinos Livres Moto GP": {
+  "TIT CAP": "Mundial de Motovelocidade: GP de Portugal",
+  "TIT PRINC": "Treinos Livres Moto GP"
+ },
+ "Mundial de Motovelocidade: GP da Austrália - Sprint Moto GP": {
+  "TIT CAP": "GP da Austrália",
+  "TIT PRINC": "Sprint Moto GP"
+ },
+ "Mundial de Motovelocidade: GP da Comunidade Valenciana: Moto GP": {
+  "TIT CAP": "GP da Comunidade Valenciana",
+  "TIT PRINC": "Moto GP"
+ },
+ "Mundial de Motovelocidade: GP da Comunidade Valenciana: Treinos Livres: Moto 2": {
+  "TIT CAP": "GP da Comunidade Valenciana",
+  "TIT PRINC": "Treinos Livres: Moto 2"
+ },
+ "Mundial de Motovelocidade: GP da Comunidade Valenciana: Treinos Livres: Moto 3": {
+  "TIT CAP": "GP da Comunidade Valenciana",
+  "TIT PRINC": "Treinos Livres: Moto 3"
+ },
+ "Mundial de Motovelocidade: GP da Comunidade Valenciana:Classificação: Moto GP": {
+  "TIT CAP": "GP da Comunidade Valenciana:Classificação",
+  "TIT PRINC": "Moto GP"
+ },
+ "Mundial de Motovelocidade: GP da Comunidade Valenciana:Moto 2": {
+  "TIT CAP": "GP da Comunidade Valenciana",
+  "TIT PRINC": "Moto 2"
+ },
+ "Mundial de Motovelocidade: GP da Comunidade Valenciana:Moto 3": {
+  "TIT CAP": "GP da Comunidade Valenciana",
+  "TIT PRINC": "Moto 3"
+ },
+ "Mundial de Motovelocidade: GP da Comunidade Valenciana:Treinos Livres: Moto GP": {
+  "TIT CAP": "GP da Comunidade Valenciana:Treinos Livres",
+  "TIT PRINC": "Moto GP"
+ },
+ "Mundial de Motovelocidade: GP do Catar: Moto 2": {
+  "TIT CAP": "GP do Catar",
+  "TIT PRINC": "Moto 2"
+ },
+ "Mundial de Motovelocidade: GP do Catar: Moto 3": {
+  "TIT CAP": "GP do Catar",
+  "TIT PRINC": "Moto 3"
+ },
+ "Mundial de Motovelocidade: GP do Catar: Moto GP": {
+  "TIT CAP": "GP do Catar",
+  "TIT PRINC": "Moto GP"
+ },
+ "Mundial de Motovelocidade: GP do Catar: Sprint: Moto GP": {
+  "TIT CAP": "GP do Catar: Sprint",
+  "TIT PRINC": "Moto GP"
+ },
+ "Mundo F": "Mundo F",
+ "NASCAR Brasil: Etapa de Brasília (DF)": {
+  "TIT CAP": "Etapa de Brasília (DF)",
+  "TIT PRINC": "NASCAR Brasil"
+ },
+ "NASCAR Brasil: Etapa de Chapecó (SC)": {
+  "TIT CAP": "Etapa de Chapecó (SC)",
+  "TIT PRINC": "NASCAR Brasil"
+ },
+ "NASCAR Cup Series: Play-offs: GP de Homestead-Miami": {
+  "TIT CAP": "Play-offs: GP de Homestead-Miami",
+  "TIT PRINC": "Nascar Cup Series"
+ },
+ "NASCAR Cup Series: Play-offs: GP de Martinsville": {
+  "TIT CAP": "Play-offs: GP de Martinsville",
+  "TIT PRINC": "Nascar Cup Series"
+ },
+ "NASCAR O'Reilly Auto Parts: GP de Homestead-Miami": "NASCAR O'Reilly Auto Parts: GP de Homestead-Miami",
+ "NBA": {
+  "TIPO": "evento",
+  "TIT PRINC": "NBA"
+ },
+ "NBA Action": "NBA Action",
+ "NBA Pré Temporada": {
+  "TIPO": "evento",
+  "TIT PRINC": "NBA Pré Temporada"
+ },
+ "NBA Tip-Off": "NBA Tip-Off",
+ "NBA: Cidade do México": {
+  "TIPO": "evento",
+  "TIT PRINC": "NBA: Cidade do México"
+ },
+ "NBB": {
+  "TIPO": "evento",
+  "TIT PRINC": "NBB"
+ },
+ "NCAA Division II Women's Volleyball Championship": "NCAA Division II Women's Volleyball Championship",
+ "NCAA Division III Women's Volleyball Championship": "NCAA Division III Women's Volleyball Championship",
+ "NCAA Men's Soccer Championship": "NCAA Men's Soccer Championship",
+ "NCAA Men's Water Polo Championship": "NCAA Men's Water Polo Championship",
+ "NFL": {
+  "TIPO": "evento",
+  "TIT PRINC": "NFL"
+ },
+ "NFL Redzone": "NFL Redzone",
+ "NHL": {
+  "TIPO": "evento",
+  "TIT PRINC": "NHL"
+ },
+ "NWSL": "NWSL",
+ "Nascar Truck Series: GP de Homestead-Miami": "Nascar Truck Series: GP de Homestead-Miami",
+ "O.J.: Made in America - Parte 1": "O.J.: Made in America - Parte 1",
+ "Pelas Quadras": "Pelas quadras",
+ "Premier League": {
+  "TIPO": "evento",
+  "TIT PRINC": "Premier League"
+ },
+ "Premier League Stories": "Premier League Stories",
+ "Resenha": "Resenha",
+ "Resenha Melhores Momentos Outubro": {
+  "TIT CAP": "Melhores Momentos Outubro",
+  "TIT PRINC": "Resenha"
+ },
+ "Resenha da Rodada": "Resenha da rodada",
+ "Resenha: Giuliano": {
+  "TIT CAP": "Giuliano",
+  "TIT PRINC": "Resenha"
+ },
+ "Resenha: Luan": {
+  "TIT CAP": "Luan",
+  "TIT PRINC": "Resenha"
+ },
+ "Resenha: Lê e Toró": {
+  "TIT CAP": "Lê e Toró",
+  "TIT PRINC": "Resenha"
+ },
+ "Roland Garros 2026: Tournament Review": {
+  "TIT PRINC": "Roland Garros: Tournament Review",
+  "TIT TEMP": "2026"
+ },
+ "Rugby Nations Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "Rugby Nations Championship"
+ },
+ "Rugby Nations Championship: Disputa 3o Lugar": {
+  "TIPO": "evento",
+  "TIT PRINC": "Rugby Nations Championship: Disputa 3o Lugar"
+ },
+ "Rugby SVNS: Etapa do Cidade do Cabo": "Rugby SVNS: Etapa do Cidade do Cabo",
+ "SEC/ACC Men's Challenge, a Wendy's Blockbuster": {
+  "TIPO": "evento",
+  "TIT PRINC": "SEC/ACC Men's Challenge, a Wendy's Blockbuster"
+ },
+ "Saban": "Saban",
+ "Setting the Tempo": "Setting the Tempo",
+ "Show da Rodada da EFL": "Show da rodada da EFL",
+ "Show da Rodada da Premier League": "Show da rodada da Premier League",
+ "Show da Rodada do Italiano": "Show da rodada do Italiano",
+ "Skechers World Champions Cup supporting Shriners Children's": "Skechers World Champions Cup supporting Shriners Children's",
+ "Spirit of Yatching: Rolex Middle Sea Race 2026": {
+  "TIT PRINC": "Spirit of Yatching: Rolex Middle Sea Race",
+  "TIT TEMP": "2026"
+ },
+ "SportsCenter": "SportsCenter",
+ "SportsCenter Abre o Jogo": "SportsCenter Abre o jogo",
+ "SportsCenter Abre o Jogo: NFL": "SportsCenter Abre o jogo: NFL",
+ "SportsCenter Americano": "SportsCenter americano",
+ "SportsCenter Americano com Scott Van Pelt": "SportsCenter americano com Scott Van Pelt",
+ "Supercopa Argentina": {
+  "TIPO": "evento",
+  "TIT PRINC": "Supercopa Argentina"
+ },
+ "Tapete Azul: Leilão Galácticos": "Tapete Azul: Leilão Galácticos",
+ "Tapete Verde: Leilão Galácticos": "Tapete Verde: Leilão Galácticos",
+ "Tênis: Next Gen ATP Finals": "Next Gen ATP Finals",
+ "UEFA Nations League": {
+  "TIPO": "evento",
+  "TIT PRINC": "UEFA Nations League"
+ },
+ "UEFA Nations League Match Day Highlights": "UEFA Nations League Match Day Highlights",
+ "UEFA Nations League Match Night Highlights": "UEFA Nations League Match Night Highlights",
+ "UEFA Women's Champions League": {
+  "TIPO": "evento",
+  "TIT PRINC": "UEFA Women's Champions League"
+ },
+ "UEFA Women's Champions League Highlight Show": "UEFA Women's Champions League Highlight Show",
+ "USL Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "USL Championship"
+ },
+ "Vem Aí ATP 100 Paris": "Vem Aí ATP 100 Paris",
+ "Vem Aí ATP Masters 1000 Paris": "Vem Aí ATP Masters 1000 Paris",
+ "Vem Aí Nitto ATP Finals": "Vem Aí Nitto ATP Finals"
+}

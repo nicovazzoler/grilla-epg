@@ -1,0 +1,631 @@
+{
+ "AFC Champions League Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "AFC Champions League"
+ },
+ "ATP 1000 Tennis Compactos ESPN Compact - ATP Masters 1000 - Rolex Paris Masters": "ESPN Compact - ATP Masters 1000 - Rolex Paris Masters",
+ "ATP 1000 Tennis Compactos ESPN Compact - ATP Masters 1000 - Rolex Shanghai Masters": {
+  "TIPO": "evento",
+  "TIT PRINC": "ESPN Compact - ATP Masters 1000 - Rolex Shanghai Masters"
+ },
+ "ATP 1000 Tennis Compactos ESPN Compact - Nitto ATP Finals": "ESPN Compact - Nitto ATP Finals",
+ "ATP 1000 Tennis Next Gen ATP Finals": {
+  "TIPO": "evento",
+  "TIT PRINC": "ATP 1000 Tennis Next Gen ATP Finals"
+ },
+ "ATP 1000 Tennis Nitto ATP Finals": {
+  "TIPO": "evento",
+  "TIT PRINC": "ATP 1000 Tennis Nitto ATP Finals"
+ },
+ "ATP 1000 Tennis Rolex Paris Masters": {
+  "TIPO": "evento",
+  "TIT PRINC": "Rolex Paris Masters"
+ },
+ "ATP 1000 Tennis Rolex Shanghai Masters": {
+  "TIPO": "evento",
+  "TIT PRINC": "ATP 1000 Tennis Rolex Shanghai Masters"
+ },
+ "ATP 500 Tennis ESPN Compact - Swiss Indoors Basel": {
+  "TIPO": "evento",
+  "TIT PRINC": "ESPN Compact - Swiss Indoors Basel"
+ },
+ "ATP 500 Tennis ESPN Compact -Erste BankOpen 500": {
+  "TIPO": "evento",
+  "TIT PRINC": "ESPN Compact - Erste BankOpen 500"
+ },
+ "Abierto de Tortugas Polo La Natividad-La Dolfina vs. La Hache": {
+  "TIPO": "evento",
+  "TIT PRINC": "Abierto de Tortugas - Polo La Natividad"
+ },
+ "Argentina Liga Profesional de Futbol Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Liga Profesional de Futbol"
+ },
+ "Baseball 2026 MLB Cup": {
+  "TIPO": "evento",
+  "TIT PRINC": "MLB Cup",
+  "TIT TEMP": 2026
+ },
+ "Basketball NBA Action": "NBA Action",
+ "Basketball NBA Edición Especial": "NBA Edición Especial",
+ "Basketball NBA Esta Noche": "NBA Esta Noche",
+ "Basketball NBA Today": "NBA Today",
+ "Big Day with Peter Schrager": "Big Day with Peter Schrager",
+ "Boxing": {
+  "TIPO": "evento",
+  "TIT PRINC": "ESPN Knockout"
+ },
+ "Boxing ESPN KnockOut": "Boxing ESPN KnockOut",
+ "Bundesliga Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Bundesliga"
+ },
+ "CONCACAF Caribbean Cup Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "CONCACAF Caribbean Cup"
+ },
+ "CONMEBOL Libertadores Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "CONMEBOL Libertadores"
+ },
+ "CONMEBOL Sudamericana Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "CONMEBOL Sudamericana"
+ },
+ "Carabao Cup Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Carabao Cup"
+ },
+ "Colombian Beisbol Baseball": {
+  "TIPO": "evento",
+  "TIT PRINC": "Liga Profesional de Béisbol Colombiano"
+ },
+ "Compactos ESPN Compact - Moto2": {
+  "TIPO": "evento",
+  "TIT PRINC": "ESPN Compact - Moto 2"
+ },
+ "Compactos ESPN Compact - Moto3": {
+  "TIPO": "evento",
+  "TIT PRINC": "ESPN Compact - Moto 3"
+ },
+ "Compactos ESPN Compact - MotoGP": {
+  "TIPO": "evento",
+  "TIT PRINC": "ESPN Compact - MotoGP"
+ },
+ "Concacaf Central American Cup Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "CONCACAF Central American Cup"
+ },
+ "Concacaf W Qualifiers Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "CONCACAF W Qualifiers"
+ },
+ "Concacaf W Qualifiers Soccer 2026 Concacaf W Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "CONCACAF W Championship",
+  "TIT TEMP": 2026
+ },
+ "Copa Libertadores Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Copa Libertadores"
+ },
+ "ESPN Compact - Premier Padel 2026 - Dubai P1 - Final Fem": {
+  "TIT CAP": "Final Femenina",
+  "TIT PRINC": "ESPN Compact - Premier Padel - Dubai P1",
+  "TIT TEMP": 2026
+ },
+ "ESPN Compact - Premier Padel 2026 - Dubai P1 - Final Masc": {
+  "TIT CAP": "Final Masculina",
+  "TIT PRINC": "ESPN Compact - Premier Padel - Dubai P1"
+ },
+ "ESPN Compact - Premier Padel 2026 - Dubai P1 - Semi Fem": {
+  "TIT CAP": "Semi Fem",
+  "TIT PRINC": "ESPN Compact - Premier Padel - Dubai P1",
+  "TIT TEMP": 2026
+ },
+ "ESPN Compact - Premier Padel 2026 - Dubai P1 - Semi Masc": {
+  "TIT CAP": "Semi Masc",
+  "TIT PRINC": "ESPN Compact - Premier Padel - Dubai P1",
+  "TIT TEMP": 2026
+ },
+ "ESPN Compact - Premier Padel 2026 - Kuwait Major - Final Fem": {
+  "TIT CAP": "Final Femenina",
+  "TIT PRINC": "ESPN Compact - Premier Padel - Kuwait Major",
+  "TIT TEMP": 2026
+ },
+ "ESPN Compact - Premier Padel 2026 - Kuwait Major - Final Masc": {
+  "TIT CAP": "Final Masculina",
+  "TIT PRINC": "ESPN Compact - Premier Padel - Kuwait Major",
+  "TIT TEMP": 2026
+ },
+ "ESPN Compact - Premier Padel 2026 - México Major - Final Fem": {
+  "TIT CAP": "Final femenina",
+  "TIT PRINC": "ESPN Compact - Premier Padel - México Major",
+  "TIT TEMP": "2026"
+ },
+ "ESPN Compact - Premier Padel 2026 - México Major - Final Masc": {
+  "TIT CAP": "Final masculina",
+  "TIT PRINC": "ESPN Compact - Premier Padel - México Major",
+  "TIT TEMP": "2026"
+ },
+ "ESPN Compact - Premier Padel 2026 - México Major - Semi Fem": {
+  "TIT CAP": "Semi Fem",
+  "TIT PRINC": "ESPN Compact - Premier Padel - México Major",
+  "TIT TEMP": "2026"
+ },
+ "ESPN Compact - Premier Padel 2026 - México Major - Semi Masc": {
+  "TIT CAP": "Semi Masc",
+  "TIT PRINC": "ESPN Compact - Premier Padel - México Major",
+  "TIT TEMP": "2026"
+ },
+ "ESPN Enfocados": "ESPN Enfocados",
+ "English League Championship Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "English League Championship"
+ },
+ "English League Championship Soccer EFL Highlights": "EFL Highlights",
+ "English League One Soccer Leicester City": {
+  "TIT CAP": "Leicester City",
+  "TIT PRINC": "English League One"
+ },
+ "English Premier League Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Premier League"
+ },
+ "English Premier League Soccer Compactos ESPN Compact - Premier League": "ESPN Compact - Premier League",
+ "English Premier League Soccer Goles de la Premier League": "Goles de la Premier League",
+ "Eredivisie Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Eredivisie"
+ },
+ "European PGA Tour Golf 2026 Abu Dhabi Aldar Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "European PGA Tour - Abu Dhabi Aldar Championship",
+  "TIT TEMP": 2026
+ },
+ "European PGA Tour Golf 2026 DP World Tour Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "European PGA Tour Golf DP World Tour Championship",
+  "TIT TEMP": "2026"
+ },
+ "FIM Superbike World Championship Motorcycle Racing World SBK - Race 1 - Spanish": {
+  "TIT CAP": "World SBK - Race 1 - Spanish",
+  "TIT PRINC": "FIM Superbike World Championship"
+ },
+ "FIM Superbike World Championship Motorcycle Racing World SBK - Race 2 - Spanish": {
+  "TIT CAP": "World SBK - Race 2 - Spanish",
+  "TIT PRINC": "FIM Superbike World Championship"
+ },
+ "First Take": "First Take",
+ "Fishing Aguas Arriba": "Aguas arriba",
+ "Football NFL Films Presents": "NFL Films Presents",
+ "Football NFL Live": "NFL Live",
+ "Football NFL Live desde México": "NFL Live desde México",
+ "Football NFL Redzone": "NFL Redzone",
+ "Football NFL Semanal": "NFL Semanal",
+ "Football Sunday NFL Countdown": "Sunday NFL Countdown",
+ "Formula 1 Motor Sports El Show de la F1": "El show de la F1",
+ "Formula 1 Motor Sports Fórmula 1 - Prácticas": {
+  "TIPO": "evento",
+  "TIT PRINC": "Práctica - Fórmula 1"
+ },
+ "Formula Two Motor Sports Formula 2: Where F1 Stars Are Made": "Formula 2: Where F1 Stars Are Made",
+ "Formula Two Motor Sports Fórmula 2 - Carrera": {
+  "TIPO": "evento",
+  "TIT PRINC": "Fórmula 2"
+ },
+ "Formula Two Motor Sports Fórmula 2 - Carrera Sprint": {
+  "TIPO": "evento",
+  "TIT PRINC": "Fórmula 2 - Sprint"
+ },
+ "Formula Two Motor Sports Fórmula 2 - Clasificación": {
+  "TIPO": "evento",
+  "TIT PRINC": "Clasificación - Fórmula 2"
+ },
+ "Formula Two Motor Sports Fórmula 2 - Práctica": {
+  "TIPO": "evento",
+  "TIT PRINC": "Práctica - Fórmula 2"
+ },
+ "French Ligue 1 Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Ligue 1"
+ },
+ "German Cup Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "German Cup 26"
+ },
+ "Get Up": "Get Up",
+ "Golf 2026 Asia-Pacific Amateur Championship (Resumen)": {
+  "TIT PRINC": "Asia-Pacific Amateur Championship (Resumen)",
+  "TIT TEMP": 2026
+ },
+ "Golf 2026 The Open Official Film": {
+  "TIT PRINC": "The Open Official Film",
+  "TIT TEMP": 2026
+ },
+ "Golf 2026 World Champions Cup": {
+  "TIPO": "evento",
+  "TIT PRINC": "World Champions Cup",
+  "TIT TEMP": "2026"
+ },
+ "Golf PGA Tour Highlights 2026 Presidents Cup Official Film": {
+  "TIT PRINC": "PGA Tour Highlights Presidents Cup Official Film",
+  "TIT TEMP": 2026
+ },
+ "Golf PGA Tour Highlights VidantaWorld Mexico Open": "PGA Tour Highlights VidantaWorld Mexico Open",
+ "Golf PGA Tour Highlights World Wide Technology Championship": "Golf PGA Tour Highlights World Wide Technology Championship",
+ "Hipismo Horseshow Jumping": {
+  "TIPO": "evento",
+  "TIT PRINC": "GP La Dolfina"
+ },
+ "International Friendly Soccer CONMEBOL Libertadores Flamengo Campeón 2025": "CONMEBOL Libertadores Flamengo Campeón 2025",
+ "International Friendly Soccer Cápsula Aston Villa Campeón UEL 2025-2026": "Aston Villa Campeón UEL 2025-2026",
+ "International Friendly Soccer Cápsula Barcelona Campeón LaLiga 2025-2026": "Barcelona Campeón LaLiga 2025-2026",
+ "International Friendly Soccer Cápsula Crystal Palace Campeón UECL 2025-2026": "Crystal Palace Campeón UECL 2025-2026",
+ "International Friendly Soccer Cápsula M.City Campeón FA Cup 2025-2026": "M.City Campeón FA Cup 2025-2026",
+ "International Friendly Soccer Cápsula PSG Campeón UCL 2025-2026": "PSG Campeón UCL 2025-2026",
+ "International Friendly Soccer Manchester City Campeón Carabao Cup": "Manchester City Campeón Carabao Cup",
+ "International Friendly Soccer PSG campeón UCL": "PSG campeón UCL 2025-2026",
+ "LALIGA Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "LALIGA ea sports"
+ },
+ "Liga MX Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Liga MX"
+ },
+ "MLB Baseball": {
+  "TIPO": "evento",
+  "TIT PRINC": "MLB Baseball"
+ },
+ "MLB Baseball Tonight Béisbol Esta Noche: World Series": {
+  "TIT CAP": "World Series",
+  "TIT PRINC": "Béisbol Esta Noche"
+ },
+ "Mixed Martial Arts ESPN Knockout: Legacy Fighting Alliance: 244": "ESPN Knockout",
+ "Mixed Martial Arts ESPN Knockout: Legacy Fighting Alliance: 246": {
+  "TIT CAP": "Legacy Fighting Alliance: 246",
+  "TIT PRINC": "ESPN Knockout"
+ },
+ "Mixed Martial Arts ESPN Knockout: Legacy Fighting Alliance: 247": {
+  "TIT CAP": "Legacy Fighting Alliance: 247",
+  "TIT PRINC": "ESPN Knockout"
+ },
+ "Motor Sports F1 Academy - Carrera": {
+  "TIPO": "evento",
+  "TIT PRINC": "F1 Academy"
+ },
+ "Motor Sports Formula 1 - Carrera": {
+  "TIPO": "evento",
+  "TIT PRINC": "Fórmula 1"
+ },
+ "Motor Sports Formula 1 - Clasificación": {
+  "TIPO": "evento",
+  "TIT PRINC": "Formula 1 - Clasificación"
+ },
+ "Motor Sports Formula 1 - La Previa": {
+  "TIPO": "evento",
+  "TIT PRINC": "Formula 1 - La previa"
+ },
+ "Motorcycle Racing Especiales MotoGP Dall'Igna: Forjado por la pasión": {
+  "TIT CAP": "Dall'Igna: Forjado por la pasión",
+  "TIT PRINC": "Motorcycle Racing Especiales MotoGP"
+ },
+ "Motorcycle Racing Lo Mejor de MotoGP": "Lo mejor de MotoGP",
+ "Motorcycle Racing Lo Mejor de MotoGP FIM Road Racing World Chmp Highlights": "FIM Road Racing World Chmp Highlights",
+ "Motorcycle Racing Lo Mejor de MotoGP Johann Zarco: Encontrando el equilibrio - Parte 1": "Motorcycle Racing Lo mejor de MotoGP Johann Zarco: Encontrando el equilibrio - Parte 1",
+ "Motorcycle Racing Lo Mejor de MotoGP MotoGP - Tales of Valentino: The Helmet": "Tales of Valentino",
+ "Motorcycle Racing Lo Mejor de MotoGP MotoGP Stories: El Proyecto Shoulder Cam": {
+  "TIT CAP": "El Proyecto Shoulder Cam",
+  "TIT PRINC": "Lo mejor de MotoGP"
+ },
+ "Motorcycle Racing MotoGP - Qualifying": {
+  "TIPO": "evento",
+  "TIT PRINC": "MotoGP - Qualifying"
+ },
+ "Motorcycle Racing MotoGP - Races": {
+  "TIPO": "evento",
+  "TIT PRINC": "MotoGP - Races"
+ },
+ "Motorcycle Racing MotoGP - Sprint": {
+  "TIPO": "evento",
+  "TIT PRINC": "MotoGP - Sprint"
+ },
+ "NBA Basketball": {
+  "TIPO": "evento",
+  "TIT PRINC": "NBA"
+ },
+ "NBA G League Basketball": {
+  "TIPO": "evento",
+  "TIT PRINC": "NBA G League"
+ },
+ "NCAA Football": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Football"
+ },
+ "NCAA Football CFP Rankings Show CFP Selection Show": "NCAA Football - CFP Rankings Show",
+ "NCAA Football SEC Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Football - SEC Championship"
+ },
+ "NCAA Men's Basketball": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Men's Basketball"
+ },
+ "NCAA Men's Basketball College GameDay - Basketball College GameDay": "Basketball College GameDay",
+ "NCAA Men's Soccer Championship": "NCAA Men's Championship",
+ "NCAA Men's Soccer Tournament": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Men's Soccer Tournament"
+ },
+ "NCAA Men's Water Polo Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Men's Water Polo Championship"
+ },
+ "NCAA Studio Update": "NCAA Studio Update",
+ "NCAA Women's Basketball": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Women's Basketball"
+ },
+ "NCAA Women's Soccer Tournament": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Women's Soccer Tournament"
+ },
+ "NCAA Women's Volleyball": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Women's Volleyball"
+ },
+ "NCAA Women's Volleyball Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAA Women's Volleyball Championship"
+ },
+ "NCAA Women's Volleyball The 5th Set": {
+  "TIT CAP": "The 5th Set",
+  "TIT PRINC": "NCAA Women's Volleyball"
+ },
+ "NCAAF College Football Live": "NCAAF College Football Live",
+ "NCAAF College Football Live: Bowl Breakdown": "NCAAF College Football Live: Bowl Breakdown",
+ "NCAAF College Football Scoreboard": "NCAAF College Football Scoreboard",
+ "NCAAF College Football Studio": "NCAAF College Football Studio",
+ "NCAAF College Football Studio (ABC)": "NCAAF College Football Studio",
+ "NCAAF College GameDay - Football College GameDay": "NCAAF College GameDay",
+ "NCAAF Football Big 12 Championship": "NCAAF Football Big 12 Championship",
+ "NCAAF Football Championship Drive CFP Rankings Countdown": "NCAAF Football Championship Drive CFP Rankings Countdown",
+ "NCAAF Football LLH Healthcare American Championship": {
+  "TIPO": "evento",
+  "TIT PRINC": "NCAAF Football LLH Healthcare American Championship"
+ },
+ "NFL Football": {
+  "TIPO": "evento",
+  "TIT PRINC": "NFL"
+ },
+ "NFL Football Kansas City Chiefs: The Franchise - Season 7,": "Kansas City Chiefs: The Franchise",
+ "NFL Football Monday Night Countdown": "NFL Football Monday Night Countdown",
+ "NFL Football Monday Night Kickoff": "NFL Football Monday Night Kickoff",
+ "NHL Hockey": {
+  "TIPO": "evento",
+  "TIT PRINC": "NHL"
+ },
+ "NHL Hockey The Point": "The Point",
+ "NHL National Hockey Night": "NHL",
+ "NWSL National Women's Soccer League": {
+  "TIPO": "evento",
+  "TIT PRINC": "NWSL"
+ },
+ "Nations Championship Rugby League": {
+  "TIPO": "evento",
+  "TIT PRINC": "Nations Championship Rugby League"
+ },
+ "Nations Championship Rugby Union": {
+  "TIPO": "evento",
+  "TIT PRINC": "Nations Championship Rugby League"
+ },
+ "New York Marathon": "New York Marathon",
+ "Polo Internacional ESPN Polo": "ESPN Polo",
+ "Premier Lacrosse League": "Premier Lacrosse League",
+ "Premier Padel Dubai P1 - Centre Court": {
+  "TIPO": "evento",
+  "TIT PRINC": "Premier Padel Dubai P1"
+ },
+ "Premier Padel México Major - Centre Court": {
+  "TIPO": "evento",
+  "TIT PRINC": "Premier Padel México Major - Centre Court"
+ },
+ "Rugby League ESPN Compact - URBA Top 14 2026": {
+  "TIT PRINC": "ESPN Compact - URBA Top 14",
+  "TIT TEMP": 2026
+ },
+ "Rugby Test Matches Rugby Union": {
+  "TIPO": "evento",
+  "TIT PRINC": "Test Match internacional"
+ },
+ "Rugby Test Matches Rugby Union Campeón SR Americas 2026": "Campeón SR Americas 2026",
+ "Rugby Union Equipo Scrum": "Equipo Scrum",
+ "Rugby Union French Rugby Championship Highlights Top 14 de Francia 2026-2027 - Resumen Semanal": {
+  "TIT PRINC": "Top 14 de Francia - Resumen semanal",
+  "TIT TEMP": "2026-2027"
+ },
+ "Rugby Union Scrum": "Scrum",
+ "SC Centroamérica SportsCenter": "Centroamérica SportsCenter",
+ "SC Fin de semana SportsCenter (Fin de Semana)": "SportsCenter (Fin de Semana)",
+ "Saban": "Saban",
+ "SailGP Series Sailing Racing On The Edge": "SailGP",
+ "Serie A Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Serie A"
+ },
+ "Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Bundesliga"
+ },
+ "Soccer Bundesliga Highlights Show German Bundesliga Highlights": "Bundesliga Highlights",
+ "Soccer Bundesliga Preview Show": "Bundesliga Preview Show",
+ "Soccer Carabao Cup Highlights": "Carabao Cup Highlights",
+ "Soccer Copa Potrero 2026": {
+  "TIPO": "evento",
+  "TIT PRINC": "Copa Potrero"
+ },
+ "Soccer ESPN F10": "ESPN F10",
+ "Soccer ESPN F10 Colombia ESPN F10": "Colombia ESPN F10",
+ "Soccer ESPN F90 Chile ESPN F90": "ESPN F90",
+ "Soccer ESPN F90 Colombia ESPN F90": "Colombia ESPN F90",
+ "Soccer ESPN FC": "ESPN FC",
+ "Soccer ESPN FShow Chile ESPN FShow": "ESPN FShow",
+ "Soccer ESPN Fútbol 1": "ESPN Fútbol 1",
+ "Soccer El Show de la Copa Libertadores": "El show de la Copa Libertadores",
+ "Soccer El Show de la Copa Libertadores: El Camino a la Final": {
+  "TIT CAP": "El camino a la final",
+  "TIT PRINC": "El show de la Copa Libertadores"
+ },
+ "Soccer Equipo F": "Equipo F",
+ "Soccer Equipo F Centroamérica": "Equipo F Centroamérica",
+ "Soccer Equipo F México Equipo Futbol": "Equipo Futbol",
+ "Soccer Eredivisie Highlight Show Dutch League Highlights": "Dutch League Highlights",
+ "Soccer Eredivisie Highlight Show Goles de la Eredivisie": "Goles de la Eredivisie",
+ "Soccer Europa League Highlight Show UEFA Europa League Highlights": "UEFA Europa League Highlights",
+ "Soccer F Nacional": "F Nacional",
+ "Soccer F Táctico": "F Táctico",
+ "Soccer Futbol Picante": "Futbol Picante",
+ "Soccer Futbol Picante Noche Futbol Picante": "Futbol picante",
+ "Soccer Generación F México Generación Futbol": "Generación futbol",
+ "Soccer Goles de La Ligue 1 French Ligue 1 Highlights": "Goles de La Ligue 1",
+ "Soccer Inside Serie A": "Inside Serie A",
+ "Soccer Italian Serie A Highlights": "Italian Serie A Highlights",
+ "Soccer Italian Serie A Highlights Goles de la Serie A": "Goles de la Serie A",
+ "Soccer LALIGA Highlights Goles de LaLiga": "Goles de LaLiga",
+ "Soccer Liga Expansión MX": {
+  "TIPO": "evento",
+  "TIT PRINC": "Liga Expansión MX"
+ },
+ "Soccer Liga MX": {
+  "TIPO": "evento",
+  "TIT PRINC": "Liga MX"
+ },
+ "Soccer Messi Cup 2026": {
+  "TIT PRINC": "Messi Cup",
+  "TIT TEMP": 2026
+ },
+ "Soccer Mundo Premier League Premier League Preview Show": "Premier League Preview Show",
+ "Soccer UEFA Champions League Highlights": "UEFA Champions League Highlights",
+ "Soccer UEFA Champions League Weekly": "UEFA Champions League Weekly",
+ "Soccer UEFA Europa League": {
+  "TIPO": "evento",
+  "TIT PRINC": "UEFA Europa League"
+ },
+ "Soccer UEFA Europa League Magazine": "UEFA Europa League Magazine",
+ "Soccer UEFA Nations League Highlight Show UEFA Nations League Match Day Highlights": "UEFA Nations League Match Day Highlights",
+ "Soccer UEFA Nations League Highlight Show UEFA Nations League Match Night Highlights": "UEFA Nations League Match Night Highlights",
+ "Soccer UEFA Women's Champions League Highlight Show UEFA Women's Champions League Highlight Show": "UEFA Women's Champions League Highlight Show",
+ "Spirit of Yachting Spirit of Yatching: Rolex Middle Sea Race 2026": {
+  "TIT CAP": "Rolex Middle Sea Race",
+  "TIT PRINC": "Spirit of Yatching",
+  "TIT TEMP": "2026"
+ },
+ "Spirit of Yachting: Rolex Middle Sea Race 2026": {
+  "TIT CAP": "Rolex Middle Sea Race",
+  "TIT PRINC": "Spirit of Yachting",
+  "TIT TEMP": 2026
+ },
+ "SportSCenter Especial: Isaac Del Toro": {
+  "TIT CAP": "Isaac Del Toro",
+  "TIT PRINC": "SportSCenter Especial"
+ },
+ "SportsCenter": "SportsCenter",
+ "SportsCenter Argentina SportsCenter": "SportsCenter",
+ "SportsCenter Chile SportsCenter": "SportsCenter Chile SportsCenter",
+ "SportsCenter Medianoche SportsCenter": "SportsCenter",
+ "SportsCenter Mediodía SportsCenter": "SportsCenter",
+ "SportsCenter Noche SportsCenter": "SportsCenter",
+ "SportsCenter Segunda Tarde SportsCenter": "SportsCenter",
+ "SportsCenter Tarde SportsCenter": "SportsCenter",
+ "SportsCenter UEL SportsCenter": "UEL SportsCenter",
+ "SportsCenter+": "SportsCenter+",
+ "Tennis ATP Uncovered ATP Tour: This Week": "ATP Tour: This Week",
+ "Tennis ESPN Compact - WTA Finals Riyadh": "ESPN Compact - WTA Finals Riyadh",
+ "Tennis ESPN Tenis Mejores Jugadas 2025": {
+  "TIT CAP": "Mejores jugadas 2025",
+  "TIT PRINC": "ESPN Tenis"
+ },
+ "Tennis ESPN Tenis Tenis 2009": {
+  "TIT PRINC": "ESPN Tenis",
+  "TIT TEMP": "2009"
+ },
+ "Tennis ESPN Tenis The Imposible Shot": {
+  "TIT CAP": "The Imposible Shot",
+  "TIT PRINC": "ESPN Tenis"
+ },
+ "Tennis ESPN Tenis | ATP Finals - La Previa": {
+  "TIT CAP": "ATP Finals - La Previa",
+  "TIT PRINC": "ESPN Tenis"
+ },
+ "Tennis FAGE WTA Finals Indian Wells": {
+  "TIPO": "evento",
+  "TIT PRINC": "FAGE WTA Finals Indian Wells 26"
+ },
+ "Tennis WTA Finals": {
+  "TIPO": "evento",
+  "TIT PRINC": "WTA Finals"
+ },
+ "The Best of Padel World Cup - Final Femenina": {
+  "TIPO": "evento",
+  "TIT PRINC": "The Best of Padel World Cup"
+ },
+ "The Best of Padel World Cup - Final Masculina": {
+  "TIPO": "evento",
+  "TIT PRINC": "The Best of Padel World Cup"
+ },
+ "The Pat McAfee Show": "The Pat McAfee Show",
+ "Top 14 Rugby Union": {
+  "TIPO": "evento",
+  "TIT PRINC": "Top 14 26"
+ },
+ "Turkish Super Lig Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Turkish Super Lig"
+ },
+ "UEFA Champions League Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "UEFA Champions League"
+ },
+ "UEFA Europa League Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "UEFA Europa League"
+ },
+ "UEFA Nations League Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "UEFA Nations League"
+ },
+ "UEFA SportsCenter UCL SportsCenter": "UEFA SportsCenter UCL SportsCenter",
+ "UEFA Women's Champions League Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "UEFA Women's Champions League"
+ },
+ "UEFA Women's European Qualifiers Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "UEFA Women's European Qualifiers"
+ },
+ "WTA Tennis": {
+  "TIPO": "evento",
+  "TIT PRINC": "ESPN Compact - WTA Finals Riyadh"
+ },
+ "Women's International Friendly Soccer": {
+  "TIPO": "evento",
+  "TIT PRINC": "Women's International Friendly"
+ },
+ "World Rugby Nations Cup Rugby Union": {
+  "TIPO": "evento",
+  "TIT PRINC": "World Rugby Nations Cup"
+ },
+ "X GAMES Action Sports México Épico: Jalisco": {
+  "TIT CAP": "Jalisco",
+  "TIT PRINC": "México Épico"
+ },
+ "Yachting Sailing SailGP: Abu Dhabi": {
+  "TIT CAP": "Abu Dhabi",
+  "TIT PRINC": "SailGP"
+ },
+ "Yachting Sailing SailGP: Dubai": {
+  "TIT CAP": "Dubai",
+  "TIT PRINC": "SailGP"
+ }
+}
