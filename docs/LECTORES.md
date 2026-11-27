@@ -161,6 +161,25 @@ columnas (las lee por posición).
 
 ---
 
+## Telemundo y Rai Premium — guía web
+
+**Cómo viene:** no hay archivo. Cada página publica un JSON por día y `procesar.py` los baja con `--desde`/`--hasta`;
+quedan guardados en `salida/guias/<señal>/` y se pueden volver a leer sin bajarlos.
+
+**Qué hace:**
+- La hora queda como la muestra la página: del Este de EE. UU. en Telemundo y de Italia en Rai Premium.
+- La descripción va a ARG LARGO. Telemundo trae además el rating, que pasa tal cual.
+- Rai Premium trae temporada, capítulo y título del capítulo en campos aparte. Una temporada que es un año va a AÑO
+  y una que es un ciclo ("2026/27") a TIT TEMP.
+- En Rai Premium es película lo que no trae capítulo y dura una hora o más. Si el mismo nombre trae temporada otro
+  día, es una serie a la que ese día le faltó el dato.
+- El último programa termina cuando dice la guía, aunque pase la medianoche.
+
+**Qué lo puede romper:** que cambien la dirección o los nombres de los campos, y bajar un día que la página todavía
+no publicó (Rai Premium contesta vacío y ese día se saltea).
+
+---
+
 ## Lo que tienen en común
 
 Casi todo lo que los rompe es lo mismo: **leen por posición** (la columna C, la altura en la página) y **reconocen
