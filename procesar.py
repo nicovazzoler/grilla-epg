@@ -325,14 +325,41 @@ def anotar_corrida(senal, archivos, capas):
                     MINUTOS_A_MANO * len(archivos)])
 
 
+def fecha_de(texto):
+    """DD/MM o DD/MM/AAAA. Sin año, el que deja la fecha más cerca de hoy (en diciembre, "05/01" es enero que viene)."""
+    partes = [int(p) for p in texto.split('/')]
+    if len(partes) == 3:
+        return dt.date(partes[2], partes[1], partes[0])
+    hoy = dt.date.today()
+    return min((dt.date(hoy.year + d, partes[1], partes[0]) for d in (-1, 0, 1)), key=lambda f: abs(f - hoy))
+
+
+def bajar_guia(senal, desde, hasta):
+    """Baja la guía web de la señal a salida/guias/<señal>/ y devuelve los archivos, que quedan como la grilla."""
+    lector = importlib.import_module(f'senales.{senal}')
+    if not hasattr(lector, 'descargar'):
+        sys.exit(f'{senal} no tiene guía web: pasale los archivos de la grilla.')
+    carpeta = AQUI / 'salida' / 'guias' / senal
+    carpeta.mkdir(parents=True, exist_ok=True)
+    rutas = lector.descargar(fecha_de(desde), fecha_de(hasta), carpeta)
+    print(f'Guía web: {len(rutas)} días bajados a {carpeta}')
+    return rutas
+
+
 def main():
     args = argparse.ArgumentParser()
     args.add_argument('senal', choices=senales(), metavar='señal', help=', '.join(senales()))
-    args.add_argument('grillas', nargs='+')
+    args.add_argument('grillas', nargs='*')
     args.add_argument('--hora', action='append', default=[], help='FILA=HH:MM para una hora mal tipeada (RBTV)')
     args.add_argument('--semanal', action='store_true', help='repite la última semana hasta fin de mes')
+    args.add_argument('--desde', help='DD/MM: en las señales que publican su guía en la web, baja desde ese día')
+    args.add_argument('--hasta', help='DD/MM: último día a bajar (inclusive); si falta, solo el de --desde')
     a = args.parse_args()
     horas = {int(f): dt.datetime.strptime(h, '%H:%M').time() for f, h in (x.split('=') for x in a.hora)}
+    if a.desde:
+        a.grillas = bajar_guia(a.senal, a.desde, a.hasta or a.desde)
+    if not a.grillas:
+        sys.exit('Faltan las grillas (o --desde, en las señales que tienen guía web).')
 
     try:
         leido = leer_grillas(a.senal, a.grillas, horas)

@@ -56,6 +56,7 @@ como TIPO junto con el resto (película, evento o programa) y queda en el diccio
 | Señal | Formato | Lo difícil |
 |---|---|---|
 | `rbtv` | Excel en lista | Nombres escritos distinto según el día |
+| `telemundo` | Guía web (JSON por día) | No hay archivo: se baja con `--desde`/`--hasta`; hora del Este de EE. UU. |
 | `america` | Excel en cuadrícula | El programa empieza en el borde del recuadro, no donde está el nombre |
 | `monterrey` | PDF | Los recuadros se arman con las líneas del PDF; conductores a A1–A3 |
 | `canal51` | Word | Títulos de películas mal escritos; estreno solo la primera vez en la semana |
@@ -74,6 +75,7 @@ copy .env.example .env        # y poné tu ANTHROPIC_API_KEY (sin clave anda igu
 
 python procesar.py <señal> <grilla> [<grilla> ...]    # varias semanas van a un solo EPG
 python aprobar.py <señal>
+python procesar.py telemundo --desde 28/11 --hasta 03/12    # señales con guía web: la baja sola
 ```
 
 El Excel queda en `salida/`. Las grillas no se suben al repo.
